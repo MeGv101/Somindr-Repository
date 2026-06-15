@@ -1,0 +1,183 @@
+#modal-overlay,
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+#modal-overlay.visible,
+.modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.modal-abierto {
+  overflow: hidden;
+}
+
+.modal-tarjeta {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #1a1a1a;
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #090909;
+  color: #e1e1e1;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-cerrar:hover {
+  background: #232323;
+}
+
+.modal-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: #090909;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.modal-tabs .tab {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #e1e1e1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.modal-tabs .tab.activo {
+  background: #484848;
+  color: #e9e9e9;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.logo-icono{
+  display: block;
+  border-radius: 12px;
+}
+.logo-icono img{
+  height: 120px;
+  width: auto;
+}
+
+
+.panel.oculto {
+  display: none;
+}
+
+.titulo {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.subtitulo {
+  font-size: 0.875rem;
+  color: #9e9e9e;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.campo {
+  margin-bottom: 12px;
+}
+
+.campo input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #252525;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: #3cb878;
+}
+
+.btn-principal {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #3cb878;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mensaje-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.mensaje-success {
+  color: green;
+  margin-bottom: 10px;
+}
+.btn-principal:hover {
+  background: #298a5a;
+}
+
+.pie {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.pie-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #3cb878;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.pie-link:hover {
+  text-decoration: underline;
+}

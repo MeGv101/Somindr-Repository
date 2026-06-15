@@ -1,0 +1,174 @@
+:root {
+  --verde: #3cb878;
+  --verde-oscuro: #298a5a;
+  --verde-claro: #eaf7f0;
+  --negro: #111;
+  --gris-claro: #f5f8f6;
+  --blanco: #fff;
+}
+
+.pe-main {
+  flex: 1;
+  padding: 40px 48px;
+  min-height: 100vh;
+  background: #f2f5f3;
+}
+
+.pe-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--blanco);
+  border-radius: 16px;
+  border: 0.5px solid rgba(0, 0, 0, 0.06);
+  padding: 32px 36px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.pe-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--negro);
+  margin-bottom: 8px;
+}
+
+.pe-header p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+.pe-section {
+  margin-bottom: 28px;
+}
+
+.pe-section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--negro);
+}
+
+.pe-sub {
+  font-size: 0.875rem;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.pe-emociones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pe-emo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #e0e8e4;
+  background: var(--blanco);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.pe-emo span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.pe-emo.seleccionado {
+  border-color: var(--verde);
+  background: var(--verde-claro);
+  font-weight: 600;
+}
+
+.pe-emo.seleccionado span {
+  background: var(--verde);
+}
+
+.pe-slider-card {
+  background: var(--gris-claro);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.pe-slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.pe-val {
+  color: var(--verde-oscuro);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.pe-slider-card input[type='range'] {
+  width: 100%;
+  accent-color: var(--verde);
+}
+
+.pe-field {
+  margin-bottom: 16px;
+}
+
+.pe-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.pe-field input,
+.pe-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e8e4;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.pe-field input:focus,
+.pe-field textarea:focus {
+  outline: none;
+  border-color: var(--verde);
+}
+
+.pe-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--verde);
+  color: var(--blanco);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pe-btn:hover {
+  background: var(--verde-oscuro);
+}
+
+@media (max-width: 640px) {
+  .pe-main {
+    padding: 24px 16px;
+  }
+
+  .pe-card {
+    padding: 24px 20px;
+  }
+}

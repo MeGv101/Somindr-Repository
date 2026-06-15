@@ -1,0 +1,232 @@
+@font-face {
+    font-family: etna;
+    src: url('../src/assets/fonts/Etna.ttf');
+}
+.main-nav{
+    width: 100vw;
+    height: 85px;
+    background-color: #1a1a1a;
+    font-family: etna;
+    font-size: xx-large;
+    padding: 30px 20px;
+    z-index: 1000;
+}
+.hamburger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 1001 !important;
+    padding: 10px;
+    background-color: #1a1a1a!important;
+    border-radius: 50%;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.hamburger:hover {
+    background-color: #262626;
+    box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.3);
+}
+
+._layer {
+    background: rgb(255, 255, 255);
+    width: 30px;
+    height: 4px;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.hamburger.is-active .-top {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.is-active .-mid {
+    opacity: 0;
+}
+
+.hamburger.is-active .-bottom {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.menuppal {
+    position: fixed;
+    top: -100%;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 80px 25px 30px;
+    transition: top 0.4s ease;
+    z-index: 1000 !important;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    visibility: visible !important;
+}
+
+.menuppal::-webkit-scrollbar {
+    display: none;
+}
+.menuppal {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.menuppal.active {
+    top: 0 !important;
+    display: flex !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    align-items: flex-start;
+    box-shadow: -5px 0 20px rgba(255, 255, 255, 0.15);
+}
+.sidebar-logo {
+    display: block;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.logo-img {
+    width: 90%;
+    height: auto;
+    display: inline-block;
+}
+
+.menu-left {
+    display: flex;
+    align-items:start;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.menu-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 90%;
+    margin-top: auto;
+    margin-left: 5%;
+    padding-top: 20px;
+    border-top: 1px solid rgba(216, 216, 216, 0.1);
+}
+.menuppal .sidebar-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.2s;
+    display: block;
+    border-radius: 8px;
+    width: 120%;
+}
+.menu-right .sidebar-link{
+    border: transparent;
+    width: 100%;
+}
+.menuppal .sidebar-link:hover {
+    color: #3CB878;
+    background: rgba(60, 184, 120, 0.1);
+    text-decoration: none;
+}
+
+.menuppal .sidebar-link.cerrar {
+    color: #b91c1c;
+}
+
+.menuppal .sidebar-link.cerrar:hover {
+    color: #ef4444;
+    background: rgba(185, 28, 28, 0.1);
+}
+
+.menuppal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999 !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menuppal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto !important;
+}
+
+@media (max-width: 768px) {
+    .menuppal {
+        width: 85vw;
+        max-width: 300px;
+        padding: 70px 20px 25px;
+    }
+    
+    .logo-img {
+        width: 80px;
+    }
+    
+    .menuppal .sidebar-link {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hamburger {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    
+    ._layer {
+        width: 24px;
+        height: 3px;
+    }
+    
+    .hamburger.is-active .-top {
+        transform: translateY(7px) rotate(45deg);
+    }
+    
+    .hamburger.is-active .-bottom {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+    
+    .menuppal {
+        width: 100vw;
+        max-width: none;
+    }
+}
+
+.main {
+    margin-left: 0 !important;
+}
+
+.hamburger {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 10000 !important;
+}
+
+._layer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

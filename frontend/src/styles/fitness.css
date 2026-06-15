@@ -1,0 +1,461 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap');
+ 
+:root {
+  --rojo:        #e63329;
+  --rojo-neon:   #ff2d21;
+  --rojo-glow:   rgba(230, 51, 41, 0.6);
+  --rojo-dim:    rgba(230, 51, 41, 0.15);
+  --negro:       #000000;
+  --negro-card:  #0a0a0a;
+  --negro-panel: #111111;
+  --gris-osc:    #1a1a1a;
+  --gris-med:    #2a2a2a;
+  --gris-linea:  #272727;
+  --gris-texto:  #888888;
+  --blanco:      #f5f5f5;
+  --blanco-dim:  rgba(245, 245, 245, 0.08);
+}
+
+/* MODO DEPURACIÓN */
+html,
+body,
+#root,
+main,
+.pe-main,
+.pe-card {
+    background: #000 !important;
+}
+
+* {
+    background-color: transparent;
+}
+ 
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: 'Barlow', sans-serif;
+}
+ 
+/* Grain overlay */
+.pe-main::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+ 
+/* Línea roja neón arriba */
+.pe-card::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--rojo-neon), transparent);
+  box-shadow: 0 0 20px var(--rojo-glow), 0 0 60px var(--rojo-dim);
+}
+ 
+/* imagen fitness */
+.pe-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: var(--gris-osc);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+ 
+.pe-hero-banner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+ 
+.pe-hero-banner .hero-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--gris-med);
+  color: var(--gris-texto);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  gap: 8px;
+}
+ 
+.pe-hero-banner .hero-placeholder span {
+  font-size: 2rem;
+}
+ 
+.pe-hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding: 24px 36px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 100%);
+  width: 100%;
+}
+ 
+.pe-hero-overlay h1 {
+   font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--blanco);
+  text-transform: uppercase;
+}
+ 
+.pe-hero-overlay h1 em {
+  font-style: normal;
+  color: var(--rojo-neon);
+  text-shadow: 0 0 30px var(--rojo-glow);
+}
+ 
+.pe-hero-overlay p {
+  color: var(--gris-texto);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+ 
+/* CONTENIDO INTERNO  */
+.pe-inner {
+  padding: 36px 36px 32px;
+}
+ 
+/* SECCIONES */
+.pe-section {
+  margin-bottom: 40px;
+}
+ 
+.pe-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+ 
+.pe-section-title::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 24px;
+  background: var(--rojo-neon);
+  box-shadow: 0 0 12px var(--rojo-glow);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+ 
+.pe-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--blanco);
+  text-transform: uppercase;
+}
+ 
+/* ── GRID RUTINAS ── */
+.rutinas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+ 
+.rutina-btn {
+  padding: 14px 10px;
+  background: var(--negro-panel);
+  border: 1px solid var(--gris-linea);
+  border-radius: 3px;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+ 
+.rutina-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--rojo-neon);
+  transition: width 0.2s ease;
+  box-shadow: 0 0 8px var(--rojo-glow);
+}
+ 
+.rutina-btn:hover {
+  border-color: var(--gris-med);
+  color: var(--blanco);
+  background: var(--gris-osc);
+}
+ 
+.rutina-btn:hover::after { width: 100%; }
+ 
+.rutina-btn.activo {
+  background: var(--rojo);
+  border-color: var(--rojo-neon);
+  color: #fff;
+  box-shadow: 0 0 20px var(--rojo-glow), inset 0 0 20px rgba(0,0,0,0.3);
+}
+ 
+.rutina-btn.activo::after { width: 0; }
+ 
+/* ── DIVIDER ── */
+.pe-divider {
+  border: none;
+  border-top: 1px solid var(--gris-linea);
+  margin: 32px 0;
+}
+ 
+/* ── EJERCICIOS CONTAINER ── */
+/* Ejercicios */
+.ejercicios-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  justify-items: center;
+}
+
+@media (max-width: 560px) {
+  .ejercicios-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tarjeta */
+.video-card {
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Contenido principal */
+.card-content {
+  position: absolute;
+  inset: 0;
+
+  background: var(--negro-panel);
+  border: 1px solid var(--gris-linea);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 18px;
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+
+  z-index: 2;
+}
+
+.card-content h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blanco);
+  margin: 0;
+  text-align: center;
+}
+
+/* Ocultar contenido */
+.video-card.active .card-content {
+  opacity: 0;
+  transform: translateY(-40px) scale(0.95);
+  pointer-events: none;
+}
+
+/* Video oculto */
+.video-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  background: #0d0d0d;
+  border: 1px solid var(--rojo);
+}
+
+/* Mostrar video */
+.video-card.active .video-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Reproductor */
+.exercise-video {
+  width: 300px;
+  height: 290px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--gris-linea);
+}
+
+/* Checkbox */
+.check-container {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.ejercicio-check {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--rojo-neon);
+  cursor: pointer;
+}
+
+/* Botones */
+.btn-flip {
+  padding: 6px 16px;
+  font-size: 0.72rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  background: transparent;
+  color: var(--rojo-neon);
+
+  border: 1px solid var(--rojo);
+  border-radius: 2px;
+
+  cursor: pointer;
+  transition: all 0.2s;
+
+  margin-top: 10px;
+}
+
+.btn-flip:hover {
+  background: var(--rojo);
+  color: #fff;
+  box-shadow: 0 0 14px var(--rojo-glow);
+}
+
+/* Botón volver */
+.btn-back {
+  color: var(--gris-texto);
+  border-color: var(--gris-med);
+}
+
+.btn-back:hover {
+  background: var(--gris-med);
+  color: var(--blanco);
+  box-shadow: none;
+}
+ 
+/* ── BOTÓN GUARDAR ── */
+.pe-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--rojo);
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  margin-top: 8px;
+}
+ 
+.pe-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+ 
+.pe-btn:hover {
+  background: var(--rojo-neon);
+  box-shadow: 0 0 30px var(--rojo-glow), 0 0 60px rgba(230, 51, 41, 0.2);
+  transform: translateY(-1px);
+}
+ 
+.pe-btn:active { transform: translateY(0); }
+ 
+/* ── RUTINA ACTIVA HEADER ── */
+.rutina-activa-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  background: var(--rojo-dim);
+  border: 1px solid rgba(230, 51, 41, 0.3);
+  border-radius: 3px;
+}
+ 
+.rutina-activa-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  color: var(--blanco);
+  text-transform: uppercase;
+}
+ 
+.rutina-badge {
+  background: var(--rojo);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+ 
+/* ── PROGRESO ── */
+.pe-progress-bar-wrap {
+  width: 100%;
+  height: 4px;
+  background: var(--gris-med);
+  border-radius: 2px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+ 
+.pe-progress-bar {
+  height: 100%;
+  background: var(--rojo-neon);
+  box-shadow: 0 0 10px var(--rojo-glow);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+ 
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .pe-inner { padding: 24px 18px; }
+  .pe-hero-overlay h1 { font-size: 2.2rem; }
+  .rutinas-grid { grid-template-columns: repeat(2, 1fr); }
+  .pe-stats-row { grid-template-columns: repeat(3, 1fr); }
+}

@@ -1,0 +1,269 @@
+:root {
+    --verde: #3CB878;
+    --verde-oscuro: #298a5a;
+    --verde-claro: #eaf7f0;
+    --negro: #111;
+    --gris-claro: #f5f8f6;
+    --blanco: #fff;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f2f5f3;
+    min-height: 100vh;
+}
+
+/* ===== AISLAMIENTO (CLAVE) ===== */
+.perfil-page {
+    position: relative;
+    z-index: 1;
+}
+
+/* Layout */
+.main {
+    flex: 1;
+    padding: 40px 48px;
+}
+
+/* ===== HEADER ===== */
+.pf-header {
+  background: var(--blanco);
+  border-radius: 16px;
+  border: 0.5px solid rgba(0,0,0,0.06);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+.pf-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--negro);
+}
+
+.pf-sub {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ===== AVATAR ===== */
+.avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f5ee;
+}
+
+.avatar-circle img,
+.avatar-circle svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 24px;
+  height: 24px;
+  background: var(--verde);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.avatar-edit-btn svg {
+  width: 11px;
+  height: 11px;
+  fill: #fff;
+}
+
+/* ===== GRID ===== */
+.perfil-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.card-titulo {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.card-sub {
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* ===== FORM ===== */
+.form-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.campo-perfil {
+    margin-bottom: 18px;
+}
+
+.campo-perfil label {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.campo-perfil input,
+.campo-perfil select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid #e5e5e5;
+}
+
+/* ===== BOTÓN ===== */
+.btn-guardar {
+    background: var(--verde);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ===== MODAL (FIX REAL) ===== */
+.av-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 20000; /* 🔥 MÁS ALTO QUE EL MENÚ */
+  align-items: center;
+  justify-content: center;
+}
+
+.av-overlay.open {
+  display: flex;
+}
+
+.av-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  width: 380px;
+  max-width: 95vw;
+}
+
+/* Header modal */
+.av-modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Tabs */
+.av-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.av-tab {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid #e5e5e5;
+  cursor: pointer;
+}
+
+.av-tab.active {
+  background: var(--verde);
+  color: #fff;
+}
+
+/* Grid avatares */
+.av-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.av-item {
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
+}
+
+.av-item.sel {
+  border-color: var(--verde);
+}
+
+/* Botones */
+.av-select-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--verde);
+  color: #fff;
+  border: none;
+  margin-top: 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px;
+    }
+
+    .perfil-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
