@@ -3,6 +3,7 @@ import {
 	serial,
 	integer,
 	text,
+	date,
 	timestamp,
 } from "drizzle-orm/pg-core";
 
@@ -26,6 +27,10 @@ export const users = pgTable("users", {
 	passwordHash: text("password_hash")
 		.notNull(),
 
+	role: text("role")
+		.notNull()
+		.default("user"),
+		
 	createdAt: timestamp("created_at")
 		.defaultNow()
 		.notNull(),
@@ -47,3 +52,39 @@ export const sessions = pgTable("sessions", {
     .defaultNow()
     .notNull(),
 });
+
+export const moodEntries = pgTable(
+  "mood_entries",
+  {
+    id: serial("id").primaryKey(),
+
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
+
+    weekStart: date("week_start")
+      .notNull(),
+
+    stress: integer("stress")
+      .notNull(),
+
+    sleepQuality: integer("sleep_quality")
+      .notNull(),
+
+    energy: integer("energy")
+      .notNull(),
+
+    anxiety: integer("anxiety")
+      .notNull(),
+
+    notes: text("notes"),
+
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
+
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .notNull(),
+  }
+);

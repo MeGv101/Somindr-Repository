@@ -39,7 +39,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     handleLinkClick()
-    setIsAuthenticated(true)
+    setIsAuthenticated(false)
   }
 
   return (

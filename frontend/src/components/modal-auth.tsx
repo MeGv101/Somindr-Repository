@@ -11,10 +11,16 @@ import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import '../styles/modal-auth.css'
 
-alert
 export type ModalAuthRef = {
-  mostrarModal: (tab?: AuthTab) => void
-  ocultarModal: () => void
+  mostrarModal: (
+    tab?: AuthTab
+  ) => void;
+
+  ocultarModal: () => void;
+
+  mostrarError: (
+    mensaje: string
+  ) => void;
 }
 const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const auth = useContext(AuthContext);
@@ -57,13 +63,9 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
     setPasswordRegistro("");
   };
 
-  const mostrarModal = (tab: AuthTab = 'login') => {
-
-    if (localStorage.getItem('token')) {
-      navigate('/fitness')
-      return
-    }
-
+  const mostrarModal = (
+    tab: AuthTab = 'login'
+  ) => {
     setTabActivo(tab)
     setModalAbierto(true)
   }
@@ -79,7 +81,14 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   useImperativeHandle(ref, () => ({
     mostrarModal,
     ocultarModal,
+    mostrarError: (mensaje: string) => {
+      setSuccess("");
+      setError(mensaje);
+      setTabActivo("login");
+      setModalAbierto(true);
+    },
   }))
+
   
   useEffect(() => {
     if (!modalAbierto) return
@@ -232,6 +241,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             />
           </div>
         </div>
+
 
         {tabActivo === 'login' && (
           <div className="panel">
