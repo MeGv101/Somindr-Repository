@@ -8,6 +8,7 @@ import { users } from './db/schema.js'
 
 import { authRoutes } from "./routes/auth.js";
 import { moodRoutes } from "./routes/mood.js";
+import { fitnessRoutes } from "./routes/fitness.js";
 
 const app = Fastify()
 
@@ -22,6 +23,8 @@ await app.register(cors, {
 await app.register(authRoutes);
 
 await app.register(moodRoutes);
+
+await app.register(fitnessRoutes);
 
 app.get('/', async () => {
   return {
