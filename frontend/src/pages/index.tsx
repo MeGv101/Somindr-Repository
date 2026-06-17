@@ -308,7 +308,6 @@ export default function Index({ onOpenAuth }: IndexProps) {
       if (dotsContainer) dotsContainer.innerHTML = ''
     }
   }, [])
-
   return (
     <>
       <section className="hero">
@@ -336,13 +335,6 @@ export default function Index({ onOpenAuth }: IndexProps) {
               <a href="#modulos" className="slide-btn">
                 Explorar →
               </a>
-              <button
-                type="button"
-                className="slide-btn slide-btn-outline"
-                onClick={() => onOpenAuth?.('registro')}
-              >
-                Registrarse
-              </button>
             </div>
           </div>
           <div className="slide-numero">01</div>
@@ -366,13 +358,9 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <p className="slide-sub">
               El bienestar emocional es el pilar invisible de tu transformación física.
             </p>
-            <button
-              type="button"
-              className="slide-btn"
-              onClick={() => onOpenAuth?.('registro')}
-            >
-              Comenzar →
-            </button>
+            <a href="#modulos" className="slide-btn">
+                Explorar →
+              </a>
           </div>
           <div className="slide-numero">02</div>
         </div>
@@ -394,7 +382,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
               Cada Día
             </h2>
             <p className="slide-sub">
-              Tu mejor versión empieza hoy. Integra salud física, mental y nutricional.
+              Tu mejor versión empieza hoy. En Somindr integras salud física y mental para mostrarla.
             </p>
             <button
               type="button"
@@ -437,9 +425,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
           <div className="stat-label">Cambio total en tu vida</div>
         </div>
       </div>
-
       <section id="modulos">
-        <a href="#modulos" className="modulo-split" id="split-psico">
+        <a href="psicoemocional" className="modulo-split" id="split-psico">
           <img src="/media/SRC/pexels-arthousestudio-7363328.jpg" alt="Psico-Emocional" />
           <div className="split-overlay"></div>
           <div className="split-content">
@@ -454,20 +441,21 @@ export default function Index({ onOpenAuth }: IndexProps) {
         <div className="split-divider">
           <span></span>
         </div>
-        <a href="#modulos" className="modulo-split" id="split-fit">
+        <a href="fitness" className="modulo-split" id="split-fit">
           <img
             src="/media/SRC/pexels-cristian-camilo-estrada-2152272341-36451470.jpg"
             alt="Fitness"
           />
           <div className="split-overlay split-overlay-fit"></div>
           <div className="split-content">
-            <span className="split-tag">Fitness</span>
+            <span className="split-tagFit">Fitness</span>
             <h2 className="split-titulo">Fitness Adaptativo</h2>
             <p className="split-desc">
               Entrena con propósito, mejora tu energía y transforma tu cuerpo con rutinas que
-              evolucionan contigo.
+              tu mismo puedes personalizar.
             </p>
-            <span className="split-cta">Explorar →</span>
+
+            <a href="fitness"><span className="split-cta">Explorar →</span></a>
           </div>
         </a>
       </section>

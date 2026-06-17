@@ -108,7 +108,10 @@
     gap: 15px;
     flex: 1;
 }
-
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
 .menu-right {
     display: flex;
     align-items: center;

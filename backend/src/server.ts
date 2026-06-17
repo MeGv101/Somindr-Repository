@@ -7,6 +7,7 @@ import { db } from './db/index.js'
 import { users } from './db/schema.js'
 
 import { authRoutes } from "./routes/auth.js";
+import { moodRoutes } from "./routes/mood.js";
 
 const app = Fastify()
 
@@ -17,6 +18,10 @@ await app.register(jwt, {
 await app.register(cors, {
   origin: ["http://localhost:5173", "http://localhost:5174",]
 })
+
+await app.register(authRoutes);
+
+await app.register(moodRoutes);
 
 app.get('/', async () => {
   return {
@@ -36,7 +41,6 @@ app.get('/users', async (_, reply) => {
   }
 })
 
-await app.register(authRoutes);
 
 await app.listen({
   port: 3000

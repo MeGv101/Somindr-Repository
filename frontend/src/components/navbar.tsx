@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import '../styles/navbar.css'
@@ -12,6 +12,7 @@ type NavbarProps = {
 
 export default function Navbar({ onOpenAuth }: NavbarProps) {
 
+  const navigate = useNavigate()
   const auth = useContext(AuthContext);
 
   if (!auth) {
@@ -36,10 +37,12 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
   }
 
   const handleLogout = () => {
+    navigate("/")
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     handleLinkClick()
     setIsAuthenticated(false)
+    return
   }
 
   return (
@@ -55,7 +58,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
       </div>
     <header>
       <div className='main-nav'>
-          somindr
+        <a href="/">somindr</a>
       </div>
       
     </header>

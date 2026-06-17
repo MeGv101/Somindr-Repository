@@ -379,22 +379,13 @@ nav {
 ══════════════════════════════════════ */
 #modulos {
   display: flex;
-  height: 1000px;
+  height: 90vh;
   background: #000;
   position: relative;
   overflow: hidden;
 }
 
-.split-divider {
-  width: 2px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transition: opacity 0.3s;
-  z-index: 10;
-}
+
 
 .modulo-split {
   position: relative;
@@ -455,6 +446,18 @@ nav {
 .split-tag {
   display: inline-block;
   background: #166534;
+  color: #dcfce7;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+.split-tagFit {
+  display: inline-block;
+  background: #a70606;
   color: #dcfce7;
   font-size: 0.75rem;
   font-weight: 600;

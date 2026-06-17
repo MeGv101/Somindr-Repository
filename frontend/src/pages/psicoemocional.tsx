@@ -1,173 +1,340 @@
-import { useState, type FormEvent } from 'react'
-import '../styles/psicoemocional.css'
+import {
+  useState,
+  useEffect,
+} from "react";
 
-const EMOCIONES = [
-  'Neutral',
-  'Feliz',
-  'Triste',
-  'Ansioso',
-  'Estresado',
-  'Enérgico',
-  'Cansado',
-  'Motivado',
-] as const
-
-type Emocion = (typeof EMOCIONES)[number]
+import "../styles/psicoemocional.css";
 
 export default function PsicoEmocional() {
-  const [emocion, setEmocion] = useState<Emocion>('Neutral')
-  const [ansiedad, setAnsiedad] = useState(5)
-  const [estres, setEstres] = useState(7)
-  const [energia, setEnergia] = useState(4)
-  const [sueno, setSueno] = useState(5)
-  const [desencadenantes, setDesencadenantes] = useState('')
-  const [situaciones, setSituaciones] = useState('')
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
+  const [ansiedad, setAnsiedad] = useState(5);
+  const [estres, setEstres] = useState(5);
+  const [energia, setEnergia] = useState(5);
+  const [sueno, setSueno] = useState(5);
+  const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [history, setHistory] = useState<any[]>([]);
+
+  const loadMood = async () => {
     try {
-      const res = await fetch('/guardar_registro.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          estado: emocion,
-          ansiedad,
-          estres,
-          energia,
-          sueno,
-          desencadenantes,
-          situaciones,
-        }),
-      })
-      const data = await res.json()
-      if (data.ok) alert('Registro semanal guardado exitosamente')
-      else alert('Error: ' + data.error)
-    } catch {
-      alert('No se pudo conectar con el servidor. Revisa que el backend esté activo.')
+      const token =
+        localStorage.getItem("token");
+      const response =
+        await fetch(
+          "http://localhost:3000/mood/current",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        );
+      const data =
+        await response.json();
+      if (!data) return;
+      setAnsiedad(data.anxiety);
+      setEstres(data.stress);
+      setEnergia(data.energy);
+      setSueno(data.sleepQuality);
+      setNotes(data.notes);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    loadMood();
+  }, []);
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
+  async function fetchHistory() {
+
+    const token =
+      localStorage.getItem("token");
+
+    const response =
+      await fetch(
+        "http://localhost:3000/mood/history",
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+    const data =
+      await response.json();
+
+    setHistory(data);
   }
 
-  return (
-    <main className="pe-main">
-      <div className="pe-card">
-        <header className="pe-header">
-          <h1>Métricas de bienestar</h1>
-          <p>Ajusta los indicadores y registra cómo te sientes hoy.</p>
-        </header>
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      setMessage("");
+      const token =
+        localStorage.getItem("token");
+      const response =
+        await fetch(
+          "http://localhost:3000/mood",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+              Authorization:
+                `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              stress: estres,
+              sleepQuality: sueno,
+              energy: energia,
+              anxiety: ansiedad,
+              notes,
+            }),
+          }
+        );
+      const data = await response.json();
+      setMessage(data.message);
+      await fetchHistory();
+    } catch (error) {
+      console.error(error);
+      setMessage("Error al guardar");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        <form id="formPsico" className="pe-form" onSubmit={handleSubmit}>
-          <section className="pe-section">
-            <h2>¿Cómo te sientes hoy?</h2>
-            <div className="pe-emociones">
-              {EMOCIONES.map((emo) => (
-                <button
-                  key={emo}
-                  type="button"
-                  className={`pe-emo${emocion === emo ? ' seleccionado' : ''}`}
-                  data-emo={emo}
-                  onClick={() => setEmocion(emo)}
-                >
-                  <span />
-                  {emo}
-                </button>
-              ))}
-            </div>
-          </section>
+  return  (
+    <main className="mood-page">
 
-          <section className="pe-section">
-            <h2>Métricas</h2>
-            <p className="pe-sub">
-              Ajusta los sliders según cómo te sientes en este momento
+      <section className="hero-section">
+
+        <div className="hero-content">
+
+          <h1>
+            Comprende Tus Motivaciones
+          </h1>
+
+          <p>
+            Cada semana podrás registrar tu estado emocional,
+            identificar patrones y construir un historial que
+            te ayude a comprender mejor tu bienestar.
+          </p>
+
+          <p>
+            La IA de Somindr utilizará esta información para
+            ofrecer conversaciones y reflexiones más
+            personalizadas, para ayudarte a nunca rendirte.
+          </p>
+
+        </div>
+
+      </section>
+
+      <section className="mood-section">
+
+        <div className="section-header">
+          <h2>Mood semanal</h2>
+
+          <p>
+            Evalúa cómo te sentiste durante la semana anterior.
+          </p>
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-header">
+            <span>Ansiedad</span>
+            <span>{ansiedad}/10</span>
+          </div>
+
+          <input
+            type="range"
+            min={1}
+            max={10}
+            value={ansiedad}
+            onChange={(e) =>
+              setAnsiedad(
+                Number(e.target.value)
+              )
+            }
+          />
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-header">
+            <span>Estrés</span>
+            <span>{estres}/10</span>
+          </div>
+
+          <input
+            type="range"
+            min={1}
+            max={10}
+            value={estres}
+            onChange={(e) =>
+              setEstres(
+                Number(e.target.value)
+              )
+            }
+          />
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-header">
+            <span>Energía</span>
+            <span>{energia}/10</span>
+          </div>
+
+          <input
+            type="range"
+            min={1}
+            max={10}
+            value={energia}
+            onChange={(e) =>
+              setEnergia(
+                Number(e.target.value)
+              )
+            }
+          />
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-header">
+            <span>Calidad del sueño</span>
+            <span>{sueno}/10</span>
+          </div>
+
+          <input
+            type="range"
+            min={1}
+            max={10}
+            value={sueno}
+            onChange={(e) =>
+              setSueno(
+                Number(e.target.value)
+              )
+            }
+          />
+        </div>
+          <p>
+            ¿Quieres darnos detalles de tus resultados? (opcional)
+          </p>
+        <textarea
+          value={notes}
+          onChange={(e) =>
+            setNotes(
+              e.target.value
+            )
+          }
+          placeholder="Ej. Mis exámenes fueron díficiles..."
+        />
+
+        <button
+          className="save-button"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {
+            loading
+              ? "Guardando..."
+              : "Guardar mood"
+          }
+        </button>
+        {message && (
+          <div className="pe-message">
+            {message}
+          </div>
+        )}
+
+      </section>
+
+      <section className="history-section">
+
+        <div className="section-header">
+          <h2>Historial emocional</h2>
+
+        </div>
+        {history.length === 0 ? (
+          <div className="history-empty">
+            <h3>Aún no hay registros</h3>
+
+            <p>
+              Completa tu primer mood semanal para
+              comenzar a construir tu historial.
             </p>
+          </div>
+        ) : (
+        <div className="history-list">
+          {history.map((entry) => (
+            
+            <div
+              key={entry.id}
+              className="history-item"
+            >
+              <br />
+              
+              <h3>
+                Semana:
+                {" "}
+                {entry.weekStart}
+              </h3>
 
-            <div className="pe-slider-card">
-              <div className="pe-slider-head">
-                <span>Nivel de Ansiedad</span>
-                <span className="pe-val">{ansiedad}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={ansiedad}
-                onChange={(e) => setAnsiedad(Number(e.target.value))}
-              />
+              <p>
+                Ansiedad:
+                {entry.anxiety}/10
+              </p>
+
+              <p>
+                Estrés:
+                {entry.stress}/10
+              </p>
+
+              <p>
+                Energía:
+                {entry.energy}/10
+              </p>
+
+              <p>
+                Sueño:
+                {entry.sleepQuality}/10
+              </p>
+              <p>
+                Detalles:  
+                {entry.notes}
+              </p>
+
             </div>
+            
+          ))}
 
-            <div className="pe-slider-card">
-              <div className="pe-slider-head">
-                <span>Nivel de Estrés</span>
-                <span className="pe-val">{estres}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={estres}
-                onChange={(e) => setEstres(Number(e.target.value))}
-              />
-            </div>
+        </div>
+        )}
+      </section>
 
-            <div className="pe-slider-card">
-              <div className="pe-slider-head">
-                <span>Nivel de Energía</span>
-                <span className="pe-val">{energia}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={energia}
-                onChange={(e) => setEnergia(Number(e.target.value))}
-              />
-            </div>
+      <section className="ai-section">
 
-            <div className="pe-slider-card">
-              <div className="pe-slider-head">
-                <span>Calidad del Sueño</span>
-                <span className="pe-val">{sueno}</span>
-              </div>
-              <input
-                type="range"
-                min={1}
-                max={10}
-                value={sueno}
-                onChange={(e) => setSueno(Number(e.target.value))}
-              />
-            </div>
-          </section>
+        <div className="section-header">
+          <h2>Asistente emocional</h2>
 
-          <section className="pe-section">
-            <h2>Notas adicionales</h2>
+          <p>
+            Conversa con la IA de Somindr para
+            reflexionar sobre tu bienestar.
+          </p>
+        </div>
 
-            <div className="pe-field">
-              <label htmlFor="desencadenantes">Desencadenantes</label>
-              <input
-                id="desencadenantes"
-                type="text"
-                placeholder="Ej: trabajo, familia, ejercicio, falta de sueño…"
-                value={desencadenantes}
-                onChange={(e) => setDesencadenantes(e.target.value)}
-              />
-            </div>
+        <button className="ai-button">
+          Hablar con la IA
+        </button>
 
-            <div className="pe-field">
-              <label htmlFor="situaciones">Situaciones del día</label>
-              <textarea
-                id="situaciones"
-                rows={4}
-                placeholder="Describe brevemente lo que influyó más en tu estado emocional hoy…"
-                value={situaciones}
-                onChange={(e) => setSituaciones(e.target.value)}
-              />
-            </div>
-          </section>
+      </section>
 
-          <button type="submit" className="pe-btn">
-            Guardar Registro Emocional
-          </button>
-        </form>
-      </div>
     </main>
-  )
+);
+
 }

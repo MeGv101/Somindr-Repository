@@ -66,6 +66,10 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const mostrarModal = (
     tab: AuthTab = 'login'
   ) => {
+    if (localStorage.getItem("token")) {
+      navigate("/fitness");
+      return;
+    }
     setTabActivo(tab)
     setModalAbierto(true)
   }
