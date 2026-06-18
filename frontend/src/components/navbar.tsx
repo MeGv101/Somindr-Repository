@@ -91,6 +91,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             <button
               type="button"
               className="sidebar-link"
+              id="logout"
               onClick={handleLogout}
             >
               Cerrar sesión

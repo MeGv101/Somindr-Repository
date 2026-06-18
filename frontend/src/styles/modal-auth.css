@@ -108,6 +108,7 @@ body.modal-abierto {
   font-weight: 700;
   margin-bottom: 6px;
   text-align: center;
+  color: #e1e1e1;
 }
 
 .subtitulo {
@@ -129,6 +130,7 @@ body.modal-abierto {
   font-size: 0.9rem;
   font-family: inherit;
   color: #e5e5e5;
+  background-color: #1a1a1a;
 }
 
 .campo input:focus {

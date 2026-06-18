@@ -1,221 +1,365 @@
-import { useState, useRef } from 'react'
+import { useState , useEffect } from 'react'
 import '../styles/fitness.css'
 import Navbar from '../components/navbar'
+export default function fitness() {
 
-interface Ejercicio {
-  nombre: string
-  id: number
-  video: string
-}
+  const [saving, setSaving] = useState(false);
 
-export default function Fitness() {
-  const rutinas = {
-    1: "Rutina de baja intensidad",
-    2: "Rutina de Media intensidad", 
-    3: "Rutina de media intensidad",
-    4: "Rutina de alta intensidad",
-    5: "Rutina de fuerza",
-    6: "Rutina de resistencia",
-    7: "Rutina de ganancia muscular",
-    8: "Rutina de perdida de grasa"
+  const [success, setSuccess] =
+  useState("");
+
+  const [error, setError] =
+  useState("");
+
+  const [loading, setLoading] = useState(false)
+
+  const [categories, setCategories] =
+  useState<any[]>([]);
+
+  const [routines, setRoutines] =
+  useState<any[]>([]);
+
+  const [routineDetail, setRoutineDetail] =
+  useState<any | null>(null);
+
+  const [completedExercises,
+  setCompletedExercises] =
+  useState<Record<number, boolean>>({});
+
+  const toggleCheckbox = (
+    exerciseId: number
+  ) => {
+    setCompletedExercises(
+      prev => ({
+        ...prev,
+        [exerciseId]:
+          !prev[exerciseId]
+      })
+    )
+
+  }
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  async function loadCategories() {
+
+    const res = await fetch(
+      "http://localhost:3000/fitness/categories"
+    );
+
+    const data = await res.json();
+
+    setCategories(data);
   }
 
-  const ejerciciosPorRutina = {
-    1: [
-      {
-        id: 0,
-        nombre: "Caminata ligera",
-        video: "/media/SRC/perrito bailando.mp4"
-      },
-      {
-        id: 1,
-        nombre: "Marcha en sitio",
-        video: "/media/SRC/Heated Rivalry.mp4"
-      },
-      {
-        id: 2,
-        nombre: "Estiramientos",
-        video: "/media/SRC/tum tum zorro.mp4"
+  async function loadRoutines(
+    categoryId: number
+  ) {
+    const res = await fetch(
+      `http://localhost:3000/fitness/category/${categoryId}/routines`
+    )
+    const data = await res.json()
+    setRoutines(data)
+    setRoutineDetail(null)
+  }
+
+
+  async function loadRoutine(
+    routineId: number
+  ) {
+
+    const res = await fetch(
+      `http://localhost:3000/fitness/routine/${routineId}`
+    )
+
+    const data = await res.json()
+
+    setRoutineDetail(data)
+  }
+
+  async function finishRoutine() {
+
+    if (saving) return;
+
+    try {
+
+      setSaving(true);
+
+      setError("");
+      setSuccess("");
+
+      if (!routineDetail) {
+        return;
       }
-      
-    ],
 
-    2: [
-      {
-        id: 0,
-        nombre: "Sentadillas",
-        video: "/media/SRC/.mp4"
-      },
-      {
-        id: 1,
-        nombre: "Flexiones",
-        video: "/media/SRC/.mp4"
+      const exercises =
+        routineDetail.exercises.map(
+          (exercise: any) => ({
+            exerciseId:
+              exercise.exerciseId,
+
+            completed:
+              completedExercises[
+                exercise.exerciseId
+              ] || false,
+          })
+        );
+
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      const response =
+        await fetch(
+          "http://localhost:3000/fitness/session",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+
+              Authorization:
+                `Bearer ${token}`,
+            },
+
+            body: JSON.stringify({
+              routineId:
+                routineDetail.id,
+
+              exercises,
+            }),
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+          "Error al guardar."
+        );
       }
-    ],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
-    7: [],
-    8: []
-  }
 
-  const [rutinaSeleccionada, setRutinaSeleccionada] = useState<number | null>(null)
-  const [ejerciciosFlipped, setEjerciciosFlipped] = useState<Record<number, boolean>>({})
-  const [ejerciciosCompletados, setEjerciciosCompletados] = useState<Record<number, boolean>>({})
-  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({})
+      setSuccess(
+        `¡Felicidades! Completaste la rutina de: ${
+          routineDetail.name
+        }.`
+      );
 
-  const seleccionarRutina = (num: number) => {
-    setRutinaSeleccionada(num)
-    setEjerciciosFlipped({})
-    setEjerciciosCompletados({})
-  }
+      setRoutineDetail(null);
 
-  const toggleFlip = (index: number) => {
-    setEjerciciosFlipped(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }))
-  }
+      setCompletedExercises({});
 
-  const toggleCheckbox = (index: number) => {
-    setEjerciciosCompletados(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }))
-  }
+    } catch (error) {
 
-  const guardarRutina = () => {
-    if (!rutinaSeleccionada) {
-      alert(" Selecciona una rutina primero")
-      return
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Error desconocido"
+      );
+
+    } finally {
+
+      setSaving(false);
+
     }
 
-    const completados = Object.values(ejerciciosCompletados).filter(Boolean).length
-    alert(` Entrenamiento guardado!\nRutina: ${rutinas[rutinaSeleccionada as keyof typeof rutinas]}\nEjercicios completados: ${completados}/6`)
   }
-
-  const cerrarVideo = (id: number) => {
-  const video = videoRefs.current[id]
-
-    if (video) {
-      video.pause()
-      video.currentTime = 0
-    }
-
-    toggleFlip(id)
-  }
+  
 
   return (
-    <>
-      <main className="pe-main">
-          <header className="pe-header">
-             <div className="pe-hero-banner">
-                <img src="/media/SRC/red Fitness.png" alt="Fitness Banner"/>
+  <main className="fitness-page">
 
-                <div className="pe-hero-overlay">
-                  <h1>Nuevo Entrenamiento</h1>
-                  <p>Elige una rutina y marca los ejercicios completados</p>
-                </div>
-              </div>
-          </header>
+    <section className="fitness-hero">
 
-          <section className="pe-section">
-            <h2>Selecciona tu rutina</h2>
-            <div className="rutinas-grid">
-              {Object.entries(rutinas).map(([id, nombre]) => (
-                <button
-                  key={id}
-                  className={`rutina-btn ${rutinaSeleccionada === Number(id) ? 'activo' : ''}`}
-                  onClick={() => seleccionarRutina(Number(id))}
-                >
-                  {nombre}
-                </button>
-              ))}
-            </div>
-          </section>
+      <h1>Fitness</h1>
 
-                  {rutinaSeleccionada && (<section className="pe-section">
+      <p>
+        Bienvenido al módulo fitness de Somindr!
+        aqui podras revisar nuestras diversas rutinas
+        especialmente diseñadas para los entusiastas que gustan de ejercicios de calistenia.
+      </p>
+      <br />
 
-            <h2>
-              {rutinas[rutinaSeleccionada as keyof typeof rutinas]}
-            </h2>
+      <p>
+        Solo elije una categoría de hoy, elije tu rutina y comienza tus ejercicios!
+      </p>
 
-            <div className="ejercicios-container">
+    </section>
 
-              {ejerciciosPorRutina[rutinaSeleccionada as keyof typeof ejerciciosPorRutina]?.map((ejercicio) => (
+    <section className="fitness-section">
 
-                <div
-                  key={ejercicio.id}
-                  className={`video-card ${
-                    ejerciciosFlipped[ejercicio.id] ? "active" : ""
-                  }`}
-                >
+      <h2>Categorías</h2>
 
-                  <div className="card-content">
+      <div className="categories-grid">
 
-                    <div className="check-container">
-                      <input
-                        type="checkbox"
-                        className="ejercicio-check"
-                        checked={ejerciciosCompletados[ejercicio.id] || false}
-                        onChange={() => toggleCheckbox(ejercicio.id)}
-                      />
-                    </div>
+        {categories.map((category: any) => (
 
-                    <h3>{ejercicio.nombre}</h3>
+          <button
+            key={category.id}
+            className="category-card"
+            onClick={() => loadRoutines(category.id)}
+          >
+            <h3>{category.name}</h3>
 
-                    <button
-                      className="btn-flip"
-                      onClick={() => toggleFlip(ejercicio.id)}
-                    >
-                      Ver cómo se hace →
-                    </button>
+            <p>{category.description}</p>
 
-                  </div>
+          </button>
 
-                  <div className="video-content">
+        ))}
 
-                    <video
-                      ref={(el) => {
-                        videoRefs.current[ejercicio.id] = el
-                      }}
-                      controls
-                      preload="metadata"
-                      className="exercise-video"
-                    >
-                      <source
-                        src={ejercicio.video}
-                        type="video/mp4"
-                      />
-                    </video>
+      </div>
 
-                    <button
-                      className="btn-flip btn-back"
-                      onClick={() => cerrarVideo(ejercicio.id)}
-                    >
-                      Volver
-                    </button>
+    </section>
 
-                  </div>
+    {routines.length > 0 && (
 
-                </div>
+      <section className="fitness-section">
 
-              ))}
+        
 
-            </div>
+        <h2>Rutinas</h2>
+
+        <div className="routines-grid">
+
+          {routines.map((routine: any) => (
 
             <button
-              onClick={guardarRutina}
-              className="pe-btn"
-              style={{ marginTop: "30px", width: "100%" }}
+              key={routine.id}
+              className="routine-card"
+              onClick={() => loadRoutine(routine.id)}
             >
-              Guardar Entrenamiento
+
+              <h3>{routine.name}</h3>
+
+              <p>
+                {routine.estimatedMinutes} min
+              </p>
+
+              <span>
+                {routine.difficulty}
+              </span>
+
             </button>
 
-          </section>
+          ))}
+
+        </div>
+        {success && (
+          <div className="fitness-success">
+            {success}
+          </div>
         )}
-      </main>
-    </>
-  )
+
+      </section>
+
+    )}
+
+    {routineDetail && (
+
+      <section className="fitness-section">
+
+        <div className="routine-header">
+
+          <h2>
+            {routineDetail.name}
+          </h2>
+
+          <p>
+            {routineDetail.description}
+          </p>
+
+          <p>
+            Duración estimada:
+            {" "}
+            {routineDetail.estimatedMinutes}
+            {" "}
+            minutos
+          </p>
+
+        </div>
+
+        <div className="exercises-list">
+
+          {routineDetail.exercises.map(
+            (exercise: any) => (
+
+              <div
+                key={exercise.exerciseId}
+                className="exercise-card"
+              >
+
+                <div className="exercise-top">
+
+                  <input
+                    type="checkbox"
+                    checked={
+                      completedExercises[
+                        exercise.exerciseId
+                      ] || false
+                    }
+                    onChange={() =>
+                      toggleCheckbox(
+                        exercise.exerciseId
+                      )
+                    }
+                  />
+
+                  <h3>
+                    {exercise.exerciseName}
+                  </h3>
+
+                </div>
+
+                {exercise.description && (
+                  <p>
+                    {exercise.description}
+                  </p>
+                )}
+
+                {exercise.recommendedReps && (
+                  <p>
+                    {exercise.recommendedReps}
+                    {" "}
+                    repeticiones
+                  </p>
+                )}
+
+                {exercise.recommendedMinutes && (
+                  <p>
+                    {exercise.recommendedMinutes}
+                    {" "}
+                    minutos
+                  </p>
+                )}
+
+              </div>
+
+            )
+          )}
+
+        </div>
+        {error && (
+          <div className="fitness-error">
+            {error}
+          </div>
+        )}
+
+        <button
+          className="finish-btn"
+          onClick={finishRoutine}
+        >
+          Finalizar rutina
+        </button>
+
+      </section>
+
+    )}
+
+  </main>
+)
 }

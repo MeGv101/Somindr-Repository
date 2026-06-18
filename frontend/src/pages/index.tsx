@@ -1,6 +1,8 @@
 import '../styles/index.css'
 import { useEffect } from 'react'
 import type { AuthTab } from '../types/auth'
+import { useLocation } from "react-router-dom";
+import { useModal } from "../context/modelContext";
 
 type Review = {
   name: string
@@ -83,6 +85,9 @@ type IndexProps = {
 }
 
 export default function Index({ onOpenAuth }: IndexProps) {
+  const location = useLocation();
+  const { setAuthMessage } = useModal();
+
   useEffect(() => {
     const track = document.getElementById('track')
     const dotsEl = document.getElementById('review-dots')
@@ -230,6 +235,20 @@ export default function Index({ onOpenAuth }: IndexProps) {
       dotsEl.innerHTML = ''
     }
   }, [])
+
+  useEffect(() => {
+
+    if (
+      location.state?.authMessage
+    ) {
+
+      setAuthMessage(
+        location.state.authMessage
+      );
+
+    }
+
+  }, [location, setAuthMessage]);
 
   useEffect(() => {
     const slides = document.querySelectorAll('.hero .slide')
@@ -455,7 +474,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
               tu mismo puedes personalizar.
             </p>
 
-            <a href="fitness"><span className="split-cta">Explorar →</span></a>
+            <span className="split-cta">Explorar →</span>
           </div>
         </a>
       </section>

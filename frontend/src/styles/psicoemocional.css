@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 :root {
-  --bg: #2d2d2d;
-  --surface: #121715;
+  --bg: #222222;
+  --surface: #303030;
   --surface-2: #1a211d;
 
   --border: #1c221f;
@@ -23,7 +23,7 @@
 
   display: flex;
   flex-direction: column;
-
+  background-color: var(--bg);
   gap: 5rem;
 }
 

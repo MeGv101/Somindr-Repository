@@ -133,26 +133,25 @@ a{
     display: block;
     border-radius: 8px;
     width: 120%;
+    background-color: transparent;
 }
 .menu-right .sidebar-link{
     border: transparent;
     width: 100%;
+    background-color: transparent;
+    cursor: pointer;
 }
+
 .menuppal .sidebar-link:hover {
     color: #3CB878;
     background: rgba(60, 184, 120, 0.1);
     text-decoration: none;
 }
 
-.menuppal .sidebar-link.cerrar {
-    color: #b91c1c;
-}
-
-.menuppal .sidebar-link.cerrar:hover {
+#logout:hover{
     color: #ef4444;
-    background: rgba(185, 28, 28, 0.1);
+    background-color: #b91c1c4b;
 }
-
 .menuppal-overlay {
     position: fixed;
     top: 0;
