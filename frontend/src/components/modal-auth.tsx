@@ -193,6 +193,8 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
       setError('Error al registrarse')
     }
   }
+
+  
   if (!modalAbierto) return null
   return (
     <div
@@ -248,7 +250,16 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
 
 
         {tabActivo === 'login' && (
-          <div className="panel">
+          <div className="panel"
+          onKeyDown={(e) => {
+
+            if (e.key === "Enter") {
+
+              handleLogin();
+
+            }
+
+          }}>
             <h2 className="titulo">Bienvenido de nuevo</h2>
             <p className="subtitulo">
               Una conexión única entre tu cuerpo y tu mente.
@@ -293,7 +304,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             <p className="pie">
               ¿No tienes cuenta?{' '}
               <button
-                type="button"
+                type="submit"
                 className="pie-link"
                 onClick={() => {
                   limpiarLogin();
@@ -307,7 +318,16 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
         )}
 
         {tabActivo === 'registro' && (
-          <div className="panel">
+          <div className="panel"
+          onKeyDown={(e) => {
+
+            if (e.key === "Enter") {
+
+              handleRegistro();
+
+            }
+
+          }}>
             <h2 className="titulo">Crea tu cuenta</h2>
             <p className="subtitulo">
               Una conexión única entre tu cuerpo y tu mente.
@@ -378,7 +398,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             <p className="pie">
               ¿Ya tienes cuenta?{' '}
               <button
-                type="button"
+                type="submit"
                 className="pie-link"
                 onClick={() => {
                   limpiarRegistro();

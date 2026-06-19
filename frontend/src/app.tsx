@@ -14,11 +14,16 @@ import PsicoEmocional from './pages/psicoemocional'
 
 import Fitness from './pages/fitness'
 
+import NotFound from "./pages/notFound";
+
 import type { AuthTab } from './types/auth'
 
 import ProtectedRoute from './components/protected'
 
 import { useModal } from "./context/modelContext";
+
+import AI from "./pages/ai";
+
 
 
 function App() {
@@ -57,9 +62,7 @@ function App() {
 
         <Route path="/" element={<Index onOpenAuth={openAuth} />} />
 
-        <Route
-          path="/perfil"
-          element={
+        <Route path="/perfil" element={
             <ProtectedRoute>
               <Perfil />
             </ProtectedRoute>
@@ -82,6 +85,20 @@ function App() {
               <Fitness />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+          path="/ai"
+          element={
+            <ProtectedRoute>
+              <AI />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={<NotFound />}
         />
 
       </Routes>

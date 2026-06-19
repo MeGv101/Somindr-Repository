@@ -1,0 +1,42 @@
+.notfound-page {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #0f1117;
+
+  color: white;
+
+  text-align: center;
+
+}
+
+.notfound-page h1 {
+
+  font-size: 8rem;
+
+  color: #298a5a;
+
+  margin-bottom: 0;
+
+}
+
+.notfound-page h2 {
+
+  margin-top: 0;
+
+}
+
+.return{
+    color: #298a5a;
+}
+.return:hover{
+    text-decoration: underline;
+}

@@ -1,6 +1,5 @@
 import { useState , useEffect } from 'react'
 import '../styles/fitness.css'
-import Navbar from '../components/navbar'
 export default function fitness() {
 
   const [saving, setSaving] = useState(false);
@@ -11,7 +10,6 @@ export default function fitness() {
   const [error, setError] =
   useState("");
 
-  const [loading, setLoading] = useState(false)
 
   const [categories, setCategories] =
   useState<any[]>([]);

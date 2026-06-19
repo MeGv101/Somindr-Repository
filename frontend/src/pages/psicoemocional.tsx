@@ -327,10 +327,11 @@ export default function PsicoEmocional() {
             reflexionar sobre tu bienestar.
           </p>
         </div>
-
-        <button className="ai-button">
+        <a href="ai">
+        <button className="trav-ai-button">
           Hablar con la IA
         </button>
+        </a>
 
       </section>
 

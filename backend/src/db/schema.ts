@@ -248,3 +248,48 @@ export const userRoutineExercises =
       ),
     }
   );
+  export const chats = pgTable("chats", {
+  id: serial("id").primaryKey(),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
+export const messages = pgTable("messages", {
+  id: serial("id").primaryKey(),
+
+  chatId: integer("chat_id")
+    .notNull()
+    .references(() => chats.id),
+
+  role: text("role")
+    .notNull(),
+
+  content: text("content")
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
+export const summaries = pgTable("summaries", {
+  id: serial("id").primaryKey(),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  summary: text("summary")
+    .notNull(),
+
+  embedding: text("embedding")
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});

@@ -2,7 +2,6 @@ import { FastifyInstance } from "fastify";
 import { db } from "../db/index.js";
 import { moodEntries } from "../db/schema.js";
 import { eq , and , desc } from "drizzle-orm"
-console.log("CARGÓ EL ARCHIVO MOOD");
 export async function moodRoutes(
   fastify: FastifyInstance
 ) {
