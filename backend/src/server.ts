@@ -18,7 +18,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174",]
+  origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"]
 })
 
 await app.register(authRoutes);
@@ -51,5 +51,7 @@ app.get('/users', async (_, reply) => {
 await app.listen({
   port: 3000
 });
+
+
 
 console.log("Server running on port 3000");

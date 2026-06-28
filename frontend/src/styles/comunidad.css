@@ -1,0 +1,62 @@
+
+
+
+body {
+  background: #080b12 !important;
+  overflow-x: unset !important;
+}
+
+.foro { min-height: 100vh; background: #080b12; color: #e2e8f0; font-family: system-ui, sans-serif; padding-bottom: 80px; }
+
+.foro .foro-header { max-width: 640px; margin: 0 auto; padding: 48px 20px 32px; }
+.foro .foro-header p { font-size: 11px; letter-spacing: .12em; color: #4ade80; text-transform: uppercase; font-weight: 600; margin: 0 0 8px; }
+.foro .foro-header h1 { font-size: clamp(24px,4vw,36px); font-weight: 700; color: #f8fafc; letter-spacing: -.02em; margin: 0 0 8px; }
+.foro .foro-header small { color: #64748b; font-size: 14px; }
+
+.foro .foro-body { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+.foro .foro-filtros { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+.foro .foro-filtros button { background: transparent !important; color: #64748b !important; border: 1px solid #1e293b !important; border-radius: 20px !important; padding: 5px 14px !important; font-size: 12px !important; font-weight: 600 !important; cursor: pointer !important; }
+.foro .foro-filtros button.foro-on { background: #f8fafc !important; color: #080b12 !important; border-color: transparent !important; }
+.foro .foro-filtros .foro-btn-nuevo { background: #4ade80 !important; color: #080b12 !important; border-color: transparent !important; margin-left: auto !important; }
+
+.foro .foro-form { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.foro .foro-form textarea { width: 100%; background: #1e293b !important; border: 1px solid #334155 !important; border-radius: 8px; color: #f1f5f9 !important; font-size: 14px; padding: 12px; font-family: inherit; resize: none; min-height: 90px; box-sizing: border-box; outline: none; }
+.foro .foro-form select { background: #1e293b !important; border: 1px solid #334155 !important; border-radius: 8px; color: #94a3b8 !important; font-size: 13px; padding: 7px 12px; font-family: inherit; outline: none; cursor: pointer; }
+.foro .foro-form-acciones { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+.foro .foro-btn-ok { background: #4ade80 !important; color: #080b12 !important; border: none !important; border-radius: 8px; padding: 8px 18px !important; font-size: 13px; font-weight: 700; cursor: pointer; }
+.foro .foro-btn-cancel { background: none !important; border: none !important; color: #475569 !important; font-size: 13px; cursor: pointer; }
+
+.foro .foro-post { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+.foro .foro-post-body { padding: 18px 18px 14px; }
+.foro .foro-post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.foro .foro-tag { border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 600; letter-spacing: .05em; }
+.foro .foro-tiempo { color: #334155; font-size: 11px; }
+.foro .foro-post-body p { margin: 0; font-size: 15px; color: #cbd5e1; line-height: 1.65; }
+.foro .foro-acciones { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+
+.foro .foro-btn-voto { display: flex !important; align-items: center !important; gap: 6px !important; border-radius: 20px !important; padding: 4px 12px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer !important; transition: all .15s; }
+.foro .foro-btn-voto.off { background: transparent !important; border: 1px solid #1e293b !important; color: #475569 !important; }
+.foro .foro-btn-voto.on  { background: #0d2d1a !important; border: 1px solid #4ade8055 !important; color: #4ade80 !important; }
+
+.foro .foro-btn-ghost { background: none !important; border: none !important; color: #475569 !important; font-size: 13px !important; cursor: pointer; padding: 0 !important; }
+.foro .foro-btn-responder { background: none !important; border: none !important; color: #4ade80 !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; padding: 0 !important; margin-left: auto; }
+
+.foro .foro-replies { border-top: 1px solid #1e293b; background: #080b12; }
+.foro .foro-reply { padding: 14px 18px; border-bottom: 1px solid #0f172a; }
+.foro .foro-reply:last-child { border-bottom: none; }
+.foro .foro-reply p { margin: 0 0 8px; font-size: 13.5px; color: #94a3b8; line-height: 1.6; }
+.foro .foro-reply-meta { display: flex; align-items: center; gap: 10px; }
+
+.foro .foro-btn-voto-sm { display: flex !important; align-items: center !important; gap: 5px !important; background: none !important; border: none !important; cursor: pointer; font-size: 12px !important; font-weight: 600 !important; padding: 0 !important; }
+.foro .foro-btn-voto-sm.off { color: #334155 !important; }
+.foro .foro-btn-voto-sm.on  { color: #4ade80 !important; }
+
+.foro .foro-reply-form { padding: 12px 18px 16px; border-top: 1px solid #0f172a; }
+.foro .foro-reply-form textarea { width: 100%; background: #0f172a !important; border: 1px solid #1e293b !important; border-radius: 8px; color: #cbd5e1 !important; font-size: 13px; padding: 10px 12px; font-family: inherit; resize: none; min-height: 70px; box-sizing: border-box; outline: none; }
+.foro .foro-reply-btns { display: flex; gap: 8px; margin-top: 8px; }
+.foro .foro-btn-ok-sm { background: #4ade80 !important; color: #080b12 !important; border: none !important; border-radius: 8px; padding: 7px 16px !important; font-size: 12px; font-weight: 700; cursor: pointer; }
+.foro .foro-btn-cancel-sm { background: none !important; border: none !important; color: #475569 !important; font-size: 12px; cursor: pointer; }
+
+.foro .foro-btn-add { width: 100%; padding: 10px 18px !important; background: none !important; border: none !important; color: #334155 !important; font-size: 12px !important; cursor: pointer; text-align: left; }
+.foro .foro-vacio { color: #334155; text-align: center; padding-top: 48px; font-size: 14px; }

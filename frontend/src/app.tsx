@@ -10,6 +10,8 @@ import Index from './pages/index'
 
 import Perfil from './pages/perfil'
 
+import Comunidad from './pages/comunidad'
+
 import PsicoEmocional from './pages/psicoemocional'
 
 import Fitness from './pages/fitness'
@@ -95,6 +97,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+
+            <Route
+             path="/comunidad"
+              element={
+              <ProtectedRoute>
+                <Comunidad />
+              </ProtectedRoute>
+            } 
+            />
 
         <Route
           path="*"

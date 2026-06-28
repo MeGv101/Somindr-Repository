@@ -71,8 +71,8 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
             Inicio
           </Link>
-          <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
-            Dashboard
+          <Link to="/comunidad" className="sidebar-link" onClick={handleLinkClick}>
+            Comunidad
           </Link>
           <Link to="/psicoemocional" className="sidebar-link" onClick={handleLinkClick}>
             Psico-Emocional
