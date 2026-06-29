@@ -1,6 +1,6 @@
 import { useState } from "react";
 import '/src/styles/comunidad.css'
-import Navbar from '../components/navbar'
+
 
 
 interface Reply { id: number; contenido: string; tiempo: string; votos: number; votado: boolean; }
