@@ -124,14 +124,14 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
                   </div>
                 </div>
               ) : (
-                <button className="foro-btn-add" onClick={() => setRActivo(post.id)}>+ añadir respuesta</button>
+                <button className="foro-btn-add" onClick={() => setRActivo(post.id)}> añadir respuesta</button>
               )}
             </div>
           )}
         </div>
       ))}
 
-      {visible.length === 0 && <p className="foro-vacio">Sin publicaciones en esta categoría.</p>}
+      {visible.length === 0 && <p className="foro-vacio">Sin publicaciones.</p>}
     </div>
   </div>
 );
