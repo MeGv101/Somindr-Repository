@@ -1,0 +1,227 @@
+:root {
+
+  --fitness-bg: #0a0a0a;
+
+  --fitness-surface: #121212;
+
+  --fitness-surface-2: #1a1a1a;
+
+  --fitness-border: #2b2b2b;
+
+  --fitness-text: #f5f5f5;
+
+  --fitness-text-muted: #9d9d9d;
+
+  --fitness-primary: #c62828;
+
+  --fitness-primary-hover: #e53935;
+
+  --fitness-accent: #8b0000;
+
+}
+
+.fitness-hero {
+
+  padding: 5rem 2rem;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(198,40,40,.15),
+      transparent
+    );
+
+  text-align: center;
+  margin-bottom: 100px;
+  border-bottom:
+    1px solid var(--fitness-border);
+
+}
+
+.fitness-hero h1 {
+
+  font-size: 3rem;
+
+  font-weight: 800;
+
+  margin-bottom: .5rem;
+
+}
+
+.fitness-hero p {
+
+  color:
+    var(--fitness-text-muted);
+
+  max-width: 700px;
+
+  margin: 0 auto;
+
+}
+.categories-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+  gap: 1rem;
+
+}
+.category-card {
+
+  background:
+    var(--fitness-surface);
+
+  border:
+    1px solid var(--fitness-border);
+
+  border-radius: 18px;
+
+  padding: 1.5rem;
+
+  cursor: pointer;
+
+  transition: .25s;
+  color: #f5f5f5;
+
+}
+.category-card:hover {
+
+  transform:
+    translateY(-4px);
+
+  border-color:
+    var(--fitness-primary);
+
+  box-shadow:
+    0 0 25px
+    rgba(198,40,40,.2);
+
+}
+.routines-grid{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around
+}
+.routine-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #151515,
+      #1f1f1f
+    );
+
+  border:
+    1px solid var(--fitness-border);
+
+  border-radius: 16px;
+
+  padding: 1.5rem;
+  color: #f5f5f5;
+
+}
+.routine-card:hover {
+
+  border-color:
+    var(--fitness-primary);
+
+  box-shadow:
+    0 0 30px
+    rgba(198,40,40,.25);
+
+}
+.exercise-card {
+
+  background:
+    var(--fitness-surface);
+
+  border:
+    1px solid var(--fitness-border);
+
+  border-radius: 16px;
+
+  padding: 1.25rem;
+
+  margin-bottom: 1rem;
+
+}
+.exercise-top input {
+
+  width: 20px;
+  height: 20px;
+
+  accent-color:
+    var(--fitness-primary);
+
+}
+.finish-btn {
+
+  width: 100%;
+
+  padding: 1rem;
+
+  border: none;
+
+  border-radius: 14px;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+
+  background:
+    var(--fitness-primary);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: .25s;
+
+}
+.finish-btn:hover {
+
+  background:
+    var(--fitness-primary-hover);
+
+  transform:
+    translateY(-2px);
+
+}
+.finish-btn:disabled {
+
+  opacity: .6;
+
+  cursor: not-allowed;
+
+}
+.fitness-success-banner {
+
+  background:
+    rgba(198,40,40,.15);
+
+  border:
+    1px solid var(--fitness-primary);
+
+  color:
+    #ffb3b3;
+
+  padding: 1rem;
+
+  border-radius: 14px;
+
+  margin-bottom: 1.5rem;
+
+}
+.fitness-page {
+
+  min-height: 100vh;
+
+  background:
+    var(--fitness-bg);
+
+  color:
+    var(--fitness-text);
+
+}
