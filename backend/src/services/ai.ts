@@ -4,37 +4,37 @@ import { GoogleGenAI } from "@google/genai";
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
+import { pipeline } from "@huggingface/transformers";
+
+let generator: Awaited<ReturnType<typeof pipeline>> | null = null;
+
+async function getGenerator() {
+  if (!generator) {
+    console.log("Cargando modelo...");
+
+    generator = await pipeline(
+      "text-generation",
+      "onnx-community/Phi-3.5-mini-instruct"
+    );
+
+    console.log("Modelo cargado.");
+  }
+
+  return generator;
+}
 
 export async function generateResponse(
   prompt: string
 ) {
-  try {
+  const model = await getGenerator();
 
-    const response =
-      await ai.models.generateContent({
-        model: "gemini-2.5-flash-lite",
-        contents: prompt,
-      });
+  const output = await model(prompt, {
+    max_new_tokens: 300,
+    temperature: 0.7,
+    do_sample: true,
+  });
 
-    console.log(
-      "GEMINI RAW RESPONSE:",
-      JSON.stringify(response, null, 2)
-    );
-
-    console.log(
-      "GEMINI TEXT:",
-      response.text
-    );
-
-    return response.text ?? null;
-
-  } catch (error) {
-
-    console.error(
-      "GEMINI ERROR:",
-      error
-    );
-
-    throw error;
-  }
+  return output[0].generated_text
+    .replace(prompt, "")
+    .trim();
 }

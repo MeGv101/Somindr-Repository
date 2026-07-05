@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import '/src/styles/comunidad.css'
-    
 
 
 
@@ -28,7 +27,7 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
   const [form, setForm] = useState(false);
   const [rTexto, setRTexto] = useState<Record<number, string>>({});
   const [rActivo, setRActivo] = useState<number | null>(null);
-  const tituloref = useRef<HTMLHeadingElement | null>(null);
+  const tituloref = useRef<HTMLHeadingElement>(null);
 
   const upPost = (id: number) =>
     setPosts(p => p.map(x => x.id !== id ? x : { ...x, votos: x.votado ? x.votos - 1 : x.votos + 1, votado: !x.votado }));
@@ -54,16 +53,14 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
   const visible = filtro === "Todos" ? posts : posts.filter(p => p.categoria === filtro);
 
   return (
-
   <div className="foro">
 
-  
-        <div className="titulo">
-        <h1 ref={tituloref}>Comunidad</h1>
-        <h2>Foro Somindr</h2>
-        <p>Progresa con la comunidad para mejorar.</p>
+         <div className="titulo">
+        <h1 ref={tituloref}>Somindr</h1>
+        <h2>En este proceso no estas solo</h2>
+        <p>Comparrte tu experiencia y conoce mas informacion en especifico</p>
       </div>
-      
+
     <div className="foro-header">
       <p>Comunidad</p>
       <h1>Foro Somindr</h1>
@@ -101,7 +98,7 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
             <p>{post.contenido}</p>
             <div className="foro-acciones">
               <button className={`foro-btn-voto ${post.votado ? "on" : "off"}`} onClick={() => upPost(post.id)}>
-                <span>{post.votado ? "-" : "+"}</span>{post.votos}
+                <span>{post.votado ? "▲" : "△"}</span>{post.votos}
               </button>
               <button className="foro-btn-ghost" onClick={() => toggle(post.id)}>
                 {post.respuestas.length} {post.respuestas.length === 1 ? "respuesta" : "respuestas"}
@@ -119,7 +116,7 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
                   <p>{r.contenido}</p>
                   <div className="foro-reply-meta">
                     <button className={`foro-btn-voto-sm ${r.votado ? "on" : "off"}`} onClick={() => upReply(post.id, r.id)}>
-                      <span>{r.votado ? "-" : "+"}</span>{r.votos}
+                      <span>{r.votado ? "▲" : "△"}</span>{r.votos}
                     </button>
                     <span className="foro-tiempo">{r.tiempo}</span>
                   </div>
@@ -145,7 +142,6 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
       {visible.length === 0 && <p className="foro-vacio">Sin publicaciones.</p>}
     </div>
   </div>
-  
 );
 
 }

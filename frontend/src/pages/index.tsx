@@ -437,9 +437,6 @@ export default function Index({ onOpenAuth }: IndexProps) {
         <div className="stat-item">
           <div className="stat-num">2</div>
           <div className="stat-label">Módulos salva vidas</div>
-        </div>
-        <div className="stat-sep"></div>
-        <div className="stat-item">
           <div className="stat-num">360°</div>
           <div className="stat-label">Cambio total en tu vida</div>
         </div>

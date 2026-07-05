@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: etna;
+    src: url('../src/assets/fonts/Etna.ttf');
+}
 
 
 body {
@@ -7,16 +10,16 @@ body {
 }
 
 .titulo {
-    font-family: etna;
+  flex-direction: column;
+    font-family: etna; 
     height: 100vh;
     display: flex;
-    flex-direction:column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 0 20px;
     position: relative;
-    background-image: url('/public/pexels.jpg'); 
+    background-image: url('/frontend/public/media/SRC/pexels-cottonbro-5319502.jpg'); 
     background-size: cover;
     background-position-y: 60%;
     background-position: center;
@@ -38,7 +41,7 @@ body {
 .titulo h1 {
     font-size: clamp(5rem, 7.8vw, 6.4rem);
     font-weight: 1200;
-    color: #006eff;
+    color: #055e1f;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.5);
     letter-spacing: -2px;
     line-height: 1.2;
@@ -46,11 +49,6 @@ body {
     white-space: nowrap;
 }
 
-.btn {
-    position: absolute;
-    bottom: 20px;
-
-}
 
 .foro { min-height: 100vh; background: #080b12; color: #e2e8f0; font-family: system-ui, sans-serif; padding-bottom: 80px; }
 
