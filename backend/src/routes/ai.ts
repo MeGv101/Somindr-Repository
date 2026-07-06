@@ -118,6 +118,7 @@ export async function aiRoutes(
         .limit(20);
 
         const historyText = history
+        .reverse()
         .map(
             (message) =>
             `${message.role}: ${message.content}`
@@ -162,7 +163,7 @@ export async function aiRoutes(
 
         if (!response) {
         throw new Error(
-            "Gemini no devolvió respuesta"
+            "La IA no devolvió respuesta"
         );
         }
 
@@ -243,7 +244,7 @@ export async function aiRoutes(
 
             if (!summary) {
                 throw new Error(
-                "Gemini no devolvió respuesta"
+                "La IA no devolvió respuesta"
                 );
             }
 
