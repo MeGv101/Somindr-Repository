@@ -110,7 +110,7 @@ export default function AI() {
       <span className="bubble b2"></span>
       <span className="bubble b3"></span>
     </div><div className="ai-container">
-        <div className="ai-header">Somindr AI</div>
+        <div className="ai-header">Asistente AI</div>
         <div className="ai-messages">
 
           {messages.map((message, index) => (
