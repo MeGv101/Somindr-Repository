@@ -105,43 +105,43 @@ export default function AI() {
   }
 
   return (
-    <div className="ai-container">
-      <div className="ai-header">Somindr AI</div>
-      <div className="ai-messages">
-        {messages.map((message, index) => (
+    <><div className="background">
+      <span className="bubble b1"></span>
+      <span className="bubble b2"></span>
+      <span className="bubble b3"></span>
+    </div><div className="ai-container">
+        <div className="ai-header">Somindr AI</div>
+        <div className="ai-messages">
+
+          {messages.map((message, index) => (
             <div key={index}
-                className={`message ${
-            message.role === "user"
-                ? "user-message"
-                : "assistant-message"
-            }`}>
+              className={`message ${message.role === "user"
+                  ? "user-message"
+                  : "assistant-message"}`}>
               <ReactMarkdown>
-                  {message.content}
+                {message.content}
               </ReactMarkdown>
             </div>
           )
-        )}
-      </div>
-      <div className="ai-input-area">
-        <input
+          )}
+        </div>
+        <div className="ai-input-area">
+          <input
             value={input}
             className="ai-input"
-            onChange={(e) =>
-            setInput(e.target.value)
-            }
-            placeholder="Escribe un mensaje..."
-        />
-        <button
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Escribe un mensaje..." />
+          <button
             onClick={sendMessage}
             className="ai-button"
             disabled={loading}
-        >
+          >
             {loading
-            ? "Pensando..."
-            : "Enviar"}
-        </button>
-      </div>
-    </div>
+              ? "Pensando..."
+              : "Enviar"}
+          </button>
+        </div>
+      </div></>
       
   );
 }

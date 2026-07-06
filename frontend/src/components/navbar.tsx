@@ -80,6 +80,9 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/fitness" className="sidebar-link" onClick={handleLinkClick}>
             Fitness
           </Link>
+          <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
+            Asesor IA
+          </Link>
           <Link to="/perfil" className="sidebar-link" onClick={handleLinkClick}>
             Configuración
           </Link>

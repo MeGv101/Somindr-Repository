@@ -55,7 +55,16 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
   return (
   <div className="foro">
 
+
          <div className="titulo">
+
+          <div className="aurora">
+               <span className="blob b1"></span>
+               <span className="blob b2"></span>
+               <span className="blob b3"></span>
+               <span className="blob b4"></span>
+               <span className="blob b5"></span>
+          </div>
         <h1 ref={tituloref}>Somindr</h1>
         <h2>En este proceso no estas solo</h2>
         <p>Comparrte tu experiencia y conoce mas informacion en especifico</p>
