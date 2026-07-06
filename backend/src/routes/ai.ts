@@ -145,7 +145,7 @@ export async function aiRoutes(
         
         
         Si la información está vacía, dile que lo ideal es que se dirija a la sección psicoemocional a colocar su estado de ánimo.`;
-
+        console.log(request.body);
         await db
         .insert(messages)
         .values({
@@ -260,6 +260,10 @@ export async function aiRoutes(
                 "SUMMARY CREATED"
             );
             }
-    }}
+    }
+     return {
+        response,
+    };
+    }
     );
 };
