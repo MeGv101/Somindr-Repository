@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../styles/fitness.css'
-import Navbar from '../components/navbar'
+
 
 interface Categoria {
   id: number
