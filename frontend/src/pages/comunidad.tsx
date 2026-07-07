@@ -1,8 +1,6 @@
 import { useState, useRef } from "react";
 import '/src/styles/comunidad.css'
 
-
-
 interface Reply { id: number; contenido: string; tiempo: string; votos: number; votado: boolean; }
 interface Post  { id: number; contenido: string; categoria: string; tiempo: string; votos: number; votado: boolean; respuestas: Reply[]; expandido: boolean; }
 
@@ -97,8 +95,8 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
         </div>
       )}
 
-      {visible.map(post => (
-        <div key={post.id} className="foro-post">
+      {visible.map((post, i) => (
+        <div key={post.id} className="foro-post" style={{ animationDelay: `${i * 70}ms` }}>
           <div className="foro-post-body">
             <div className="foro-post-meta">
               <span className="foro-tag" style={CAT[post.categoria]}>{post.categoria}</span>
@@ -120,8 +118,8 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
 
           {post.expandido && (
             <div className="foro-replies">
-              {post.respuestas.map(r => (
-                <div key={r.id} className="foro-reply">
+              {post.respuestas.map((r, ri) => (
+                <div key={r.id} className="foro-reply" style={{ animationDelay: `${ri * 60}ms` }}>
                   <p>{r.contenido}</p>
                   <div className="foro-reply-meta">
                     <button className={`foro-btn-voto-sm ${r.votado ? "on" : "off"}`} onClick={() => upReply(post.id, r.id)}>
