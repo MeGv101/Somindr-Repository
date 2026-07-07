@@ -260,6 +260,11 @@ export async function aiRoutes(
                 "SUMMARY CREATED"
             );
             }
-    }}
+    }
+    return {
+     response,
+    }
+    }
+    
     );
 };
