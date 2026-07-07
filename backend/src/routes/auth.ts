@@ -5,6 +5,12 @@ import { db } from "../db/index.js";
 import { users, sessions } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
+import {
+    sendVerificationEmail,
+    sendPasswordResetEmail,
+    verifyToken,
+    consumeToken,
+} from "../services/mail.js";
 
 
 export async function authRoutes(fastify: FastifyInstance) {
@@ -37,6 +43,14 @@ export async function authRoutes(fastify: FastifyInstance) {
     if (!validPassword) {
       return reply.status(401).send({
         message: "Credenciales inválidas",
+      });
+    }
+
+    if (!usuario.emailVerified) {
+      return reply.status(403).send({
+        code: "EMAIL_NOT_VERIFIED",
+        message: "Debes verificar tu correo antes de iniciar sesión.",
+        email: usuario.email,
       });
     }
     
@@ -128,18 +142,36 @@ export async function authRoutes(fastify: FastifyInstance) {
       body.password,
       10
     );
-
     //insercion de datos
-    await db.insert(users).values({
+    const [newUser] = await db
+    .insert(users)
+    .values({
       nombre: body.nombre,
       apellido: body.apellido,
       username: body.username,
       email: body.email,
       passwordHash,
+    })
+    .returning();
+
+  try {
+    await sendVerificationEmail({
+      id: newUser.id,
+      nombre: newUser.nombre,
+      email: newUser.email,
     });
+  } catch (error) {
+    console.error(error);
+
+    return reply.status(201).send({
+      message:
+        "El usuario fue creado, pero ocurrió un error al enviar el correo de verificación.",
+    });
+  }
 
     return reply.code(201).send({
-      message: "Usuario registrado"
+      message:
+        "Usuario registrado. Revisa tu correo para verificar tu cuenta."
     });
 
     } catch (error) {
@@ -165,4 +197,150 @@ export async function authRoutes(fastify: FastifyInstance) {
     };
   });
 
+  fastify.get("/verify-email", async (request, reply) => {
+    const { token } = request.query as {
+          token: string;
+      };
+
+      if (!token) {
+          return reply.status(400).send({
+              message: "Token inválido."
+          });
+      }
+
+      const authToken = await verifyToken(
+          token,
+          "VERIFY_EMAIL"
+      );
+
+      if (!authToken) {
+          return reply.status(400).send({
+              message:
+                  "El enlace es inválido o expiró."
+          });
+      }
+
+      await db
+          .update(users)
+          .set({
+              emailVerified: true,
+          })
+          .where(eq(users.id, authToken.userId));
+
+      await consumeToken(authToken.id);
+
+      return {
+          message:
+              "Correo verificado correctamente."
+      };
+  });
+
+  fastify.post("/resend-verification", async (request, reply) => {
+      const { email } = request.body as {
+          email: string;
+      };
+
+      const result = await db
+          .select()
+          .from(users)
+          .where(eq(users.email, email));
+
+      if (result.length === 0) {
+          return reply.status(404).send({
+              message:
+                  "Usuario no encontrado."
+          });
+      }
+
+      const user = result[0];
+
+      if (user.emailVerified) {
+          return reply.status(400).send({
+              message:
+                  "El correo ya está verificado."
+          });
+      }
+
+      await sendVerificationEmail({
+          id: user.id,
+          nombre: user.nombre,
+          email: user.email,
+      });
+
+      return {
+          message:
+              "Correo reenviado."
+      };
+  });
+
+  fastify.post("/forgot-password", async (request, reply) => {
+      const { email } = request.body as {
+          email: string;
+      };
+
+      const result = await db
+          .select()
+          .from(users)
+          .where(eq(users.email, email));
+
+      if (result.length === 0) {
+          return {
+              message:
+                  "Si el correo existe, recibirás un enlace para restablecer la contraseña."
+          };
+      }
+
+      const user = result[0];
+
+      await sendPasswordResetEmail({
+          id: user.id,
+          nombre: user.nombre,
+          email: user.email,
+      });
+
+      return {
+          message:
+              "Si el correo existe, recibirás un enlace para restablecer la contraseña."
+      };
+  });
+
+  fastify.post("/reset-password", async (request, reply) => {
+      const body = request.body as {
+          token: string;
+          password: string;
+      };
+
+      const authToken = await verifyToken(
+          body.token,
+          "RESET_PASSWORD"
+      );
+
+      if (!authToken) {
+          return reply.status(400).send({
+              message:
+                  "El enlace es inválido o expiró."
+          });
+      }
+
+      const passwordHash = await bcrypt.hash(
+          body.password,
+          10
+      );
+
+      await db
+          .update(users)
+          .set({
+              passwordHash,
+          })
+          .where(eq(users.id, authToken.userId));
+
+      await consumeToken(authToken.id);
+
+      return {
+          message:
+              "Contraseña actualizada correctamente."
+      };
+  });
+
 }
+
