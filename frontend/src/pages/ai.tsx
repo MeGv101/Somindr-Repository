@@ -110,7 +110,15 @@ export default function AI() {
       <span className="bubble b2"></span>
       <span className="bubble b3"></span>
     </div><div className="ai-container">
-        <div className="ai-header">Somindr AI</div>
+        <div className="ai-header" style={{
+          "--clr-1": "#4facfe",
+          "--clr-2": "#00f2fe",
+          "--clr-3": "#a855f7",
+          "--clr-4": "#ec4899",
+          "--fs": "2rem",
+        } as React.CSSProperties}>
+          <h1 className="ai-header__text">Asistente AI</h1>
+        </div>
         <div className="ai-messages">
 
           {messages.map((message, index) => (

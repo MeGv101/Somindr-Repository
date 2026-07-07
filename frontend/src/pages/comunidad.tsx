@@ -56,7 +56,7 @@ export default function comunidad(): import("react/jsx-runtime").JSX.Element {
   <div className="foro">
 
 
-         <div className="titulo">
+         <div className="titulo-hero">
 
           <div className="aurora">
                <span className="blob b1"></span>
