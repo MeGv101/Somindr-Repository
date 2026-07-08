@@ -37,6 +37,10 @@
     );
     pointer-events: none;
 }
+.main-nav a{
+    color: #ffffff;
+    text-decoration: none;
+}
 .hamburger {
     position: fixed;
     top: 20px;
