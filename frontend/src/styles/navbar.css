@@ -11,6 +11,10 @@
     padding: 30px 20px;
     z-index: 1000;
 }
+.main-nav a{
+    color: #ffffff;
+    text-decoration: none;
+}
 .hamburger {
     position: fixed;
     top: 20px;

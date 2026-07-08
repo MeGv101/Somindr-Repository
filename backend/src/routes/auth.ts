@@ -196,7 +196,8 @@ export async function authRoutes(fastify: FastifyInstance) {
       message: "Sesión cerrada"
     };
   });
-
+ 
+  //emails
   fastify.get("/verify-email", async (request, reply) => {
     const { token } = request.query as {
           token: string;
