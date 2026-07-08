@@ -33,6 +33,10 @@ export const users = pgTable("users", {
 		.notNull()
 		.default("user"),
 		
+  emailVerified: boolean("email_verified")
+    .default(false)
+    .notNull(),
+
 	createdAt: timestamp("created_at")
 		.defaultNow()
 		.notNull(),
@@ -288,6 +292,33 @@ export const summaries = pgTable("summaries", {
 
   embedding: text("embedding")
     .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
+
+export const authTokens = pgTable("auth_tokens", {
+  id: serial("id").primaryKey(),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
+
+  token: text("token")
+    .notNull()
+    .unique(),
+
+  type: varchar("type", {
+    length: 32,
+  }).notNull(),
+
+  expiresAt: timestamp("expires_at")
+    .notNull(),
+
+  usedAt: timestamp("used_at"),
 
   createdAt: timestamp("created_at")
     .defaultNow()
