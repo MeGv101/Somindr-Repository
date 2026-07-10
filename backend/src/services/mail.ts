@@ -111,18 +111,63 @@ async function consumeToken(
     })
     .where(eq(authTokens.id, tokenId));
 }
+function emailWrapper(content: string): string {
+  return `
+  <div style="background-color:#f4f4f7; padding:40px 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px; margin:0 auto; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <tr>
+        <td style="background-color:#111827; padding:24px; text-align:center;">
+          <span style="color:#fffff; font-size:20px; font-weight:700; letter-spacing:0.5px;">Somindr</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:32px;">
+          ${content}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 32px; background-color:#f9fafb; text-align:center;">
+          <p style="margin:0; color:#9ca3af; font-size:12px;">
+            Este es un correo automático, por favor no respondas.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  `;
+}
+
+function buttonHtml(url: string, label: string, color = "#72cb10"): string {
+  return `
+    <div style="text-align:center; margin:28px 0;">
+      <a href="${url}" style="background-color:${color}; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-size:15px; font-weight:600; display:inline-block;">
+        ${label}
+      </a>
+    </div>
+  `;
+}
 
 export async function sendVerificationEmail(
   user: MailUser
 ): Promise<void> {
-  const token = await createToken(
-    user.id,
-    "VERIFY_EMAIL"
-  );
+  const token = await createToken(user.id, "VERIFY_EMAIL");
+  const verificationUrl = `${FRONTEND_URL}/verify-email?token=${token}`;
 
-  const verificationUrl =
-    `${FRONTEND_URL}/verify-email?token=${token}`;
+  const content = `
+    <h2 style="margin:0 0 12px; color:#111827; font-size:20px;">Hola ${user.nombre} </h2>
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      Gracias por registrarte en Somindr.
+    </p>
+    <p style="margin:0; color:#374151; font-size:15px; line-height:1.5;">
+      Haz clic en el botón para activar tu cuenta.
+    </p>
+    ${buttonHtml(verificationUrl, "Verificar cuenta")}
+    <p style="margin:0; color:#9ca3af; font-size:13px; text-align:center;">
+      Este enlace expira en 24 horas.
+    </p>
+  `;
 
+<<<<<<< HEAD
   await sendEmail(
     user.email,
     "Bienvenido a SOMINDR",
@@ -138,37 +183,29 @@ export async function sendVerificationEmail(
       </a>
     `
   );
+=======
+  await sendEmail(user.email, "Verifica tu cuenta en Somindr", emailWrapper(content));
+>>>>>>> a407197d78c4972151ab61b22fa74ff99d76ddf4
 }
 
 export async function sendPasswordResetEmail(
   user: MailUser
 ): Promise<void> {
-  const token = await createToken(
-    user.id,
-    "RESET_PASSWORD",
-    1
-  );
+  const token = await createToken(user.id, "RESET_PASSWORD", 1);
+  const resetUrl = `${FRONTEND_URL}/reset-password?token=${token}`;
 
-  const resetUrl =
-    `${FRONTEND_URL}/reset-password?token=${token}`;
+  const content = `
+    <h2 style="margin:0 0 12px; color:#111827; font-size:20px;">Hola ${user.nombre}</h2>
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      Recibimos una solicitud para cambiar tu contraseña.
+    </p>
+    ${buttonHtml(resetUrl, "Restablecer contraseña", "#dc2626")}
+    <p style="margin:0; color:#9ca3af; font-size:13px; text-align:center;">
+      Si no fuiste tú, ignora este correo. Este enlace expira en 1 hora.
+    </p>
+  `;
 
-  await sendEmail(
-    user.email,
-    "Restablece tu contraseña",
-    `
-      <h2>Hola ${user.nombre}</h2>
-
-      <p>Recibimos una solicitud para cambiar tu contraseña.</p>
-
-      <p>Haz clic en el siguiente enlace.</p>
-
-      <a href="${resetUrl}">
-        Restablecer contraseña
-      </a>
-
-      <p>Si no fuiste tú, ignora este correo.</p>
-    `
-  );
+  await sendEmail(user.email, "Restablece tu contraseña", emailWrapper(content));
 }
 
 export async function verifyToken(
