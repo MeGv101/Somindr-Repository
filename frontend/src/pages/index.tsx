@@ -689,6 +689,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
 
       <section className="seccion sobre">
         <div className="sobre-inner">
+          
           <div className="sobre-texto">
             <div className="tag">Nuestra Misión</div>
             <h2>
@@ -718,7 +719,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
             </button>
           </div>
           <div className="sobre-visual">
-            <div className="sobre-visual-main"></div>
+            <div className="sobre-visual-main"><img src="https://images.pexels.com/photos/33632576/pexels-photo-33632576.jpeg" alt="Imagen sobre Somindr" className="img-sobre"/>
+            </div>
             <div className="sobre-visual-badge">
               <div className="sobre-visual-badge-icon"></div>
               <div className="sobre-visual-badge-texto">

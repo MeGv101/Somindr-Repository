@@ -923,6 +923,7 @@ nav {
 .sobre-visual-main {
   border-radius: 24px;
   height: 380px;
+  width: 380px;
   background: linear-gradient(135deg, #c5e0d0, #9dcfb5);
   display: flex; 
   align-items: center; 
@@ -1127,4 +1128,11 @@ footer p { font-size: 13px; }
     height: 300px;
   }
   .split-divider { display: none; }
+}
+
+
+.img-sobre{
+  position: relative;
+  height: 380px;
+  width: 380px;
 }
