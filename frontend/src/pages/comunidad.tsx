@@ -12,7 +12,7 @@ const INIT: Post[] = [
     { id: 102, contenido: "Complementa con legumbres si no comes mucha carne: lentejas, frijoles, garbanzos.", tiempo: "hace 20 min", votos: 5, votado: false },
   ]},
   { id: 2, contenido: "Llevo 3 semanas sin motivación para entrenar. No es pereza, literalmente no siento ganas de nada.", categoria: "Psicoemocional", tiempo: "hace 3 h", votos: 22, votado: false, expandido: false, respuestas: [
-    { id: 201, contenido: "Eso se llama burnout. A veces el cuerpo necesita un descanso real. Bajar la intensidad no es retroceder.", tiempo: "hace 2 h", votos: 18, votado: false },
+    { id: 201, contenido: "Me encanta esta web, me ha permitido realizar un cambio drastico que me llevo a mejorar mi cuerpo, mejorando la ganancia de grupos musculares como pecho y hombros. !Me encanta¡.", tiempo: "hace 2 h", votos: 18, votado: false },
   ]},
   { id: 3, contenido: "¿Vale la pena hacer cardio en ayunas para quemar grasa?", categoria: "Físico", tiempo: "hace 6 h", votos: 8, votado: false, expandido: false, respuestas: [] },
 ];

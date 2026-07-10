@@ -26,6 +26,7 @@ import { useModal } from "./context/modelContext";
 
 import AI from "./pages/ai";
 
+import Verificacion from "./pages/verificacion";
 
 
 function App() {
@@ -61,10 +62,11 @@ function App() {
       <ModalAuth ref={modalRef} />
 
       <Routes>
-
         <Route path="/" element={<Index onOpenAuth={openAuth} />} />
 
-        <Route path="/perfil" element={
+        <Route
+          path="/perfil"
+          element={
             <ProtectedRoute>
               <Perfil />
             </ProtectedRoute>
@@ -98,21 +100,25 @@ function App() {
           }
         />
 
-
-            <Route
-             path="/comunidad"
-              element={
-              <ProtectedRoute>
-                <Comunidad />
-              </ProtectedRoute>
-            } 
-            />
-
         <Route
-          path="*"
-          element={<NotFound />}
+          path="/verificacion"
+          element={
+  
+              <Verificacion />
+            
+          }
         />
 
+        <Route
+          path="/comunidad"
+          element={
+            <ProtectedRoute>
+              <Comunidad />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
     </BrowserRouter>
