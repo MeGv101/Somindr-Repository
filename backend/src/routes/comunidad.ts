@@ -67,14 +67,24 @@ export async function communityRoutes(
             );
 
         const commentsList = await db
-            .select()
-            .from(comments)
-            .where(
-            eq(
-                comments.postId,
-                post.id
-            )
-            );
+        .select({
+          id: comments.id,
+          content: comments.content,
+          createdAt: comments.createdAt,
+          authorId: users.id,
+          username: users.username,
+          nombre: users.nombre,
+          role: users.role,
+        })
+        .from(comments)
+        .innerJoin(
+          users,
+          eq(comments.userId, users.id)
+        )
+        .where(
+          eq(comments.postId, post.id)
+        )
+        .orderBy(comments.createdAt);
 
         const myReaction =
             reactions.find(
@@ -97,12 +107,9 @@ export async function communityRoutes(
                 reaction =>
                 reaction.type === "DISLIKE"
             ).length,
+            comments: commentsList,
 
-            comments:
-            commentsList.length,
-
-            userReaction:
-            myReaction?.type ?? null,
+            userReaction: myReaction?.type ?? null,
 
         };
 
