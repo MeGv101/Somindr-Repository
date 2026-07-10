@@ -418,7 +418,7 @@ export default function Comunidad() {
                         react(post.id, "LIKE")
                       }
                     >
-                      👍 {post.likes}
+                      ↑  {post.likes}
                     </button>
 
                     <button
@@ -431,7 +431,7 @@ export default function Comunidad() {
                         react(post.id, "DISLIKE")
                       }
                     >
-                      👎 {post.dislikes}
+                      ↓  {post.dislikes}
                     </button>
 
                     <button

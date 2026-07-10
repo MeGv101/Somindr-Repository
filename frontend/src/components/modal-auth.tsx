@@ -314,7 +314,20 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
                 Regístrate
               </button>
             </p>
+
+            <p className="pie">
+              ¿No recibiste un correo?{''}
+              <button 
+              type="submit"
+              className="pie-link"
+              onClick={() =>{
+              
+              }}>
+                 Reenviar correo
+              </button>
+            </p>
           </div>
+
         )}
 
         {tabActivo === 'registro' && (
@@ -407,6 +420,8 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
               >
                 Inicia sesión
               </button>
+
+ 
             </p>
           </div>
         )}
