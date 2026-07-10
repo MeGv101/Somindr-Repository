@@ -117,7 +117,6 @@ export default function AI() {
           "--clr-4": "#ec4899",
           "--fs": "2rem",
         } as React.CSSProperties}>
-          <h1 className="ai-header__text">Asistente AI</h1>
         </div>
         <div className="ai-messages">
 

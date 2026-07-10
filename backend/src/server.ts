@@ -10,6 +10,7 @@ import { authRoutes } from "./routes/auth.js";
 import { moodRoutes } from "./routes/mood.js";
 import { fitnessRoutes } from "./routes/fitness.js";
 import { aiRoutes } from "./routes/ai.js";
+import { communityRoutes } from "./routes/comunidad.js";
 
 const app = Fastify()
 
@@ -28,6 +29,10 @@ await app.register(moodRoutes);
 await app.register(fitnessRoutes);
 
 await app.register(aiRoutes);
+
+await app.register(communityRoutes, {
+  prefix: "/community",
+});
 
 app.get('/', async () => {
   return {

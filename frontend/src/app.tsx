@@ -101,7 +101,7 @@ function App() {
         />
 
         <Route
-          path="/verificacion"
+          path="/verify-email"
           element={
   
               <Verificacion />
