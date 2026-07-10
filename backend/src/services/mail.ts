@@ -117,7 +117,7 @@ function emailWrapper(content: string): string {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px; margin:0 auto; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
       <tr>
         <td style="background-color:#111827; padding:24px; text-align:center;">
-          <span style="color:#ffffff; font-size:20px; font-weight:700; letter-spacing:0.5px;">Somindr</span>
+          <span style="color:#fffff; font-size:20px; font-weight:700; letter-spacing:0.5px;">Somindr</span>
         </td>
       </tr>
       <tr>
@@ -137,7 +137,7 @@ function emailWrapper(content: string): string {
   `;
 }
 
-function buttonHtml(url: string, label: string, color = "#4f46e5"): string {
+function buttonHtml(url: string, label: string, color = "#72cb10"): string {
   return `
     <div style="text-align:center; margin:28px 0;">
       <a href="${url}" style="background-color:${color}; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-size:15px; font-weight:600; display:inline-block;">
