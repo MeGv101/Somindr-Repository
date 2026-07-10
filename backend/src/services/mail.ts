@@ -190,37 +190,6 @@ export async function sendPasswordResetEmail(
   await sendEmail(user.email, "Restablece tu contraseña", emailWrapper(content));
 }
 
-export async function sendPasswordResetEmail(
-  user: MailUser
-): Promise<void> {
-  const token = await createToken(
-    user.id,
-    "RESET_PASSWORD",
-    1
-  );
-
-  const resetUrl =
-    `${FRONTEND_URL}/reset-password?token=${token}`;
-
-  await sendEmail(
-    user.email,
-    "Restablece tu contraseña",
-    `
-      <h2>Hola ${user.nombre}</h2>
-
-      <p>Recibimos una solicitud para cambiar tu contraseña.</p>
-
-      <p>Haz clic en el siguiente enlace.</p>
-
-      <a href="${resetUrl}">
-        Restablecer contraseña
-      </a>
-
-      <p>Si no fuiste tú, ignora este correo.</p>
-    `
-  );
-}
-
 export async function verifyToken(
   token: string,
   type: AuthTokenType
