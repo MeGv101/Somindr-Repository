@@ -343,7 +343,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
               onClick={() =>{
               
               }}>
-                 Reenviar correo
+                Reenviar correo
               </button>
             </p>
           </div>
