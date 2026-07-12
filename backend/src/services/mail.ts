@@ -167,25 +167,7 @@ export async function sendVerificationEmail(
     </p>
   `;
 
-<<<<<<< HEAD
-  await sendEmail(
-    user.email,
-    "Bienvenido a SOMINDR",
-    `
-      <h2>Hola ${user.nombre}</h2>
-
-      <p>Verifica tu cuenta y unete a la ecperiencia de SOMINDR</p>
-
-      <p>Haz clic en el siguiente enlace para activar tu cuenta.</p>
-
-      <a href="${verificationUrl}">
-        Verificar cuenta
-      </a>
-    `
-  );
-=======
   await sendEmail(user.email, "Verifica tu cuenta en Somindr", emailWrapper(content));
->>>>>>> a407197d78c4972151ab61b22fa74ff99d76ddf4
 }
 
 export async function sendPasswordResetEmail(

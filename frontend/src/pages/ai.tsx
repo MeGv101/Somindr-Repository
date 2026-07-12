@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import  ReactMarkdown from "react-markdown";
 import type { Message } from "../types/Message";
 import '../styles/ai.css'
@@ -13,6 +13,9 @@ export default function AI() {
 
   const [loading, setLoading] =
     useState(false);
+
+ 
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
 
     useEffect(() => {
@@ -40,6 +43,17 @@ export default function AI() {
     loadMessages();
 
   }, []);
+
+    useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages, loading]);
+
   async function sendMessage() {
 
     if (!input.trim()) return;
@@ -104,21 +118,23 @@ export default function AI() {
     setInput("");
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" && !loading) {
+      sendMessage();
+    }
+  }
+
   return (
-    <><div className="background">
-      <span className="bubble b1"></span>
-      <span className="bubble b2"></span>
-      <span className="bubble b3"></span>
-    </div><div className="ai-container">
-        <div className="ai-header" style={{
-          "--clr-1": "#4facfe",
-          "--clr-2": "#00f2fe",
-          "--clr-3": "#a855f7",
-          "--clr-4": "#ec4899",
-          "--fs": "2rem",
-        } as React.CSSProperties}>
+    <div className="ai-page">
+      <div className="background">
+        <span className="bubble b1"></span>
+        <span className="bubble b2"></span>
+        <span className="bubble b3"></span>
+      </div>
+      <div className="ai-container">
+        <div className="ai-header">
         </div>
-        <div className="ai-messages">
+        <div className="ai-messages" ref={messagesContainerRef}>
 
           {messages.map((message, index) => (
             <div key={index}
@@ -137,6 +153,7 @@ export default function AI() {
             value={input}
             className="ai-input"
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Escribe un mensaje..." />
           <button
             onClick={sendMessage}
@@ -148,7 +165,7 @@ export default function AI() {
               : "Enviar"}
           </button>
         </div>
-      </div></>
-      
+      </div>
+    </div>
   );
 }
