@@ -31,6 +31,8 @@ import Verificacion from "./pages/verificacion";
 
 function App() {
 
+  console.log("App cargado");
+  
   const modalRef = useRef<ModalAuthRef>(null)
 
   const {
