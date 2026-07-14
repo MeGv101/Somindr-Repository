@@ -198,6 +198,38 @@ export async function authRoutes(fastify: FastifyInstance) {
   });
  
   //emails
+  fastify.post("/verify-email", async (request, reply) => {
+
+    const body = request.body as {
+      token: string;
+    };
+
+    const authToken = await verifyToken(
+      body.token,
+      "VERIFY_EMAIL"
+    );
+
+    if (!authToken) {
+      return reply.status(400).send({
+        message: "El enlace de verificación es inválido o ha expirado.",
+      });
+    }
+
+    await db
+      .update(users)
+      .set({
+        emailVerified: true,
+      })
+      .where(eq(users.id, authToken.userId));
+
+    await consumeToken(authToken.id);
+
+    return reply.send({
+      message: "Correo verificado correctamente.",
+    });
+
+  });
+
   fastify.get("/verify-email", async (request, reply) => {
     const { token } = request.query as {
           token: string;

@@ -7,6 +7,7 @@ import {
 	text,
 	date,
 	timestamp,
+  unique, 
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -324,3 +325,89 @@ export const authTokens = pgTable("auth_tokens", {
     .defaultNow()
     .notNull(),
 });
+
+export const posts = pgTable("posts", {
+  id: serial("id").primaryKey(),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  title: varchar("title", {
+    length: 150,
+  }).notNull(),
+
+  category: varchar("category", {
+    length: 50,
+  }).notNull(),
+
+  content: text("content")
+    .notNull(),
+
+  edited: boolean("edited")
+    .default(false)
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .notNull(),
+});
+
+export const comments = pgTable("comments", {
+  id: serial("id").primaryKey(),
+
+  postId: integer("post_id")
+    .notNull()
+    .references(() => posts.id),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  content: text("content")
+    .notNull(),
+  
+  edited: boolean("edited")
+    .default(false)
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .notNull(),
+});
+
+export const postReactions = pgTable("post_reactions", {
+  id: serial("id").primaryKey(),
+
+  postId: integer("post_id")
+    .notNull()
+    .references(() => posts.id),
+
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+
+  type: varchar("type", {
+    length: 10,
+  }).notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+},
+(table) => ({
+  uniqueReaction: unique().on(
+    table.postId,
+    table.userId
+  ),
+})
+);
+

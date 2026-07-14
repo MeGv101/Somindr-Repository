@@ -110,7 +110,14 @@ export default function PsicoEmocional() {
     }
   };
 
-  return  (
+  const metrics = [
+    { label: "Ansiedad", value: ansiedad, set: setAnsiedad },
+    { label: "Estrés", value: estres, set: setEstres },
+    { label: "Energía", value: energia, set: setEnergia },
+    { label: "Calidad del sueño", value: sueno, set: setSueno },
+  ];
+
+  return (
     <main className="mood-page">
 
       <section className="hero-section">
@@ -118,19 +125,18 @@ export default function PsicoEmocional() {
         <div className="hero-content">
 
           <h1>
-            Comprende Tus Motivaciones
+            Comprende tus emociones 
           </h1>
 
           <p>
-            Cada semana podrás registrar tu estado emocional,
-            identificar patrones y construir un historial que
-            te ayude a comprender mejor tu bienestar.
+            Registra tu estado emocional cada semana, encuentra
+            patrones y construye un historial que te ayude a
+            entender mejor tu bienestar.
           </p>
 
           <p>
-            La IA de Somindr utilizará esta información para
-            ofrecer conversaciones y reflexiones más
-            personalizadas, para ayudarte a nunca rendirte.
+            La IA de Somindr usa esta información para
+            conversaciones y reflexiones más personalizadas.
           </p>
 
         </div>
@@ -141,116 +147,64 @@ export default function PsicoEmocional() {
 
         <div className="section-header">
           <h2>Mood semanal</h2>
-
-          <p>
-            Evalúa cómo te sentiste durante la semana anterior.
-          </p>
+          <p>Evalúa cómo te sentiste durante la semana anterior.</p>
         </div>
 
-        <div className="metric-card">
-          <div className="metric-header">
-            <span>Ansiedad</span>
-            <span>{ansiedad}/10</span>
+        <div className="mood-grid">
+
+          <div className="mood-form">
+
+            {metrics.map((metric, i) => (
+              <div
+                className="metric-card"
+                key={metric.label}
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <div className="metric-header">
+                  <span>{metric.label}</span>
+                  <span>{metric.value}/10</span>
+                </div>
+
+                <input
+                  type="range"
+                  min={1}
+                  max={10}
+                  value={metric.value}
+                  onChange={(e) => metric.set(Number(e.target.value))}
+                  style={{ "--val": metric.value } as React.CSSProperties}
+                />
+              </div>
+            ))}
+
+            <p>¿Quieres darnos detalles de tus resultados? (opcional)</p>
+
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Ej. Mis exámenes fueron díficiles..."
+            />
+
+            <button
+              className="save-button"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Guardando..." : "Guardar mood"}
+            </button>
+
+            {message && (
+              <div className="pe-message">
+                {message}
+              </div>
+            )}
+
           </div>
 
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={ansiedad}
-            onChange={(e) =>
-              setAnsiedad(
-                Number(e.target.value)
-              )
-            }
-          />
+          <div className="mood-visual">
+            <img src="https://images.pexels.com/photos/38263125/pexels-photo-38263125.jpeg" alt="Persona meditando" />
+          </div>
+
         </div>
-
-        <div className="metric-card">
-          <div className="metric-header">
-            <span>Estrés</span>
-            <span>{estres}/10</span>
-          </div>
-
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={estres}
-            onChange={(e) =>
-              setEstres(
-                Number(e.target.value)
-              )
-            }
-          />
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-header">
-            <span>Energía</span>
-            <span>{energia}/10</span>
-          </div>
-
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={energia}
-            onChange={(e) =>
-              setEnergia(
-                Number(e.target.value)
-              )
-            }
-          />
-        </div>
-
-        <div className="metric-card">
-          <div className="metric-header">
-            <span>Calidad del sueño</span>
-            <span>{sueno}/10</span>
-          </div>
-
-          <input
-            type="range"
-            min={1}
-            max={10}
-            value={sueno}
-            onChange={(e) =>
-              setSueno(
-                Number(e.target.value)
-              )
-            }
-          />
-        </div>
-          <p>
-            ¿Quieres darnos detalles de tus resultados? (opcional)
-          </p>
-        <textarea
-          value={notes}
-          onChange={(e) =>
-            setNotes(
-              e.target.value
-            )
-          }
-          placeholder="Ej. Mis exámenes fueron díficiles..."
-        />
-
-        <button
-          className="save-button"
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {
-            loading
-              ? "Guardando..."
-              : "Guardar mood"
-          }
-        </button>
-        {message && (
-          <div className="pe-message">
-            {message}
-          </div>
-        )}
 
       </section>
 
@@ -258,62 +212,48 @@ export default function PsicoEmocional() {
 
         <div className="section-header">
           <h2>Historial emocional</h2>
-
         </div>
+
         {history.length === 0 ? (
           <div className="history-empty">
-            <h3>Aún no hay registros</h3>
+
+            <img
+              className="grillo-illustration"
+              src="https://cdn-icons-png.flaticon.com/512/616/616564.png"
+              alt="Grillo"
+            />
+
+            <h3>Aquí solo se escuchan los grillos</h3>
+
+            <div className="grillo-chirp" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
 
             <p>
-              Completa tu primer mood semanal para
-              comenzar a construir tu historial.
+              Todavía no registras ningún mood. Sube y guarda el
+              de esta semana para empezar tu historial.
             </p>
+
           </div>
         ) : (
-        <div className="history-list">
-          {history.map((entry) => (
-            
-            <div
-              key={entry.id}
-              className="history-item"
-            >
-              <br />
-              
-              <h3>
-                Semana:
-                {" "}
-                {entry.weekStart}
-              </h3>
-
-              <p>
-                Ansiedad:
-                {entry.anxiety}/10
-              </p>
-
-              <p>
-                Estrés:
-                {entry.stress}/10
-              </p>
-
-              <p>
-                Energía:
-                {entry.energy}/10
-              </p>
-
-              <p>
-                Sueño:
-                {entry.sleepQuality}/10
-              </p>
-              <p>
-                Detalles:  
-                {entry.notes}
-              </p>
-
-            </div>
-            
-          ))}
-
-        </div>
+          <div className="history-list">
+            {history.map((entry, i) => (
+              <div
+                key={entry.id}
+                className="history-item"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <h3>Semana: {entry.weekStart}</h3>
+                <p>Ansiedad: {entry.anxiety}/10</p>
+                <p>Estrés: {entry.stress}/10</p>
+                <p>Energía: {entry.energy}/10</p>
+                <p>Sueño: {entry.sleepQuality}/10</p>
+                <p>Detalles: {entry.notes}</p>
+              </div>
+            ))}
+          </div>
         )}
       </section>
 
@@ -321,21 +261,18 @@ export default function PsicoEmocional() {
 
         <div className="section-header">
           <h2>Asistente emocional</h2>
-
-          <p>
-            Conversa con la IA de Somindr para
-            reflexionar sobre tu bienestar.
-          </p>
+          <p>Conversa con la IA de Somindr para reflexionar sobre tu bienestar.</p>
         </div>
+
         <a href="ai">
-        <button className="trav-ai-button">
-          Hablar con la IA
-        </button>
+          <button className="trav-ai-button">
+            Hablar con la IA
+          </button>
         </a>
 
       </section>
 
     </main>
-);
+  );
 
 }

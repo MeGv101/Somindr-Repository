@@ -12,7 +12,7 @@ import Perfil from './pages/perfil'
 
 import Comunidad from './pages/comunidad'
 
-import AboutUs from './pages/aboutus'
+import AboutUs from './pages/Aboutus'
 
 import PsicoEmocional from './pages/psicoemocional'
 
@@ -28,10 +28,13 @@ import { useModal } from "./context/modelContext";
 
 import AI from "./pages/ai";
 
+import Verificacion from "./pages/verificacion";
 
 
 function App() {
 
+  console.log("App cargado");
+  
   const modalRef = useRef<ModalAuthRef>(null)
 
   const {
@@ -63,10 +66,11 @@ function App() {
       <ModalAuth ref={modalRef} />
 
       <Routes>
-
         <Route path="/" element={<Index onOpenAuth={openAuth} />} />
 
-        <Route path="/perfil" element={
+        <Route
+          path="/perfil"
+          element={
             <ProtectedRoute>
               <Perfil />
             </ProtectedRoute>
@@ -100,31 +104,32 @@ function App() {
           }
         />
 
+        <Route
+          path="/verify-email"
+          element={
+  
+              <Verificacion />
+            
+          }
+        />
 
-            <Route
-             path="/comunidad"
-              element={
-              <ProtectedRoute>
-                <Comunidad />
-              </ProtectedRoute>
-            } 
-            />
-
-          
-       <Route
-          path="/aboutus"
+        <Route
+          path="/comunidad"
           element={
             <ProtectedRoute>
-              <AboutUs />
+              <Comunidad />
             </ProtectedRoute>
           }
         />
 
         <Route
-          path="*"
-          element={<NotFound />}
+          path="/aboutus"
+          element={
+            <AboutUs />
+          }
         />
 
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
     </BrowserRouter>

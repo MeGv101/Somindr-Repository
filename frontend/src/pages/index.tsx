@@ -3,6 +3,11 @@ import { useEffect } from 'react'
 import type { AuthTab } from '../types/auth'
 import { useLocation } from "react-router-dom";
 import { useModal } from "../context/modelContext";
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
+
+
+gsap.registerPlugin(ScrollTrigger)
 
 type Review = {
   name: string
@@ -71,14 +76,61 @@ const REVIEWS: Review[] = [
   },
   {
     name: 'Mario Ernesto',
-    role: 'Actor XXX, Cerditas 503',
+    role: 'Miembro Somindr',
     date: 'abril 2026',
-    rating: 2,
-    text: 'Me ha ayudado a cumplir todas mis metas y ambiciones. Parece hecha con IA',
+    rating: 4,
+    text: 'Me ha ayudado a cumplir todas mis metas y ambiciones. Una plataforma sólida y bien pensada.',
     initials: 'ME',
     hue: '330',
   },
 ]
+
+type InfoCard = {
+
+  title: string
+  desc: string
+}
+
+const INFO_CARDS: InfoCard[] = [
+  {
+
+    title: 'Objetivo personalizado',
+    desc: 'Definimos metas claras y adaptadas a tu ritmo y punto de partida.',
+  },
+  {
+
+    title: 'Acompañamiento emocional',
+    desc: 'Sesiones guiadas para trabajar el bienestar mental junto al físico.',
+  },
+  {
+
+    title: 'Progreso medible',
+    desc: 'Visualiza tu evolución semana a semana con datos reales.',
+  },
+  {
+
+    title: 'Comunidad activa',
+    desc: 'Conecta con personas que comparten tu mismo proceso de cambio.',
+  },
+]
+
+
+const animateStatValue = (el: HTMLElement) => {
+  const raw = el.dataset.value ?? el.textContent ?? ''
+  const match = raw.match(/^([\d.]+)(.*)$/)
+  if (!match) return
+  const end = parseFloat(match[1])
+  const suffix = match[2]
+  const counter = { val: 0 }
+  gsap.to(counter, {
+    val: end,
+    duration: 1.3,
+    ease: 'power2.out',
+    onUpdate: () => {
+      el.textContent = `${Math.round(counter.val)}${suffix}`
+    },
+  })
+}
 
 type IndexProps = {
   onOpenAuth?: (tab: AuthTab) => void
@@ -327,6 +379,128 @@ export default function Index({ onOpenAuth }: IndexProps) {
       if (dotsContainer) dotsContainer.innerHTML = ''
     }
   }, [])
+
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+     
+      gsap.set('.stat-item', { opacity: 0, y: 24 })
+      ScrollTrigger.batch('.stat-item', {
+        start: 'top 88%',
+        once: true,
+        onEnter: (batch: Element[]) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            stagger: 0.12,
+          })
+          batch.forEach((item: Element) => {
+            item.querySelectorAll<HTMLElement>('.stat-num').forEach((el) => animateStatValue(el))
+          })
+        },
+      })
+
+
+      gsap.utils.toArray<HTMLElement>('.modulo-split').forEach((el: any, i: number) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: i % 2 === 0 ? -70 : 70 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+          },
+        )
+      })
+
+      gsap.fromTo(
+        '.carousel-header',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: '.carousel-wrap', start: 'top 82%', once: true },
+        },
+      )
+      gsap.fromTo(
+        '.track-outer',
+        { opacity: 0, scale: 0.94 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: '.track-outer', start: 'top 88%', once: true },
+        },
+      )
+
+  
+      gsap.utils.toArray<HTMLElement>('.info-card').forEach((el: any, i: number) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, scale: 0.35, x: i % 2 === 0 ? -55 : 55 },
+          {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            duration: 0.9,
+            delay: i * 0.08,
+            ease: 'back.out(1.6)',
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+          },
+        )
+      })
+
+  
+      gsap.fromTo(
+        '.sobre-texto',
+        { opacity: 0, x: -60 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: '.sobre-inner', start: 'top 78%', once: true },
+        },
+      )
+      gsap.fromTo(
+        '.sobre-visual',
+        { opacity: 0, x: 60, scale: 0.92 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: '.sobre-inner', start: 'top 78%', once: true },
+        },
+      )
+
+     
+      gsap.fromTo(
+        ['.cta h2', '.cta p', '.cta-btns'],
+        { opacity: 0, scale: 0.85, y: 20 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'back.out(1.7)',
+          scrollTrigger: { trigger: '.cta', start: 'top 85%', once: true },
+        },
+      )
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <>
       <section className="hero">
@@ -424,22 +598,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
       </section>
 
       <div className="stats-band">
-        <div className="stat-item">
-          <div className="stat-num">12K+</div>
-          <div className="stat-label">Usuarios activos</div>
-        </div>
-        <div className="stat-sep"></div>
-        <div className="stat-item">
-          <div className="stat-num">98%</div>
-          <div className="stat-label">Satisfacción de usuarios</div>
-        </div>
-        <div className="stat-sep"></div>
-        <div className="stat-item">
-          <div className="stat-num">2</div>
-          <div className="stat-label">Módulos salva vidas</div>
-          <div className="stat-num">360°</div>
-          <div className="stat-label">Cambio total en tu vida</div>
-        </div>
+
       </div>
       <section id="modulos">
         <a href="psicoemocional" className="modulo-split" id="split-psico">
@@ -511,8 +670,26 @@ export default function Index({ onOpenAuth }: IndexProps) {
         </div>
       </section>
 
+      <section className="info-band" id="info-band">
+        <div className="info-band-glow info-band-glow-a"></div>
+        <div className="info-band-glow info-band-glow-b"></div>
+        <div className="info-band-header">
+          <p>por qué somindr</p>
+          <h2>Todo lo que necesitas, en un solo lugar</h2>
+        </div>
+        <div className="info-grid" id="infoGrid">
+          {INFO_CARDS.map((card) => (
+            <div className="info-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="seccion sobre">
         <div className="sobre-inner">
+          
           <div className="sobre-texto">
             <div className="tag">Nuestra Misión</div>
             <h2>
@@ -542,7 +719,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
             </button>
           </div>
           <div className="sobre-visual">
-            <div className="sobre-visual-main"></div>
+            <div className="sobre-visual-main"><img src="https://images.pexels.com/photos/33632576/pexels-photo-33632576.jpeg" alt="Imagen sobre Somindr" className="img-sobre"/>
+            </div>
             <div className="sobre-visual-badge">
               <div className="sobre-visual-badge-icon"></div>
               <div className="sobre-visual-badge-texto">

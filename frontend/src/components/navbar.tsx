@@ -81,7 +81,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             Psico-Emocional
           </Link>
           <Link to="/fitness" className="sidebar-link" onClick={handleLinkClick}>
-            Fitness
+            Rutinas Físicas
           </Link>
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
