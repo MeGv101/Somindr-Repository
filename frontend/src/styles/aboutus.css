@@ -1,0 +1,320 @@
+:root {
+  --sn-bg: #0a0a0a;
+  --sn-surface: #121212;
+  --sn-surface-2: #1a1a1a;
+  --sn-border: #2b2b2b;
+  --sn-text: #f5f5f5;
+  --sn-text-muted: #9d9d9d;
+  --sn-primary: #13f60f;
+  --sn-primary-hover: #00ff00b2;
+  --sn-accent: #8b0000;
+  --sn-glow: rgba(156, 129, 129, 0.4);
+  --sn-glass: rgba(255, 255, 255, .04);
+  --sn-glass-border: rgba(255, 255, 255, .09);
+  --sn-nutricion: #4ade80;
+  --sn-fisico: #60a5fa;
+  --sn-psico: #c084fc;
+  --sn-equipo: #ff0000;
+  --sn-equipo-glow: rgba(96, 165, 250, .4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sobrenosotros-page {
+  min-height: 100vh;
+  background: var(--sn-bg);
+  color: var(--sn-text);
+  font-family: inherit;
+}
+
+/* ============================================
+   HERO — el aurora de círculos, intacto.
+   No tocar: blur, blobs, animación.
+   ============================================ */
+
+.titulo-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--sn-border);
+  isolation: isolate;
+}
+
+.titulo-hero .aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  filter: blur(70px);
+  opacity: .55;
+  pointer-events: none;
+}
+
+.titulo-hero .blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: sn-flotar 18s ease-in-out infinite;
+}
+
+.blob.b1 { width: 320px; height: 320px; top: -80px;  left: 5%;   background: var(--sn-primary);  animation-delay: 0s; }
+.blob.b2 { width: 260px; height: 260px; top: 40px;   left: 60%;  background: var(--sn-nutricion); animation-delay: -3s; }
+.blob.b3 { width: 300px; height: 300px; top: 120px;  left: 30%;  background: var(--sn-fisico);    animation-delay: -7s; }
+.blob.b4 { width: 220px; height: 220px; top: -40px;  left: 80%;  background: var(--sn-psico);     animation-delay: -11s; }
+.blob.b5 { width: 260px; height: 260px; top: 160px;  left: -5%;  background: var(--sn-accent);    animation-delay: -14s; }
+
+@keyframes sn-flotar {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, 25px) scale(1.08); }
+  66%      { transform: translate(-25px, 15px) scale(.95); }
+}
+
+.titulo-hero h1,
+.titulo-hero h2,
+.titulo-hero p {
+  position: relative;
+  z-index: 1;
+}
+
+.titulo-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.titulo-hero h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--sn-text-muted);
+  margin-top: .5rem;
+}
+
+.titulo-hero p {
+  color: var(--sn-text-muted);
+  max-width: 620px;
+  margin: 1rem auto 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titulo-hero .blob { animation: none; }
+}
+
+/* ============================================
+   Secciones generales
+   ============================================ */
+
+.sn-section {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sn-section + .sn-section {
+  border-top: 1px solid var(--sn-border);
+}
+
+.sn-eyebrow {
+  color: var(--sn-primary-hover);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .6rem;
+  display: block;
+}
+
+.sn-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -.01em;
+}
+
+.sn-section > p.sn-lead {
+  color: var(--sn-text-muted);
+  max-width: 680px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* ---- Qué es el proyecto ---- */
+
+.proyecto-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+@media (max-width: 800px) {
+  .proyecto-grid { grid-template-columns: 1fr; }
+}
+
+.proyecto-texto p {
+  color: var(--sn-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.proyecto-texto strong {
+  color: var(--sn-text);
+}
+
+.mision-card {
+  background: var(--sn-glass);
+  border: 1px solid var(--sn-glass-border);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  padding: 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.mision-card::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 220px;
+  height: 220px;
+  background: var(--sn-primary);
+  filter: blur(80px);
+  opacity: .35;
+}
+
+.mision-card h3 {
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--sn-primary-hover);
+  margin-bottom: .75rem;
+  position: relative;
+}
+
+.mision-card p {
+  color: var(--sn-text);
+  line-height: 1.7;
+  font-size: 1rem;
+  position: relative;
+}
+
+/* ---- Pilares (Nutrición / Físico / Psicoemocional) ---- */
+
+.pilares-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.pilar-card {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: 18px;
+  padding: 1.6rem;
+  transition: .25s;
+  border-top: 3px solid var(--sn-color, var(--sn-primary));
+}
+
+.pilar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(0, 0, 0, .35);
+}
+
+.pilar-card .pilar-icono {
+  font-size: 1.6rem;
+  margin-bottom: .75rem;
+  display: inline-block;
+}
+
+.pilar-card h3 {
+  margin-bottom: .5rem;
+  font-size: 1.05rem;
+}
+
+.pilar-card p {
+  color: var(--sn-text-muted);
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+/* ============================================
+   Equipo — fotos de los 4 integrantes
+   ============================================ */
+
+.equipo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+
+.integrante-card {
+  background: var(--sn-glass);
+  border: 1px solid var(--sn-glass-border);
+  border-radius: 20px;
+  padding: 1.75rem 1.25rem 1.5rem;
+  text-align: center;
+  transition: .25s;
+}
+
+.integrante-card:hover {
+  border-color: var(--sn-equipo);
+  box-shadow: 0 0 25px var(--sn-equipo-glow);
+  transform: translateY(-4px);
+}
+
+.integrante-foto {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  background: var(--sn-surface-2);
+  border: 2px solid var(--sn-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.integrante-card:hover .integrante-foto {
+  border-color: var(--sn-equipo);
+}
+
+.integrante-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.integrante-foto .placeholder-iniciales {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sn-text-muted);
+}
+
+.integrante-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: .2rem;
+}
+
+.integrante-rol {
+  color: var(--sn-primary-hover);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: .6rem;
+}
+
+.integrante-bio {
+  color: var(--sn-text-muted);
+  font-size: .85rem;
+  line-height: 1.5;
+}
