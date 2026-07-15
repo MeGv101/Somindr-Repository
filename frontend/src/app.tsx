@@ -12,6 +12,8 @@ import Perfil from './pages/perfil'
 
 import Comunidad from './pages/comunidad'
 
+import AboutUs from './pages/Aboutus'
+
 import PsicoEmocional from './pages/psicoemocional'
 
 import Fitness from './pages/fitness'
@@ -117,6 +119,13 @@ function App() {
             <ProtectedRoute>
               <Comunidad />
             </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/aboutus"
+          element={
+            <AboutUs />
           }
         />
 
