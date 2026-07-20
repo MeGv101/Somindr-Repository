@@ -4,10 +4,10 @@ import type { AuthTab } from '../types/auth'
 import { useLocation } from "react-router-dom";
 import { useModal } from "../context/modelContext";
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/all'
-
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
 
 type Review = {
   name: string

@@ -163,6 +163,24 @@ export default function Fitness() {
           </p>
         </section>
 
+        {/* Cards decorativas — solo diseño, sin lógica ni datos dinámicos */}
+        <section className="fitness-section">
+          <div className="fitness-glass-grid">
+            <div className="fitness-glass-card"> 
+              <h3>Constancia</h3>
+              <p>Pequeños avances diarios construyen resultados que perduran.</p>
+            </div>
+            <div className="fitness-glass-card">
+              <h3>Fuerza real</h3>
+              <p>Rutinas de calistenia pensadas para progresar a tu propio ritmo.</p>
+            </div>
+            <div className="fitness-glass-card">
+              <h3>Escucha tu cuerpo</h3>
+              <p>El descanso también es parte del entrenamiento.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="fitness-section">
           <h2>Categorías</h2>
           <div className="categories-grid">
