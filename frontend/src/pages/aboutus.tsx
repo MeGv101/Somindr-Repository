@@ -37,10 +37,10 @@ const PILARES: Pilar[] = [
 
 // Reemplaza "foto" por la ruta real de cada imagen cuando la tengan lista.
 const EQUIPO: Integrante[] = [
-  { nombre: "Adán Bonilla", rol: "Desarrollo Backend", bio: "Encargado de la experiencia visual e interfaz de Somindr." },
+  { nombre: "Adán Bonilla", rol: "Desarrollo Frontend", bio: "Encargado de la experiencia visual e interfaz de Somindr." },
   { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma." },
-  { nombre: "Gabriel Marroquín", rol: "Desarrollo Frontend",  bio: "Encargado del contenido en nutrición, físico y salud emocional." },
-  { nombre: "Emily Flores", rol: "Desarrollo Frontend",        bio: "Encargado de que la plataforma sea clara, cómoda y accesible." },
+  { nombre: "Gabriel Marroquín", rol: "Desarrollo Backend", bio: "Encargado del contenido en nutrición, físico y salud emocional." },
+  { nombre: "Emily Flores", rol: "Desarrollo Frontend",       bio: "Encargado de que la plataforma sea clara, cómoda y accesible." },
 ];
 
 function iniciales(nombre: string) {

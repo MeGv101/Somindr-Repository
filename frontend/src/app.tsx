@@ -12,7 +12,7 @@ import Perfil from './pages/perfil'
 
 import Comunidad from './pages/comunidad'
 
-import AboutUs from './pages/Aboutus'
+import AboutUs from './pages/aboutus'
 
 import PsicoEmocional from './pages/psicoemocional'
 
