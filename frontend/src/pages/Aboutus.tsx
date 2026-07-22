@@ -56,7 +56,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
   return (
     <div className="sobrenosotros-page">
 
-      {/* Hero — el mismo aurora de círculos, sin tocar su estilo */}
+     
       <div className="titulo-hero">
         <div className="aurora">
           <span className="blob b1"></span>
@@ -70,7 +70,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         <p>Un espacio pensado para que nadie atraviese solo su proceso físico y emocional.</p>
       </div>
 
-      {/* Qué es el proyecto */}
+    
       <section className="sn-section">
         <h2>¿Qué es Somindr?</h2>
 
@@ -102,7 +102,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         </div>
       </section>
 
-      {/* Pilares del proyecto */}
+    
       <section className="sn-section">
         <h2>Nuestros pilares</h2>
         <p className="sn-lead">
