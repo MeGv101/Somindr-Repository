@@ -4,6 +4,7 @@ import {
 } from "react";
 
 import "../styles/psicoemocional.css";
+import Footer from "../components/footer";
 
 export default function PsicoEmocional() {
 
@@ -271,6 +272,7 @@ export default function PsicoEmocional() {
         </a>
 
       </section>
+      <Footer />
 
     </main>
   );

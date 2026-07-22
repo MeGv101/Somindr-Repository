@@ -1,4 +1,5 @@
 import '../styles/aboutus.css'
+import Footer from '../components/footer';
 
 interface Pilar {
   icono: string;
@@ -37,10 +38,10 @@ const PILARES: Pilar[] = [
 
 // Reemplaza "foto" por la ruta real de cada imagen cuando la tengan lista.
 const EQUIPO: Integrante[] = [
-  { nombre: "Adán Bonilla", rol: "Desarrollo Frontend", bio: "Encargado de la experiencia visual e interfaz de Somindr." },
-  { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma." },
-  { nombre: "Gabriel Marroquín", rol: "Desarrollo Backend", bio: "Encargado del contenido en nutrición, físico y salud emocional." },
-  { nombre: "Emily Flores", rol: "Desarrollo Frontend",       bio: "Encargado de que la plataforma sea clara, cómoda y accesible." },
+  { nombre: "Adán Bonilla", rol: "Desarrollo Backend", bio: "Encargado de la experiencia visual e interfaz de Somindr.", foto: "../media/SRC/Adan.jpg" },
+  { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma.", foto: "../media/SRC/Mario.jpg" },
+  { nombre: "Gabriel Marroquín", rol: "Desarrollo Frontend",  bio: "Encargado del contenido en nutrición, físico y salud emocional.", foto: "../media/SRC/Chiqui.jpg" },
+  { nombre: "Emily Flores", rol: "Desarrollo Frontend",        bio: "Encargado de que la plataforma sea clara, cómoda y accesible.", foto: "../media/SRC/yopi.jpg" },
 ];
 
 function iniciales(nombre: string) {
@@ -56,7 +57,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
   return (
     <div className="sobrenosotros-page">
 
-      {/* Hero — el mismo aurora de círculos, sin tocar su estilo */}
+     
       <div className="titulo-hero">
         <div className="aurora">
           <span className="blob b1"></span>
@@ -70,7 +71,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         <p>Un espacio pensado para que nadie atraviese solo su proceso físico y emocional.</p>
       </div>
 
-      {/* Qué es el proyecto */}
+    
       <section className="sn-section">
         <h2>¿Qué es Somindr?</h2>
 
@@ -102,7 +103,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         </div>
       </section>
 
-      {/* Pilares del proyecto */}
+    
       <section className="sn-section">
         <h2>Nuestros pilares</h2>
         <p className="sn-lead">
@@ -120,7 +121,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         </div>
       </section>
 
-      {/* Equipo — fotos de los 4 integrantes */}
+    
       <section className="sn-section">
         <h2>El equipo</h2>
         <p className="sn-lead">
@@ -142,7 +143,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
           ))}
         </div>
       </section>
-
+        <Footer />
     </div>
   );
 }

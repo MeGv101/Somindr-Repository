@@ -4,10 +4,11 @@ import type { AuthTab } from '../types/auth'
 import { useLocation } from "react-router-dom";
 import { useModal } from "../context/modelContext";
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/all'
-
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Footer from '../components/footer';
 
 gsap.registerPlugin(ScrollTrigger)
+
 
 type Review = {
   name: string
@@ -754,23 +755,11 @@ export default function Index({ onOpenAuth }: IndexProps) {
             Iniciar sesión
           </button>
         </div>
-      </section>
 
-      <footer>
-        <div>
-          <div className="footer-logo">
-            SOMINDR <span></span>
-          </div>
-          <p>© 2025 Fit Emotional. Todos los derechos reservados.</p>
-        </div>
-        <div className="footer-links">
-          <a href="/">Inicio</a>
-          <a href="#modulos">Psico-Emocional</a>
-          <a href="#modulos">Nutrición</a>
-          <a href="#modulos">Fitness</a>
-          <a href="/perfil">Perfil</a>
-        </div>
-      </footer>
-    </>
+      </section>
+      <Footer />
+   
+</>
   )
+  
 }

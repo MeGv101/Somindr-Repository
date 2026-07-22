@@ -14,6 +14,7 @@ import Comunidad from './pages/comunidad'
 
 import AboutUs from './pages/aboutus'
 
+
 import PsicoEmocional from './pages/psicoemocional'
 
 import Fitness from './pages/fitness'
@@ -21,6 +22,7 @@ import Fitness from './pages/fitness'
 import NotFound from "./pages/notFound";
 
 import type { AuthTab } from './types/auth'
+
 
 import ProtectedRoute from './components/protected'
 

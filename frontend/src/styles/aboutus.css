@@ -43,6 +43,12 @@
   text-align: center;
   border-bottom: 1px solid var(--sn-border);
   isolation: isolate;
+  background:
+  linear-gradient(135deg, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.45)),
+  url("https://images.pexels.com/photos/36496015/pexels-photo-36496015.jpeg?_gl=1*1edgie9*_ga*MTE5NTc3NjE1OS4xNzg0NTU2MTg2*_ga_8JE65Q40S6*czE3ODQ1NTYxODUkbzEkZzEkdDE3ODQ1NTY4OTgkajYkbDAkaDA.");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .titulo-hero .aurora {
@@ -67,11 +73,7 @@
 .blob.b4 { width: 220px; height: 220px; top: -40px;  left: 80%;  background: var(--sn-psico);     animation-delay: -11s; }
 .blob.b5 { width: 260px; height: 260px; top: 160px;  left: -5%;  background: var(--sn-accent);    animation-delay: -14s; }
 
-@keyframes sn-flotar {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%      { transform: translate(30px, 25px) scale(1.08); }
-  66%      { transform: translate(-25px, 15px) scale(.95); }
-}
+
 
 .titulo-hero h1,
 .titulo-hero h2,
@@ -287,6 +289,7 @@
 }
 
 .integrante-foto img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;

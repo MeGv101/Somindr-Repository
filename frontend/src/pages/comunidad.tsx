@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "/src/styles/comunidad.css";
+import Footer from '../components/footer';
 interface Reply {
   id: number;
   content: string;
@@ -326,6 +327,7 @@ export default function Comunidad() {
 
                 <input
                   type="text"
+                  className="tit"
                   placeholder="Título"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
@@ -565,6 +567,7 @@ export default function Comunidad() {
       ))}
 
     </div>
+    
 
   </div>
 );

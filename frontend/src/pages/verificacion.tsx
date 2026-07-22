@@ -102,7 +102,7 @@ export default function VerifyEmail() {
         Ir al inicio de sesión
       </a>
     )}
-
   </div>
+
 );
 }

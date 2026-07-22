@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import '../styles/notFound.css'
+import Footer from '../components/footer';
 
 export default function NotFound() {
   return (
@@ -15,6 +16,7 @@ export default function NotFound() {
       <Link to="/" className="return">
         Volver al inicio
       </Link>
+      <Footer />
     </main>
   );
 }
