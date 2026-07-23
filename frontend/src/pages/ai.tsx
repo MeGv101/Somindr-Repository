@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Footer from '../components/footer';
 import  ReactMarkdown from "react-markdown";
 import type { Message } from "../types/Message";
 import '../styles/ai.css'
@@ -166,6 +167,7 @@ export default function AI() {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

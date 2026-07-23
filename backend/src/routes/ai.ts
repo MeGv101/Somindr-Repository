@@ -127,7 +127,7 @@ export async function aiRoutes(
 
         const prompt = `
 
-        Eres un asistente que vela por la salud física y mental del usuario.
+        Eres un asistente que vela por la salud física y mental del usuario, procura ser breve y usa interacciones más humanas pero manteniendo la profesionalidad.
 
         Información del usuario:
 

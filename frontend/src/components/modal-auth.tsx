@@ -35,8 +35,9 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   }
 
   const {
-    setIsAuthenticated,
-  } = auth;
+  isAuthenticated,
+  setIsAuthenticated,
+} = auth;
 
   const navigate = useNavigate()
   const verificationRef = useRef<ModalVerificationRef>(null)
@@ -69,16 +70,29 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   };
 
   const mostrarModal = (
-    tab: AuthTab = 'login'
-  ) => {
-    if (localStorage.getItem("token")) {
-      navigate("/fitness");
-      return;
-    }
-    setTabActivo(tab)
-    setModalAbierto(true)
+  tab: AuthTab = "login"
+) => {
+
+  if (isAuthenticated) {
+    return;
   }
 
+  limpiarLogin();
+  limpiarRegistro();
+
+  setError("");
+  setSuccess("");
+
+  setTabActivo(tab);
+  setModalAbierto(true);
+};
+
+  useEffect(() => {
+  if (isAuthenticated && modalAbierto) {
+    ocultarModal();
+  }
+
+}, [isAuthenticated]);
   const ocultarModal = () => {
     limpiarLogin();
     limpiarRegistro();
@@ -100,8 +114,14 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
 
   
   useEffect(() => {
-    if (!modalAbierto) return
 
+    if (isAuthenticated) {
+      return;
+    }
+
+    if (!modalAbierto) {
+      return;
+    }
     document.body.classList.add('modal-abierto')
 
     const onKeyDown = (e: KeyboardEvent) => {
