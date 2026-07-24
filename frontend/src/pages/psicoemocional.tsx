@@ -4,6 +4,7 @@ import {
 } from "react";
 
 import "../styles/psicoemocional.css";
+import Footer from "../components/footer";
 
 export default function PsicoEmocional() {
 
@@ -22,7 +23,7 @@ export default function PsicoEmocional() {
         localStorage.getItem("token");
       const response =
         await fetch(
-          "http://localhost:3000/mood/current",
+          "/api/mood/current",
           {
             headers: {
               Authorization:
@@ -58,7 +59,7 @@ export default function PsicoEmocional() {
 
     const response =
       await fetch(
-        "http://localhost:3000/mood/history",
+        "/api/mood/history",
         {
           headers: {
             Authorization:
@@ -81,7 +82,7 @@ export default function PsicoEmocional() {
         localStorage.getItem("token");
       const response =
         await fetch(
-          "http://localhost:3000/mood",
+          "/api/mood",
           {
             method: "POST",
             headers: {
@@ -271,6 +272,7 @@ export default function PsicoEmocional() {
         </a>
 
       </section>
+      <Footer />
 
     </main>
   );

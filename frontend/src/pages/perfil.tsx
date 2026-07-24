@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import '../styles/perfil.css'
 import Navbar from '../components/navbar'
+import Footer from '../components/footer';
 
 const PRESET_AVATARS = [
   { hair: '#3CB878', bg: '#DCF3E6' },
@@ -237,6 +238,7 @@ export default function Perfil() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   )
 }

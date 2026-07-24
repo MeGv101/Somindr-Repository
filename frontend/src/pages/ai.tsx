@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Footer from '../components/footer';
 import  ReactMarkdown from "react-markdown";
 import type { Message } from "../types/Message";
 import '../styles/ai.css'
@@ -24,7 +25,7 @@ export default function AI() {
     const token = localStorage.getItem("token");
     const response =
         await fetch(
-            "http://localhost:3000/messages",
+            "/api/messages",
             {
             headers: {
                 Authorization:
@@ -76,7 +77,7 @@ export default function AI() {
         localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:3000/chat",
+        "/api/chat",
         {
           method: "POST",
 
@@ -125,6 +126,7 @@ export default function AI() {
   }
 
   return (
+    <>
     <div className="ai-page">
       <div className="background">
         <span className="bubble b1"></span>
@@ -167,5 +169,7 @@ export default function AI() {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

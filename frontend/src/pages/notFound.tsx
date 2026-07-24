@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import '../styles/notFound.css'
+import Footer from '../components/footer';
 
 export default function NotFound() {
   return (
+    <>
     <main className="notfound-page">
       <h1>404</h1>
 
@@ -16,5 +18,7 @@ export default function NotFound() {
         Volver al inicio
       </Link>
     </main>
+    <Footer />
+    </>
   );
 }

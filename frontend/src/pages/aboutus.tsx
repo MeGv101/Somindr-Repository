@@ -1,4 +1,5 @@
 import '../styles/aboutus.css'
+import Footer from '../components/footer';
 
 interface Pilar {
   icono: string;
@@ -142,7 +143,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
           ))}
         </div>
       </section>
-
+        <Footer />
     </div>
   );
 }

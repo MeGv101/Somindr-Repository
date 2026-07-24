@@ -27,7 +27,7 @@ export default function VerifyEmail() {
       try {
 
         const response = await fetch(
-          "http://localhost:3000/verify-email",
+          "/api/verify-email",
           {
             method: "POST",
             headers: {
@@ -102,7 +102,7 @@ export default function VerifyEmail() {
         Ir al inicio de sesión
       </a>
     )}
-
   </div>
+
 );
 }

@@ -2,6 +2,7 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
   type MouseEvent,
 } from 'react'
@@ -9,6 +10,9 @@ import { useNavigate } from 'react-router-dom'
 import type { AuthTab } from '../types/auth'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
+import ModalVerification, {
+  type ModalVerificationRef,
+} from './modal-verification'
 import '../styles/modal-auth.css'
 
 export type ModalAuthRef = {
@@ -31,10 +35,12 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   }
 
   const {
-    setIsAuthenticated,
-  } = auth;
+  isAuthenticated,
+  setIsAuthenticated,
+} = auth;
 
   const navigate = useNavigate()
+  const verificationRef = useRef<ModalVerificationRef>(null)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
@@ -64,16 +70,29 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   };
 
   const mostrarModal = (
-    tab: AuthTab = 'login'
-  ) => {
-    if (localStorage.getItem("token")) {
-      navigate("/fitness");
-      return;
-    }
-    setTabActivo(tab)
-    setModalAbierto(true)
+  tab: AuthTab = "login"
+) => {
+
+  if (isAuthenticated) {
+    return;
   }
 
+  limpiarLogin();
+  limpiarRegistro();
+
+  setError("");
+  setSuccess("");
+
+  setTabActivo(tab);
+  setModalAbierto(true);
+};
+
+  useEffect(() => {
+  if (isAuthenticated && modalAbierto) {
+    ocultarModal();
+  }
+
+}, [isAuthenticated]);
   const ocultarModal = () => {
     limpiarLogin();
     limpiarRegistro();
@@ -95,8 +114,14 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
 
   
   useEffect(() => {
-    if (!modalAbierto) return
 
+    if (isAuthenticated) {
+      return;
+    }
+
+    if (!modalAbierto) {
+      return;
+    }
     document.body.classList.add('modal-abierto')
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -126,7 +151,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/login",
+        "/api/login",
         {
           method: "POST",
           headers: {
@@ -161,7 +186,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const handleRegistro = async () => {
     try {
       const response = await fetch(
-        'http://localhost:3000/register',
+        '/api/register',
         {
           method: 'POST',
           headers: {
@@ -182,10 +207,15 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
         setError(data.message);
         return;
       }
+
+      const correoRegistrado = emailRegistro;
+
       limpiarRegistro();
       setTabActivo("login");
       setError("");
-      setSuccess('Cuenta creada')
+      setSuccess("");
+      setModalAbierto(false);
+      verificationRef.current?.mostrarModal(correoRegistrado);
 
     } catch (error) {
       console.error(error)
@@ -195,16 +225,28 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   }
 
   
-  if (!modalAbierto) return null
   return (
-    <div
-      id="modal-overlay"
-      className="modal-overlay visible"
-      onClick={cerrarModal}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="modal-tarjeta" onClick={(e) => e.stopPropagation()}>
+    <>
+      <ModalVerification
+        ref={verificationRef}
+        onIniciarSesion={() => {
+          limpiarLogin();
+          setError("");
+          setSuccess("");
+          setTabActivo("login");
+          setModalAbierto(true);
+        }}
+      />
+
+      {modalAbierto && (
+        <div
+          id="modal-overlay"
+          className="modal-overlay visible"
+          onClick={cerrarModal}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="modal-tarjeta" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="modal-cerrar"
@@ -424,9 +466,11 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
  
             </p>
           </div>
-        )}
-      </div>
-    </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   )
 })
 

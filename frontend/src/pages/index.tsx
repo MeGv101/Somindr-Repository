@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useModal } from "../context/modelContext";
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Footer from '../components/footer';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -698,7 +699,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
               Somindr
             </h2>
             <p>
-              Fit Emotional nació de la comprensión de que salud y bienestar van más profundamente
+              Somindr nació de la comprensión de que salud y bienestar van más profundamente
               conectados de lo que muchos creen. Somos una plataforma única que entiende que cada
               persona es diferente.
             </p>
@@ -710,13 +711,14 @@ export default function Index({ onOpenAuth }: IndexProps) {
               Nuestra misión: llevarte a una vida más plena a través del bienestar físico y
               emocional, con equilibrio, ciencia y dedicación especial por tu salud.
             </p>
+            <a href="/aboutus">
             <button
               type="button"
               className="btn-verde"
-              onClick={() => onOpenAuth?.('registro')}
             >
               Conoce tu transformación →
             </button>
+            </a>
           </div>
           <div className="sobre-visual">
             <div className="sobre-visual-main"><img src="https://images.pexels.com/photos/33632576/pexels-photo-33632576.jpeg" alt="Imagen sobre Somindr" className="img-sobre"/>
@@ -754,23 +756,11 @@ export default function Index({ onOpenAuth }: IndexProps) {
             Iniciar sesión
           </button>
         </div>
-      </section>
 
-      <footer>
-        <div>
-          <div className="footer-logo">
-            SOMINDR <span></span>
-          </div>
-          <p>© 2025 Fit Emotional. Todos los derechos reservados.</p>
-        </div>
-        <div className="footer-links">
-          <a href="/">Inicio</a>
-          <a href="#modulos">Psico-Emocional</a>
-          <a href="#modulos">Nutrición</a>
-          <a href="#modulos">Fitness</a>
-          <a href="/perfil">Perfil</a>
-        </div>
-      </footer>
-    </>
+      </section>
+      <Footer />
+   
+</>
   )
+  
 }

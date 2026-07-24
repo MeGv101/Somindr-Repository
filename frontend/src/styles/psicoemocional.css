@@ -15,7 +15,7 @@
   color: var(--text);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  padding: 64px 8vw 96px;
+  padding: 64px 8vw 0px;
   display: flex;
   flex-direction: column;
   gap: 88px;
