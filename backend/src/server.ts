@@ -19,7 +19,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://naturals-requirement-differential-powered.trycloudflare.com"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://soul-homes-popular-dear.trycloudflare.com"]
 })
 
 await app.register(authRoutes, {
