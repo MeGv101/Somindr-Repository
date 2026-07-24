@@ -19,19 +19,27 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://naturals-requirement-differential-powered.trycloudflare.com"]
 })
 
-await app.register(authRoutes);
+await app.register(authRoutes, {
+  prefix: "/api",
+});
 
-await app.register(moodRoutes);
+await app.register(moodRoutes, {
+  prefix: "/api",
+});
 
-await app.register(fitnessRoutes);
+await app.register(fitnessRoutes, {
+  prefix: "/api",
+});
 
-await app.register(aiRoutes);
+await app.register(aiRoutes, {
+  prefix: "/api",
+});
 
 await app.register(communityRoutes, {
-  prefix: "/community",
+  prefix: "/api/community",
 });
 
 app.get('/', async () => {
@@ -54,6 +62,7 @@ app.get('/users', async (_, reply) => {
 
 
 await app.listen({
+  host: "0.0.0.0",
   port: 3000
 });
 

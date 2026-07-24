@@ -146,7 +146,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/login",
+        "/api/login",
         {
           method: "POST",
           headers: {
@@ -181,7 +181,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const handleRegistro = async () => {
     try {
       const response = await fetch(
-        'http://localhost:3000/register',
+        '/api/register',
         {
           method: 'POST',
           headers: {
