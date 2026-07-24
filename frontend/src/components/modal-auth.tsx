@@ -2,6 +2,7 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
   type MouseEvent,
 } from 'react'
@@ -9,6 +10,9 @@ import { useNavigate } from 'react-router-dom'
 import type { AuthTab } from '../types/auth'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
+import ModalVerification, {
+  type ModalVerificationRef,
+} from './modal-verification'
 import '../styles/modal-auth.css'
 
 export type ModalAuthRef = {
@@ -36,6 +40,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
 } = auth;
 
   const navigate = useNavigate()
+  const verificationRef = useRef<ModalVerificationRef>(null)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
@@ -202,10 +207,15 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
         setError(data.message);
         return;
       }
+
+      const correoRegistrado = emailRegistro;
+
       limpiarRegistro();
       setTabActivo("login");
       setError("");
-      setSuccess('Cuenta creada')
+      setSuccess("");
+      setModalAbierto(false);
+      verificationRef.current?.mostrarModal(correoRegistrado);
 
     } catch (error) {
       console.error(error)
@@ -215,16 +225,28 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   }
 
   
-  if (!modalAbierto) return null
   return (
-    <div
-      id="modal-overlay"
-      className="modal-overlay visible"
-      onClick={cerrarModal}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="modal-tarjeta" onClick={(e) => e.stopPropagation()}>
+    <>
+      <ModalVerification
+        ref={verificationRef}
+        onIniciarSesion={() => {
+          limpiarLogin();
+          setError("");
+          setSuccess("");
+          setTabActivo("login");
+          setModalAbierto(true);
+        }}
+      />
+
+      {modalAbierto && (
+        <div
+          id="modal-overlay"
+          className="modal-overlay visible"
+          onClick={cerrarModal}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="modal-tarjeta" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="modal-cerrar"
@@ -444,9 +466,11 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
  
             </p>
           </div>
-        )}
-      </div>
-    </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   )
 })
 
