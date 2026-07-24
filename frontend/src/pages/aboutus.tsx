@@ -120,7 +120,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         </div>
       </section>
 
-    
+      {/* Equipo — fotos de los 4 integrantes */}
       <section className="sn-section">
         <h2>El equipo</h2>
         <p className="sn-lead">
