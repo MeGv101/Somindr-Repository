@@ -101,16 +101,6 @@ async function findValidToken(
   return authToken;
 }
 
-async function consumeToken(
-  tokenId: number
-): Promise<void> {
-  await db
-    .update(authTokens)
-    .set({
-      usedAt: new Date(),
-    })
-    .where(eq(authTokens.id, tokenId));
-}
 function emailWrapper(content: string): string {
   return `
   <div style="background-color:#f4f4f7; padding:40px 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
@@ -190,11 +180,3 @@ export async function sendPasswordResetEmail(
   await sendEmail(user.email, "Restablece tu contraseña", emailWrapper(content));
 }
 
-export async function verifyToken(
-  token: string,
-  type: AuthTokenType
-): Promise<(typeof authTokens.$inferSelect) | null> {
-  return findValidToken(token, type);
-}
-
-export { consumeToken };

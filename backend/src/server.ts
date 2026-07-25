@@ -6,11 +6,11 @@ import jwt from "@fastify/jwt";
 import { db } from './db/index.js'
 import { users } from './db/schema.js'
 
-import { authRoutes } from "./routes/auth.js";
-import { moodRoutes } from "./routes/mood.js";
-import { fitnessRoutes } from "./routes/fitness.js";
-import { aiRoutes } from "./routes/ai.js";
-import { communityRoutes } from "./routes/comunidad.js";
+import { authRoutes } from "./routes/auth.route.js";
+import { moodRoutes } from "./routes/mood.route.js";
+import { fitnessRoutes } from "./routes/fitness.route.js";
+import { aiRoutes } from "./routes/ai.route.js";
+import { communityRoutes } from "./routes/comunidad.route.js";
 
 const app = Fastify()
 

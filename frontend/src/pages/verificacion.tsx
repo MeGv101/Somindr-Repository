@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import "/src/styles/verificacion.css";
-
+import Footer from "../components/footer";
 export default function VerifyEmail() {
 
   const [searchParams] = useSearchParams();
@@ -72,6 +72,7 @@ export default function VerifyEmail() {
   }, []);
 
   return (
+    <>
   <div className="verify-page">
 
     <h1>Somindr</h1>
@@ -102,7 +103,10 @@ export default function VerifyEmail() {
         Ir al inicio de sesión
       </a>
     )}
+    
   </div>
+  <Footer/>
+  </>
 
 );
 }
