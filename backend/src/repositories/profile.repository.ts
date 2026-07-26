@@ -39,6 +39,7 @@ export async function updateProfile(
     estaturaCm: number;
     nivelActividad: string;
     biografia: string | null;
+    fotoPerfil: number;
   }
 ) {
   await db
@@ -53,18 +54,7 @@ export async function updateProfile(
       estaturaCm: data.estaturaCm,
       nivelActividad: data.nivelActividad,
       biografia: data.biografia,
-    })
-    .where(eq(users.id, userId));
-}
-
-export async function updateProfilePicture(
-  userId: number,
-  profilePicture: number
-) {
-  await db
-    .update(users)
-    .set({
-      fotoPerfil: profilePicture,
+      fotoPerfil: data.fotoPerfil,
     })
     .where(eq(users.id, userId));
 }

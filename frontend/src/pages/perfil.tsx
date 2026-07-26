@@ -174,30 +174,20 @@ const openModal = () => {
   setTempPreset(
     perfil.fotoPerfil - 1
   );
-
   setModalOpen(true);
-
 };
 
 const closeModal = () => {
-
   setModalOpen(false);
-
 };
 
 const confirmPreset = () => {
-
   setPerfil({
-
     ...perfil,
-
     fotoPerfil:
       tempPreset + 1,
-
   });
-
   setModalOpen(false);
-
 };
 
   return (
