@@ -281,7 +281,6 @@ export default function Profile() {
         {posts.length === 0 ? (
 
             <div className="post-empty">
-              <div className="post-empty-icon">📝</div>
               <h3>Sin publicaciones</h3>
               <p>Este usuario todavía no ha publicado nada.</p>
             </div>
