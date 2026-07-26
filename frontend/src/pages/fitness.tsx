@@ -51,7 +51,7 @@ export default function Fitness() {
 
   async function cargarCategorias() {
     try {
-      const res = await fetch('http://localhost:3000/fitness/categories')
+      const res = await fetch('/api/fitness/categories')
       const data = await res.json()
       setCategorias(data)
     } catch (err) {
@@ -61,7 +61,7 @@ export default function Fitness() {
 
   async function cargarRutinas(categoryId: number) {
     try {
-      const res = await fetch(`http://localhost:3000/fitness/category/${categoryId}/routines`)
+      const res = await fetch(`/api/fitness/category/${categoryId}/routines`)
       const data = await res.json()
       setRutinas(data)
       setRutinaDetalle(null)
@@ -74,7 +74,7 @@ export default function Fitness() {
 
   async function cargarRutina(routineId: number) {
     try {
-      const res = await fetch(`http://localhost:3000/fitness/routine/${routineId}`)
+      const res = await fetch(`/api/fitness/routine/${routineId}`)
       const data = await res.json()
       setRutinaDetalle(data)
       setEjerciciosFlipped({})
@@ -119,7 +119,7 @@ export default function Fitness() {
 
       const token = localStorage.getItem('token')
 
-      const response = await fetch('http://localhost:3000/fitness/session', {
+      const response = await fetch('/api/fitness/session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

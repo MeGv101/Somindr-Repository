@@ -4,6 +4,7 @@ import Footer from '../components/footer';
 
 export default function NotFound() {
   return (
+    <>
     <main className="notfound-page">
       <h1>404</h1>
 
@@ -16,7 +17,8 @@ export default function NotFound() {
       <Link to="/" className="return">
         Volver al inicio
       </Link>
-      <Footer />
     </main>
+    <Footer />
+    </>
   );
 }

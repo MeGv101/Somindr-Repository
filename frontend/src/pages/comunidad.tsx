@@ -102,7 +102,7 @@ export default function Comunidad() {
       localStorage.getItem("token");
     const response =
       await fetch(
-        "http://localhost:3000/community/posts",
+        "/api/community/posts",
 
         {
 
@@ -150,7 +150,7 @@ export default function Comunidad() {
 
     const response =
       await fetch(
-        "http://localhost:3000/community/posts",
+        "/api/community/posts",
         {
 
           method:"POST",
@@ -191,7 +191,7 @@ export default function Comunidad() {
       localStorage.getItem("token");
     const response =
       await fetch(
-        `http://localhost:3000/community/posts/${id}/reaction`,
+        `/api/community/posts/${id}/reaction`,
         {
 
           method:"POST",
@@ -232,7 +232,7 @@ export default function Comunidad() {
 
     const response =
       await fetch(
-        `http://localhost:3000/community/posts/${postId}/comments`,
+        `/api/community/posts/${postId}/comments`,
         {
           method:"POST",
           headers:{
@@ -568,7 +568,7 @@ export default function Comunidad() {
 
     </div>
     
-
+      <Footer />
   </div>
 );
 }

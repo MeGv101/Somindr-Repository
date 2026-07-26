@@ -38,10 +38,10 @@ const PILARES: Pilar[] = [
 
 // Reemplaza "foto" por la ruta real de cada imagen cuando la tengan lista.
 const EQUIPO: Integrante[] = [
-  { nombre: "Adán Bonilla", rol: "Desarrollo Backend", bio: "Encargado de la experiencia visual e interfaz de Somindr.", foto: "../media/SRC/Adan.jpg" },
-  { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma.", foto: "../media/SRC/Mario.jpg" },
-  { nombre: "Gabriel Marroquín", rol: "Desarrollo Frontend",  bio: "Encargado del contenido en nutrición, físico y salud emocional.", foto: "../media/SRC/Chiqui.jpg" },
-  { nombre: "Emily Flores", rol: "Desarrollo Frontend",        bio: "Encargado de que la plataforma sea clara, cómoda y accesible.", foto: "../media/SRC/yopi.jpg" },
+  { nombre: "Adán Bonilla", rol: "Desarrollo Backend", bio: "Encargado de la experiencia visual e interfaz de Somindr.", foto: "../media/SRC/New Adan.png" },
+  { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma.", foto: "../media/SRC/New Mario.png" },
+  { nombre: "Gabriel Marroquín", rol: "Desarrollo Frontend",  bio: "Encargado del contenido en nutrición, físico y salud emocional.", foto: "../media/SRC/New Gabriel.png" },
+  { nombre: "Emily Flores", rol: "Desarrollo Frontend",        bio: "Encargado de que la plataforma sea clara, cómoda y accesible.", foto: "../media/SRC/New Me.png" },
 ];
 
 function iniciales(nombre: string) {
@@ -121,7 +121,7 @@ export default function sobreNosotros(): import("react/jsx-runtime").JSX.Element
         </div>
       </section>
 
-    
+      {/* Equipo — fotos de los 4 integrantes */}
       <section className="sn-section">
         <h2>El equipo</h2>
         <p className="sn-lead">
