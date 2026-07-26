@@ -13,7 +13,9 @@ import { AuthContext } from "../context/authContext"
 import ModalVerification, {
   type ModalVerificationRef,
 } from './modal-verification'
+import { validarDatosRegistro } from '../utils/validacionesRegistro'
 import '../styles/modal-auth.css'
+import '../styles/modal-error-datos.css'
 
 export type ModalAuthRef = {
   mostrarModal: (
@@ -60,6 +62,11 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const [pesoKg, setPesoKg] = useState("")
   const [estaturaCm, setEstaturaCm] = useState("")
   const [nivelActividad, setNivelActividad] = useState("")
+
+  // Modal de dato inválido (peso, estatura o fecha de nacimiento irreales)
+  const [modalDatoInvalidoAbierto, setModalDatoInvalidoAbierto] =
+    useState(false)
+  const [mensajeDatoInvalido, setMensajeDatoInvalido] = useState("")
 
   const limpiarLogin = () => {
     setEmail("");
@@ -153,6 +160,10 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
     setTabActivo(tab)
   }
 
+  const cerrarModalDatoInvalido = () => {
+    setModalDatoInvalidoAbierto(false)
+  }
+
   const handleLogin = async () => {
     if (!email || !passwordLogin) {
       setSuccess("");
@@ -194,6 +205,38 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   };
 
   const handleRegistro = async () => {
+
+    // Validamos que peso, estatura y fecha de nacimiento sean datos reales.
+    // No se exige un mínimo fijo (como 0): si el valor ingresado es
+    // irreal, se limpia únicamente ese campo y se muestra el aviso.
+    const resultado = validarDatosRegistro({
+      pesoKg,
+      estaturaCm,
+      fechaNacimiento,
+    });
+
+    if (!resultado.valido) {
+
+      if (resultado.campoInvalido === "pesoKg") {
+        setPesoKg("");
+      }
+
+      if (resultado.campoInvalido === "estaturaCm") {
+        setEstaturaCm("");
+      }
+
+      if (resultado.campoInvalido === "fechaNacimiento") {
+        setFechaNacimiento("");
+      }
+
+      setMensajeDatoInvalido(
+        resultado.mensaje ??
+          "Verifica los datos ingresados."
+      );
+      setModalDatoInvalidoAbierto(true);
+      return;
+    }
+
     try {
       const response = await fetch(
         '/api/register',
@@ -471,6 +514,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             <div className="campo">
               <input
                 type="date"
+                max={new Date().toISOString().split("T")[0]}
                 value={fechaNacimiento}
                 onChange={(e) =>
                   setFechaNacimiento(e.target.value)
@@ -565,6 +609,40 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             </p>
           </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {modalDatoInvalidoAbierto && (
+        <div
+          className="validacion-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              cerrarModalDatoInvalido();
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="validacion-modal">
+            <div className="validacion-icono">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 9v4" />
+                <path d="M12 17h.01" />
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+            </div>
+            <p className="validacion-titulo">Dato inválido</p>
+            <p className="validacion-mensaje">
+              {mensajeDatoInvalido}
+            </p>
+            <button
+              type="button"
+              className="validacion-btn"
+              onClick={cerrarModalDatoInvalido}
+            >
+              Entendido
+            </button>
           </div>
         </div>
       )}

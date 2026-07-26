@@ -53,6 +53,15 @@ export default function Perfil() {
   const [tempPreset, setTempPreset] =
     useState(0);
 
+  const [successOpen, setSuccessOpen] =
+    useState(false);
+
+  const [errorOpen, setErrorOpen] =
+    useState(false);
+
+  const [errorMsg, setErrorMsg] =
+    useState("Ocurrió un error al guardar tus cambios. Intenta de nuevo.");
+
   useEffect(() => {
     cargarPerfil();
   }, []);
@@ -115,7 +124,164 @@ export default function Perfil() {
 
 }
 
+function validarPerfil() {
+
+  // No se fuerza ningún mínimo (como 0) desde el input: el usuario
+  // puede escribir libremente. Si al guardar el valor resulta irreal,
+  // se limpia únicamente ese campo y se muestra el aviso correspondiente.
+
+  // ----- Peso -----
+  if (perfil.pesoKg !== "" && perfil.pesoKg !== null) {
+
+    const peso = Number(perfil.pesoKg);
+
+    if (isNaN(peso) || peso <= 0) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        pesoKg: "",
+      }));
+
+      setErrorMsg(
+        "El peso ingresado no es un valor real. Ingresa un peso válido en kilogramos."
+      );
+
+      return false;
+
+    }
+
+    if (peso > 500) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        pesoKg: "",
+      }));
+
+      setErrorMsg(
+        "El peso ingresado es demasiado alto para ser real. Verifica el dato."
+      );
+
+      return false;
+
+    }
+
+  }
+
+  // ----- Estatura -----
+  if (perfil.estaturaCm !== "" && perfil.estaturaCm !== null) {
+
+    const estatura = Number(perfil.estaturaCm);
+
+    if (isNaN(estatura) || estatura <= 0) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        estaturaCm: "",
+      }));
+
+      setErrorMsg(
+        "La estatura ingresada no es un valor real. Ingresa una estatura válida en centímetros."
+      );
+
+      return false;
+
+    }
+
+    if (estatura > 300) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        estaturaCm: "",
+      }));
+
+      setErrorMsg(
+        "La estatura ingresada es demasiado alta para ser real. Verifica el dato."
+      );
+
+      return false;
+
+    }
+
+  }
+
+  // ----- Fecha de nacimiento -----
+  if (perfil.fechaNacimiento) {
+
+    const fechaNac = new Date(
+      perfil.fechaNacimiento
+    );
+
+    if (isNaN(fechaNac.getTime())) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        fechaNacimiento: "",
+      }));
+
+      setErrorMsg(
+        "La fecha de nacimiento ingresada no es válida."
+      );
+
+      return false;
+
+    }
+
+    const hoy = new Date();
+
+    if (fechaNac > hoy) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        fechaNacimiento: "",
+      }));
+
+      setErrorMsg(
+        "La fecha de nacimiento no puede ser una fecha futura."
+      );
+
+      return false;
+
+    }
+
+    let edad =
+      hoy.getFullYear() - fechaNac.getFullYear();
+
+    const cumpleEsteAnio =
+      hoy.getMonth() > fechaNac.getMonth() ||
+      (hoy.getMonth() === fechaNac.getMonth() &&
+        hoy.getDate() >= fechaNac.getDate());
+
+    if (!cumpleEsteAnio) {
+      edad -= 1;
+    }
+
+    if (edad < 1 || edad > 120) {
+
+      setPerfil((prev) => ({
+        ...prev,
+        fechaNacimiento: "",
+      }));
+
+      setErrorMsg(
+        "La fecha de nacimiento debe corresponder a una edad real (entre 1 y 120 años)."
+      );
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
 async function guardarPerfil() {
+
+  if (!validarPerfil()) {
+    setErrorOpen(true);
+    return;
+  }
 
   try {
 
@@ -137,15 +303,21 @@ async function guardarPerfil() {
 
         },
 
-        body: JSON.stringify(perfil),
+        body: JSON.stringify({
+          ...perfil,
+          pesoKg: Number(perfil.pesoKg),
+          estaturaCm: Number(perfil.estaturaCm),
+        }),
 
       });
 
     if (!response.ok) {
 
-      alert(
-        "No se pudo actualizar el perfil."
+      setErrorMsg(
+        "No se pudo actualizar el perfil. Intenta de nuevo."
       );
+
+      setErrorOpen(true);
 
       return;
 
@@ -153,17 +325,17 @@ async function guardarPerfil() {
 
     await cargarPerfil();
 
-    alert(
-      "Perfil actualizado correctamente."
-    );
+    setSuccessOpen(true);
 
   } catch (err) {
 
     console.error(err);
 
-    alert(
-      "Error del servidor."
+    setErrorMsg(
+      "Ocurrió un error al conectar con el servidor. Intenta de nuevo."
     );
+
+    setErrorOpen(true);
 
   }
 
@@ -188,6 +360,14 @@ const confirmPreset = () => {
       tempPreset + 1,
   });
   setModalOpen(false);
+};
+
+const closeSuccess = () => {
+  setSuccessOpen(false);
+};
+
+const closeError = () => {
+  setErrorOpen(false);
 };
 
   return (
@@ -323,6 +503,7 @@ const confirmPreset = () => {
 
                   <input
                     type="date"
+                    max={new Date().toISOString().split("T")[0]}
                     value={perfil.fechaNacimiento}
                     onChange={(e) =>
                       setPerfil({
@@ -395,9 +576,7 @@ const confirmPreset = () => {
                     onChange={(e) =>
                       setPerfil({
                         ...perfil,
-                        pesoKg: Number(
-                          e.target.value
-                        ),
+                        pesoKg: e.target.value,
                       })
                     }
                   />
@@ -414,9 +593,7 @@ const confirmPreset = () => {
                     onChange={(e) =>
                       setPerfil({
                         ...perfil,
-                        estaturaCm: Number(
-                          e.target.value
-                        ),
+                        estaturaCm: e.target.value,
                       })
                     }
                   />
@@ -503,6 +680,37 @@ const confirmPreset = () => {
             </div>
         </div>
       </div>
+
+      <div className={`success-overlay${successOpen ? ' open' : ''}`} id="successOverlay">
+        <div className="success-modal">
+          <div className="success-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12l5 5L20 6" />
+            </svg>
+          </div>
+          <p className="success-title">Datos guardados con éxito</p>
+          <p className="success-sub">Tu perfil se actualizó correctamente.</p>
+          <button className="success-close-btn" onClick={closeSuccess}>
+            Aceptar
+          </button>
+        </div>
+      </div>
+
+      <div className={`error-overlay${errorOpen ? ' open' : ''}`} id="errorOverlay">
+        <div className="error-modal">
+          <div className="error-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </div>
+          <p className="error-title">No se pudo actualizar el perfil</p>
+          <p className="error-sub">{errorMsg}</p>
+          <button className="error-close-btn" onClick={closeError}>
+            Aceptar
+          </button>
+        </div>
+      </div>
+
       <Footer />
     </>
   )
