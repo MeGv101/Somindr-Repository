@@ -55,6 +55,11 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   const [username, setUsername] = useState('')
   const [emailRegistro, setEmailRegistro] = useState('')
   const [passwordRegistro, setPasswordRegistro] = useState('')
+  const [genero, setGenero] = useState("")
+  const [fechaNacimiento, setFechaNacimiento] = useState("")
+  const [pesoKg, setPesoKg] = useState("")
+  const [estaturaCm, setEstaturaCm] = useState("")
+  const [nivelActividad, setNivelActividad] = useState("")
 
   const limpiarLogin = () => {
     setEmail("");
@@ -62,12 +67,17 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   };
 
   const limpiarRegistro = () => {
-    setNombre("");
-    setApellido("");
-    setUsername("");
-    setEmailRegistro("");
-    setPasswordRegistro("");
-  };
+    setNombre("")
+    setApellido("")
+    setUsername("")
+    setEmailRegistro("")
+    setPasswordRegistro("")
+    setGenero("")
+    setFechaNacimiento("")
+    setPesoKg("")
+    setEstaturaCm("")
+    setNivelActividad("")
+  }
 
   const mostrarModal = (
   tab: AuthTab = "login"
@@ -198,6 +208,11 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
             username,
             email: emailRegistro,
             password: passwordRegistro,
+            genero,
+            fechaNacimiento,
+            pesoKg: Number(pesoKg),
+            estaturaCm: Number(estaturaCm),
+            nivelActividad,
           }),
         }
       )
@@ -430,6 +445,89 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
                 value={passwordRegistro}
                 onChange={(e) => setPasswordRegistro(e.target.value)}
               />
+            </div>
+            <div className="campo">
+              <select
+                value={genero}
+                onChange={(e) => setGenero(e.target.value)}
+              >
+                <option value="">
+                  Selecciona tu género
+                </option>
+
+                <option value="Masculino">
+                  Masculino
+                </option>
+
+                <option value="Femenino">
+                  Femenino
+                </option>
+
+                <option value="Otro">
+                  Otro
+                </option>
+              </select>
+            </div>
+            <div className="campo">
+              <input
+                type="date"
+                value={fechaNacimiento}
+                onChange={(e) =>
+                  setFechaNacimiento(e.target.value)
+                }
+              />
+            </div>
+            <div className="campo">
+              <input
+                type="number"
+                placeholder="Peso (kg)"
+                value={pesoKg}
+                onChange={(e) =>
+                  setPesoKg(e.target.value)
+                }
+              />
+            </div>
+            <div className="campo">
+              <input
+                type="number"
+                placeholder="Estatura (cm)"
+                value={estaturaCm}
+                onChange={(e) =>
+                  setEstaturaCm(e.target.value)
+                }
+              />
+            </div>
+            <div className="campo">
+              <select
+                value={nivelActividad}
+                onChange={(e) =>
+                  setNivelActividad(e.target.value)
+                }
+              >
+                <option value="">
+                  Nivel de actividad
+                </option>
+
+                <option value="Sedentario">
+                  Sedentario
+                </option>
+
+                <option value="Ligero">
+                  Ligero
+                </option>
+
+                <option value="Moderado">
+                  Moderado
+                </option>
+
+                <option value="Activo">
+                  Activo
+                </option>
+
+                <option value="Muy activo">
+                  Muy activo
+                </option>
+              </select>
             </div>
             {error && (
               <p className="mensaje-error">

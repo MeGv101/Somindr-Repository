@@ -35,7 +35,7 @@ export default function Footer({ handleLinkClick }: FooterProps) {
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
           </Link>
-          <Link to="/perfil" className="sidebar-link" onClick={handleLinkClick}>
+          <Link to="/profile/configuration" className="sidebar-link" onClick={handleLinkClick}>
             Configuración
           </Link>
         </div>

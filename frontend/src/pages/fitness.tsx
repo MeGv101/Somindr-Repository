@@ -293,7 +293,6 @@ export default function Fitness() {
               {saving ? 'Guardando...' : 'Guardar Entrenamiento'}
             </button>
 
-            <Footer />
           </section>
         )}
         <Footer />

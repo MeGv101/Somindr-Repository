@@ -13,6 +13,7 @@ import type {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+
 const FRONTEND_URL = process.env.FRONTEND_URL!;
 const TOKEN_EXPIRATION_HOURS = 24;
 
@@ -32,6 +33,12 @@ async function sendEmail(
   subject: string,
   html: string
 ): Promise<void> {
+
+  if (process.env.EMAILS_ENABLED !== "true") {
+    console.log(`[DEV] Correo de verificación omitido por motivos de testeo.`);
+    return;
+  }
+
   const { error } = await resend.emails.send({
     from: "Somindr <onboarding@resend.dev>",
     to,
@@ -101,16 +108,6 @@ async function findValidToken(
   return authToken;
 }
 
-async function consumeToken(
-  tokenId: number
-): Promise<void> {
-  await db
-    .update(authTokens)
-    .set({
-      usedAt: new Date(),
-    })
-    .where(eq(authTokens.id, tokenId));
-}
 function emailWrapper(content: string): string {
   return `
   <div style="background-color:#f4f4f7; padding:40px 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
@@ -190,11 +187,3 @@ export async function sendPasswordResetEmail(
   await sendEmail(user.email, "Restablece tu contraseña", emailWrapper(content));
 }
 
-export async function verifyToken(
-  token: string,
-  type: AuthTokenType
-): Promise<(typeof authTokens.$inferSelect) | null> {
-  return findValidToken(token, type);
-}
-
-export { consumeToken };
