@@ -51,6 +51,22 @@ export default function Profile() {
     avatar8,
   ];
 
+  interface ProfessionalContact {
+      type: string;
+      value: string;
+    }
+
+    interface ProfessionalProfile {
+      profession: string;
+      description: string;
+      pricePerHour: number;
+      verified: boolean;
+      contacts: ProfessionalContact[];
+    }
+
+  const [professional, setProfessional] =
+  useState<ProfessionalProfile | null>(null);
+
   useEffect(() => {
     cargarPerfil();
   }, [username]);
@@ -82,6 +98,20 @@ export default function Profile() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+
+    const response =
+      await fetch(
+        `/api/profile/professional/${username}`
+      );
+
+    if (response.ok) {
+
+      const data =
+        await response.json();
+
+      setProfessional(data);
+
     }
   }
 
@@ -190,6 +220,57 @@ export default function Profile() {
           </p>
 
         </div>
+
+
+        {
+          professional && (
+
+          <div className="card">
+
+            <h3>
+              Profesional
+            </h3>
+
+            <p>
+              {professional.profession}
+            </p>
+
+            <p>
+              {professional.description}
+            </p>
+
+            <p>
+              ${professional.pricePerHour}/hora
+            </p>
+
+            {professional.verified && (
+              <span className="verified">
+                ✔ Verificado
+              </span>
+            )}
+
+            <h4>
+              Contacto
+            </h4>
+
+            {
+              professional.contacts.map(
+                (contact, index) => (
+
+                <p key={index}>
+                  <strong>
+                    {contact.type}:
+                  </strong>{" "}
+                  {contact.value}
+                </p>
+
+              ))
+            }
+
+          </div>
+
+          )
+          }
 
 
         <div className="card">

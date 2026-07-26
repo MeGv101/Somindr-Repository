@@ -58,4 +58,22 @@ export async function profileRoutes(
     }
   );
 
+  fastify.get(
+    "/profile/professional/:username",
+    async (request) => {
+
+      const { username } =
+        request.params as {
+          username: string;
+        };
+
+      return await service
+        .getProfessionalByUsername(
+          username
+        );
+
+    }
+  );
+
 }
+
