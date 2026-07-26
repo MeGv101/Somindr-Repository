@@ -3,6 +3,15 @@ import { Link , useNavigate } from 'react-router-dom'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import '../styles/navbar.css'
+import Guest from "../assets/avatars/Guest.jpg";
+import avatar1 from "../assets/avatars/avatar1.jpeg";
+import avatar2 from "../assets/avatars/avatar2.jpeg";
+import avatar3 from "../assets/avatars/avatar3.jpeg";
+import avatar4 from "../assets/avatars/avatar4.jpeg";
+import avatar5 from "../assets/avatars/avatar5.jpeg";
+import avatar6 from "../assets/avatars/avatar6.jpeg";
+import avatar7 from "../assets/avatars/avatar7.jpeg";
+import avatar8 from "../assets/avatars/avatar8.jpeg";
 
 import type { AuthTab } from '../types/auth'
 
@@ -12,6 +21,16 @@ type NavbarProps = {
 
 export default function Navbar({ onOpenAuth }: NavbarProps) {
 
+  const avatars = [
+    avatar1,
+    avatar2,
+    avatar3,
+    avatar4,
+    avatar5,
+    avatar6,
+    avatar7,
+    avatar8,
+  ];
   const navigate = useNavigate()
   const auth = useContext(AuthContext);
 
@@ -24,6 +43,8 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
   const {
     isAuthenticated,
     setIsAuthenticated,
+    user,
+    setUser,
   } = auth;
   const [isOpen, setIsOpen] = useState(false)
 
@@ -38,10 +59,11 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
 
   const handleLogout = () => {
     navigate("/")
+    setUser(null);
+    setIsAuthenticated(false)
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     handleLinkClick()
-    setIsAuthenticated(false)
     return
   }
 
@@ -83,10 +105,26 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
           </Link>
-          <Link to="/perfil" className="sidebar-link" onClick={handleLinkClick}>
-            Configuración
-          </Link>
-
+          <div className='nav-profile'>
+            <Link
+              to="/perfil"
+              className="sidebar-link profile-link"
+              onClick={handleLinkClick}
+            >
+              <img
+                src={user ? avatars[user.fotoPerfil - 1] : Guest}
+                className="navbar-avatar"
+                alt="Avatar"
+              />          
+              <span>
+                {
+                  user
+                    ? user.username
+                    : "Invitado"
+                }
+              </span>
+          </Link> 
+          </div>
           
         </div>
         <div className="menu-right">

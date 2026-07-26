@@ -217,3 +217,29 @@ export async function deleteReaction(
     .delete(postReactions)
     .where(eq(postReactions.id, id));
 }
+
+export async function findPostsByUsername(
+  username: string
+) {
+  return await db
+    .select({
+      id: posts.id,
+      title: posts.title,
+      category: posts.category,
+      content: posts.content,
+      edited: posts.edited,
+      createdAt: posts.createdAt,
+      updatedAt: posts.updatedAt,
+      author: users.username,
+      avatar: users.fotoPerfil,
+    })
+    .from(posts)
+    .innerJoin(
+      users,
+      eq(posts.userId, users.id)
+    )
+    .where(
+      eq(users.username, username)
+    )
+    .orderBy(desc(posts.createdAt));
+}

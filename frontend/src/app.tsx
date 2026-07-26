@@ -32,6 +32,7 @@ import AI from "./pages/ai";
 
 import Verificacion from "./pages/verificacion";
 
+import Profiles from "./pages/profiles";
 
 function App() {
 
@@ -71,7 +72,7 @@ function App() {
         <Route path="/" element={<Index onOpenAuth={openAuth} />} />
 
         <Route
-          path="/perfil"
+          path="/profile/configuration"
           element={
             <ProtectedRoute>
               <Perfil />
@@ -120,6 +121,24 @@ function App() {
           element={
             <ProtectedRoute>
               <Comunidad />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/perfil/:username"
+          element={
+            <ProtectedRoute>
+              <Profiles />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <Profiles />
             </ProtectedRoute>
           }
         />

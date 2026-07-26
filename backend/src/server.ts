@@ -12,7 +12,7 @@ import { fitnessRoutes } from "./routes/fitness.route.js";
 import { aiRoutes } from "./routes/ai.route.js";
 import { communityRoutes } from "./routes/comunidad.route.js";
 import { profileRoutes } from "./routes/profile.route.js";
-
+import { userRoutes } from "./routes/user.route.js";
 const app = Fastify()
 
 await app.register(jwt, {
@@ -45,6 +45,10 @@ await app.register(communityRoutes, {
 
 await app.register(profileRoutes, {
   prefix: "/api",
+});
+
+await app.register(userRoutes, {
+    prefix:"/api/users"
 });
 
 app.get('/', async () => {

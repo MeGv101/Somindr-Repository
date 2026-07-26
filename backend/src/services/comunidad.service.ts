@@ -270,9 +270,7 @@ export async function deleteComment(
 }
 
 
-// ==========================
 // REACTIONS
-// ==========================
 
 export async function react(
   userId: number,
@@ -332,4 +330,11 @@ export async function react(
       "Reacción actualizada."
   };
 
+}
+
+export async function getPostsByUsername(
+  username: string
+) {
+  return await repository
+    .findPostsByUsername(username);
 }

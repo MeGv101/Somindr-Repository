@@ -148,7 +148,8 @@ a{
     font-weight: 500;
     padding: 10px 15px;
     transition: all 0.2s;
-    display: block;
+    display: flex;
+    align-items: center;
     border-radius: 8px;
     width: 120%;
     background-color: transparent;
@@ -249,4 +250,14 @@ a{
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+}
+.navbar-avatar{
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.nav-profile{
+    display: flex;
+    align-items: center;
+    width: 100%;
 }

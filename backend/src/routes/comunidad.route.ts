@@ -218,4 +218,30 @@ export async function communityRoutes(
       );
     }
   );
+  fastify.get(
+  "/user/:username",
+  async (request, reply) => {
+
+    try {
+
+      const { username } =
+        request.params as {
+          username: string;
+        };
+
+      return await communityService
+        .getPostsByUsername(username);
+
+    } catch {
+
+      return reply.status(400).send({
+        message:
+          "No se pudieron obtener las publicaciones",
+      });
+
+    }
+
+  }
+);
 }
+
