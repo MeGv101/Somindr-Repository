@@ -1,61 +1,56 @@
 import { useState, useRef } from 'react'
+import type { ChangeEvent } from 'react'
 import '../styles/perfil.css'
-import Navbar from '../components/navbar'
-import Footer from '../components/footer';
 
-const PRESET_AVATARS = [
-  { hair: '#3CB878', bg: '#DCF3E6' },
-  { hair: '#0EA8A0', bg: '#DAF3F1' },
-  { hair: '#3B82F6', bg: '#DDEAFE' },
-  { hair: '#8B5CF6', bg: '#EDE6FE' },
-  { hair: '#EC4899', bg: '#FCE4F0' },
-  { hair: '#64748B', bg: '#E7EBEF' },
-  { hair: '#14B8A6', bg: '#D9F5F0' },
-  { hair: '#F97316', bg: '#FEE9DA' },
-]
-
-function FaceSVG({ hair, bg }) {
-  return (
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="50" fill={bg} />
-      <ellipse cx="50" cy="40" rx="18" ry="20" fill={hair} />
-      <ellipse cx="50" cy="80" rx="28" ry="22" fill={hair} />
-      <circle cx="50" cy="38" r="15" fill="#FFDBB5" />
-      <ellipse cx="44" cy="36" rx="2.5" ry="3" fill="#333" />
-      <ellipse cx="56" cy="36" rx="2.5" ry="3" fill="#333" />
-      <path d="M44 44 Q50 49 56 44" stroke="#c0856a" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    </svg>
-  )
+type PresetAvatar = {
+  name: string
+  gender: 'f' | 'm'
+  src: string
 }
 
+type CurrentAvatar =
+  | { type: 'preset'; index: number }
+  | { type: 'photo'; src: string }
+
+// Coloca las 8 imágenes en /public/media/ (mismos nombres) para que estas rutas funcionen.
+const PRESET_AVATARS: PresetAvatar[] = [
+  { name: 'Rizos', gender: 'f', src: "../media/SRC/avatar-01-rizos-verde.png" },
+  { name: 'Rubia', gender: 'f', src: "../media/SRC/avatar-02-rubia-rosa.png" },
+  { name: 'Corto punk', gender: 'f', src: "../media/SRC/avatar-03-corto-punk.png" },
+  { name: 'Pelirroja', gender: 'f', src: "../media/SRC/avatar-04-pelirroja-naranja.png" },
+  { name: 'Lentes', gender: 'm', src: "../media/SRC/avatar-05-lentes-azul.png" },
+  { name: 'Ondulado', gender: 'm', src: "../media/SRC/avatar-06-ondulado-morado.png" },
+  { name: 'Pelirrojo', gender: 'm', src: "../media/SRC/avatar-07-pelirrojo-verde.png" },
+  { name: 'Barba', gender: 'm', src: "../media/SRC/avatar-08-barba-cuadros.png" },
+]
+
 export default function Perfil() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState('personajes') // 'personajes' | 'foto'
-  const [currentAvatar, setCurrentAvatar] = useState({ type: 'preset', index: 0 })
-  const [tempPreset, setTempPreset] = useState(0)
-  const [photoPreview, setPhotoPreview] = useState(null)
-  const fileInputRef = useRef(null)
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [activeTab, setActiveTab] = useState<'personajes' | 'foto'>('personajes')
+  const [currentAvatar, setCurrentAvatar] = useState<CurrentAvatar>({ type: 'preset', index: 0 })
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const openModal = () => {
     setActiveTab('personajes')
-    setTempPreset(currentAvatar.type === 'preset' ? currentAvatar.index : 0)
     setPhotoPreview(currentAvatar.type === 'photo' ? currentAvatar.src : null)
     setModalOpen(true)
   }
 
   const closeModal = () => setModalOpen(false)
 
-  const handleFileChange = (e) => {
+  // Un clic en el avatar lo aplica y cierra el modal al instante
+  const selectPreset = (index: number) => {
+    setCurrentAvatar({ type: 'preset', index })
+    setModalOpen(false)
+  }
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = () => setPhotoPreview(reader.result)
+    reader.onload = () => setPhotoPreview(reader.result as string)
     reader.readAsDataURL(file)
-  }
-
-  const confirmPreset = () => {
-    setCurrentAvatar({ type: 'preset', index: tempPreset })
-    setModalOpen(false)
   }
 
   const confirmPhoto = () => {
@@ -64,6 +59,9 @@ export default function Perfil() {
     setModalOpen(false)
   }
 
+  const displayedSrc =
+    currentAvatar.type === 'photo' ? currentAvatar.src : PRESET_AVATARS[currentAvatar.index].src
+
   return (
     <>
       <main className="main">
@@ -71,11 +69,7 @@ export default function Perfil() {
         <div className="pf-header">
           <div className="avatar-wrap" onClick={openModal}>
             <div className="avatar-circle" id="avatarCircle">
-              {currentAvatar.type === 'photo' ? (
-                <img src={currentAvatar.src} alt="Tu avatar" />
-              ) : (
-                <FaceSVG {...PRESET_AVATARS[currentAvatar.index]} />
-              )}
+              <img src={displayedSrc} alt="Tu avatar" />
             </div>
             <div className="avatar-edit-btn" id="openModal">
               <svg viewBox="0 0 16 16"><path d="M11.013 2.513a1.75 1.75 0 012.475 2.474L5.07 13.406a2.25 2.25 0 01-.92.578l-2.8.867.867-2.8a2.25 2.25 0 01.578-.92l8.218-8.218z" /></svg>
@@ -83,7 +77,7 @@ export default function Perfil() {
           </div>
           <div>
             <p className="pf-name" id="displayName">Nombre Apellido</p>
-            <p className="pf-sub">usuario@email.com · Miembro desde Enero 2025</p>
+            <p className="pf-sub">usuario@email.com · Miembro desde Enero 2026</p>
           </div>
           <button className="btn-guardar" style={{ marginLeft: 'auto' }}>Guardar cambios</button>
         </div>
@@ -197,16 +191,14 @@ export default function Perfil() {
                 {PRESET_AVATARS.map((av, i) => (
                   <div
                     key={i}
-                    className={`av-item${tempPreset === i ? ' sel' : ''}`}
-                    onClick={() => setTempPreset(i)}
+                    className={`av-item${currentAvatar.type === 'preset' && currentAvatar.index === i ? ' sel' : ''}`}
+                    onClick={() => selectPreset(i)}
+                    title={av.name}
                   >
-                    <FaceSVG {...av} />
+                    <img src={av.src} alt={av.name} />
                   </div>
                 ))}
               </div>
-              <button className="av-select-btn" onClick={confirmPreset}>
-                Usar este avatar
-              </button>
             </div>
           )}
 
@@ -238,7 +230,6 @@ export default function Perfil() {
           )}
         </div>
       </div>
-      <Footer />
     </>
   )
 }
