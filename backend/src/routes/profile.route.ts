@@ -42,6 +42,7 @@ export async function profileRoutes(
           estaturaCm: number;
           nivelActividad: string;
           biografia: string | null;
+          fotoPerfil: number;
         };
 
       await service.editProfile(
@@ -57,31 +58,22 @@ export async function profileRoutes(
     }
   );
 
-  fastify.patch(
-    "/profile/picture",
+  fastify.get(
+    "/profile/professional/:username",
     async (request) => {
 
-      const payload =
-        await request.jwtVerify() as {
-          id: number;
+      const { username } =
+        request.params as {
+          username: string;
         };
 
-      const body =
-        request.body as {
-          profilePicture: number;
-        };
-
-      await service.changeProfilePicture(
-        payload.id,
-        body.profilePicture
-      );
-
-      return {
-        message:
-          "Foto actualizada."
-      };
+      return await service
+        .getProfessionalByUsername(
+          username
+        );
 
     }
   );
 
 }
+

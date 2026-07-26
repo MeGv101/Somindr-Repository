@@ -87,6 +87,8 @@ export async function register(body: {
     nivelActividad: string;
 }) {
 
+    body.username = body.username.trim().toLowerCase();
+
     const emailRegex =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

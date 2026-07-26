@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "../db/index.js";
-import { users } from "../db/schema.js";
+import { users, professionals, professionalContacts } from "../db/schema.js";
 
 export async function getProfileByUserId(
   userId: number
@@ -39,6 +39,7 @@ export async function updateProfile(
     estaturaCm: number;
     nivelActividad: string;
     biografia: string | null;
+    fotoPerfil: number;
   }
 ) {
   await db
@@ -53,18 +54,80 @@ export async function updateProfile(
       estaturaCm: data.estaturaCm,
       nivelActividad: data.nivelActividad,
       biografia: data.biografia,
+      fotoPerfil: data.fotoPerfil,
     })
     .where(eq(users.id, userId));
 }
-
-export async function updateProfilePicture(
-  userId: number,
-  profilePicture: number
+export async function findProfessionalByUsername(
+  username: string
 ) {
-  await db
-    .update(users)
-    .set({
-      fotoPerfil: profilePicture,
-    })
-    .where(eq(users.id, userId));
+
+  const professional =
+    await db
+      .select({
+        profession:
+          professionals.profession,
+        description:
+          professionals.description,
+        verified:
+          professionals.verified,
+        pricePerHour:
+          professionals.pricePerHour,
+        acceptingClients:
+          professionals.acceptingClients,
+      })
+      .from(professionals)
+      .innerJoin(
+        users,
+        eq(
+          professionals.userId,
+          users.id
+        )
+      )
+      .where(
+        eq(
+          users.username,
+          username
+        )
+      );
+
+  if (!professional.length) {
+    return null;
+  }
+  const contacts =
+    await db
+      .select({
+        type:
+          professionalContacts.type,
+        value:
+          professionalContacts.value,
+        visible:
+          professionalContacts.visible,
+      })
+      .from(professionalContacts)
+      .innerJoin(
+        professionals,
+        eq(
+          professionalContacts.professionalId,
+          professionals.id
+        )
+      )
+      .innerJoin(
+        users,
+        eq(
+          professionals.userId,
+          users.id
+        )
+      )
+      .where(
+        eq(
+          users.username,
+          username
+        )
+      );
+  return {
+    ...professional[0],
+    contacts,
+  };
+
 }

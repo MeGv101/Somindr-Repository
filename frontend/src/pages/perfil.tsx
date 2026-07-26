@@ -1,227 +1,84 @@
-import { useState, useRef, useEffect } from "react";
-
-import "../styles/perfil.css";
-
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
-
-import avatar1 from "../assets/avatars/avatar1.jpeg";
-import avatar2 from "../assets/avatars/avatar2.jpeg";
-import avatar3 from "../assets/avatars/avatar3.jpeg";
-import avatar4 from "../assets/avatars/avatar4.jpeg";
-import avatar5 from "../assets/avatars/avatar5.jpeg";
-import avatar6 from "../assets/avatars/avatar6.jpeg";
-import avatar7 from "../assets/avatars/avatar7.jpeg";
-import avatar8 from "../assets/avatars/avatar8.jpeg";
+import { useState, useRef } from 'react'
+import '../styles/perfil.css'
+import Navbar from '../components/navbar'
+import Footer from '../components/footer';
 
 const PRESET_AVATARS = [
-  avatar1,
-  avatar2,
-  avatar3,
-  avatar4,
-  avatar5,
-  avatar6,
-  avatar7,
-  avatar8,
-];
+  { hair: '#3CB878', bg: '#DCF3E6' },
+  { hair: '#0EA8A0', bg: '#DAF3F1' },
+  { hair: '#3B82F6', bg: '#DDEAFE' },
+  { hair: '#8B5CF6', bg: '#EDE6FE' },
+  { hair: '#EC4899', bg: '#FCE4F0' },
+  { hair: '#64748B', bg: '#E7EBEF' },
+  { hair: '#14B8A6', bg: '#D9F5F0' },
+  { hair: '#F97316', bg: '#FEE9DA' },
+]
+
+function FaceSVG({ hair, bg }) {
+  return (
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill={bg} />
+      <ellipse cx="50" cy="40" rx="18" ry="20" fill={hair} />
+      <ellipse cx="50" cy="80" rx="28" ry="22" fill={hair} />
+      <circle cx="50" cy="38" r="15" fill="#FFDBB5" />
+      <ellipse cx="44" cy="36" rx="2.5" ry="3" fill="#333" />
+      <ellipse cx="56" cy="36" rx="2.5" ry="3" fill="#333" />
+      <path d="M44 44 Q50 49 56 44" stroke="#c0856a" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 export default function Perfil() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState('personajes') // 'personajes' | 'foto'
+  const [currentAvatar, setCurrentAvatar] = useState({ type: 'preset', index: 0 })
+  const [tempPreset, setTempPreset] = useState(0)
+  const [photoPreview, setPhotoPreview] = useState(null)
+  const fileInputRef = useRef(null)
 
-  const [loading, setLoading] =
-    useState(true);
-
-  const [perfil, setPerfil] =
-    useState({
-
-      nombre: "",
-      apellido: "",
-      username: "",
-      email: "",
-      genero: "",
-      fechaNacimiento: "",
-      pesoKg: 0,
-      estaturaCm: 0,
-      nivelActividad: "",
-      biografia: "",
-      fotoPerfil: 1,
-
-    });
-
-  const [modalOpen, setModalOpen] =
-    useState(false);
-
-  const [tempPreset, setTempPreset] =
-    useState(0);
-
-  useEffect(() => {
-    cargarPerfil();
-  }, []);
-
-  if (loading) {
-
-    return (
-      <>
-
-        <main className="main">
-          <h2>Cargando perfil...</h2>
-        </main>
-
-        <Footer />
-      </>
-    );
-
-  }
-  async function cargarPerfil() {
-
-  try {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch("/api/profile", {
-
-        headers: {
-          Authorization:
-            `Bearer ${token}`,
-        },
-
-      });
-
-    if (!response.ok) {
-      throw new Error(
-        "No se pudo cargar el perfil."
-      );
-    }
-
-    const data =
-      await response.json();
-
-    setPerfil(data);
-
-    setTempPreset(
-      data.fotoPerfil - 1
-    );
-
-  } catch (err) {
-
-    console.error(err);
-
-  } finally {
-
-    setLoading(false);
-
+  const openModal = () => {
+    setActiveTab('personajes')
+    setTempPreset(currentAvatar.type === 'preset' ? currentAvatar.index : 0)
+    setPhotoPreview(currentAvatar.type === 'photo' ? currentAvatar.src : null)
+    setModalOpen(true)
   }
 
-}
+  const closeModal = () => setModalOpen(false)
 
-async function guardarPerfil() {
-
-  try {
-
-    const token =
-      localStorage.getItem("token");
-
-    const response =
-      await fetch("/api/profile", {
-
-        method: "PATCH",
-
-        headers: {
-
-          "Content-Type":
-            "application/json",
-
-          Authorization:
-            `Bearer ${token}`,
-
-        },
-
-        body: JSON.stringify(perfil),
-
-      });
-
-    if (!response.ok) {
-
-      alert(
-        "No se pudo actualizar el perfil."
-      );
-
-      return;
-
-    }
-
-    await cargarPerfil();
-
-    alert(
-      "Perfil actualizado correctamente."
-    );
-
-  } catch (err) {
-
-    console.error(err);
-
-    alert(
-      "Error del servidor."
-    );
-
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setPhotoPreview(reader.result)
+    reader.readAsDataURL(file)
   }
 
-}
+  const confirmPreset = () => {
+    setCurrentAvatar({ type: 'preset', index: tempPreset })
+    setModalOpen(false)
+  }
 
-const openModal = () => {
+  const confirmPhoto = () => {
+    if (!photoPreview) return
+    setCurrentAvatar({ type: 'photo', src: photoPreview })
+    setModalOpen(false)
+  }
 
-  setTempPreset(
-    perfil.fotoPerfil - 1
-  );
-
-  setModalOpen(true);
-
-};
-
-const closeModal = () => {
-
-  setModalOpen(false);
-
-};
-
-const confirmPreset = () => {
-
-  setPerfil({
-
-    ...perfil,
-
-    fotoPerfil:
-      tempPreset + 1,
-
-  });
-
-  setModalOpen(false);
-
-};
+  const displayedSrc =
+    currentAvatar.type === 'photo' ? currentAvatar.src : PRESET_AVATARS[currentAvatar.index].src
 
   return (
     <>
       <main className="main">
 
         <div className="pf-header">
-
-          <div
-            className="avatar-wrap"
-            onClick={openModal}
-          >
-
-            <div className="avatar-circle">
-
-              <img
-                src={
-                  PRESET_AVATARS[
-                    perfil.fotoPerfil - 1
-                  ]
-                }
-                alt="Avatar"
-              />
-
+          <div className="avatar-wrap" onClick={openModal}>
+            <div className="avatar-circle" id="avatarCircle">
+              {currentAvatar.type === 'photo' ? (
+                <img src={currentAvatar.src} alt="Tu avatar" />
+              ) : (
+                <FaceSVG {...PRESET_AVATARS[currentAvatar.index]} />
+              )}
             </div>
 
             <div className="avatar-edit-btn">
@@ -235,15 +92,8 @@ const confirmPreset = () => {
           </div>
 
           <div>
-
-            <p className="pf-name">
-              {perfil.nombre} {perfil.apellido}
-            </p>
-
-            <p className="pf-sub">
-              {perfil.username}
-            </p>
-
+            <p className="pf-name" id="displayName">Nombre Apellido</p>
+            <p className="pf-sub">usuario@email.com · Miembro desde Enero 2025</p>
           </div>
 
           <button
@@ -496,24 +346,16 @@ const confirmPreset = () => {
                 {PRESET_AVATARS.map((avatar, i) => (
                   <div
                     key={i}
-                    className={`av-item ${tempPreset === i ? "sel" : ""}`}
+                    className={`av-item${tempPreset === i ? ' sel' : ''}`}
                     onClick={() => setTempPreset(i)}
                   >
-                    <img
-                      src={avatar}
-                      alt={`Avatar ${i + 1}`}
-                      className="avatar-option"
-                    />
+                    <FaceSVG {...av} />
                   </div>
                 ))}
               </div>
-              <button className="av-select-btn" onClick={confirmPreset}>
-                Usar este avatar
-              </button>
             </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

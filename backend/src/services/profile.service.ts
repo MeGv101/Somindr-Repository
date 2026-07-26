@@ -20,29 +20,24 @@ export async function editProfile(
     estaturaCm: number;
     nivelActividad: string;
     biografia: string | null;
+    fotoPerfil: number;
   }
 ) {
+
+  body.username = body.username.trim().toLowerCase();
+
+
   await repository.updateProfile(
     userId,
     body
   );
 }
 
-export async function changeProfilePicture(
-  userId: number,
-  profilePicture: number
+export async function getProfessionalByUsername(
+  username: string
 ) {
-  if (
-    profilePicture < 1 ||
-    profilePicture > 8
-  ) {
-    throw new Error(
-      "Foto inválida."
+  return await repository
+    .findProfessionalByUsername(
+      username
     );
-  }
-
-  await repository.updateProfilePicture(
-    userId,
-    profilePicture
-  );
 }
