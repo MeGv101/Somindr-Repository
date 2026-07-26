@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "/src/styles/comunidad.css";
 import Footer from '../components/footer';
+import { SearchBar } from "../components/searchBar";
+
 interface Reply {
   id: number;
   content: string;
@@ -291,6 +293,8 @@ export default function Comunidad() {
           </div>
 
           <div className="foro-header">
+
+            <SearchBar />
             <p>Comunidad</p>
             <h1>Foro Somindr</h1>
             <small>Comparte, pregunta y aprende con otros.</small>

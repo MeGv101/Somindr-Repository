@@ -3,6 +3,7 @@ import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import jwt from "@fastify/jwt";
 
+
 import { db } from './db/index.js'
 import { users } from './db/schema.js'
 
@@ -13,6 +14,7 @@ import { aiRoutes } from "./routes/ai.route.js";
 import { communityRoutes } from "./routes/comunidad.route.js";
 import { profileRoutes } from "./routes/profile.route.js";
 import { userRoutes } from "./routes/user.route.js";
+import {searchRoutes } from "./routes/search.routes.js"
 const app = Fastify()
 
 await app.register(jwt, {
@@ -50,6 +52,8 @@ await app.register(profileRoutes, {
 await app.register(userRoutes, {
     prefix:"/api/users"
 });
+
+await app.register(searchRoutes);
 
 app.get('/', async () => {
   return {

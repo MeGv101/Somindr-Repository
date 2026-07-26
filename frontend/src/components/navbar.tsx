@@ -3,6 +3,7 @@ import { Link , useNavigate } from 'react-router-dom'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import '../styles/navbar.css'
+import { SearchBar } from './searchBar'
 import Guest from "../assets/avatars/Guest.jpg";
 import avatar1 from "../assets/avatars/avatar1.jpeg";
 import avatar2 from "../assets/avatars/avatar2.jpeg";
@@ -88,6 +89,8 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
         <div className="sidebar-logo">
           <img src="../src/assets/logo.svg" className="logo-img" alt="logo" />
         </div>
+
+        <SearchBar />
 
         <div className="menu-left">
           <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
