@@ -2,6 +2,7 @@
 
 :root {
     /* ===== PALETA PRINCIPAL - VERDE + ROJO OSCURO ===== */
+   
     --verde-claro: #7BCB9E;
     --verde-medio: #3CB878;
     --verde-oscuro: #1F7A52;
@@ -54,6 +55,7 @@
 }
 
 /* ===== RESET ===== */
+
 *,
 *::before,
 *::after {
