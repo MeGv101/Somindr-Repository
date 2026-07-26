@@ -80,6 +80,11 @@ export async function register(body: {
     username: string;
     email: string;
     password: string;
+    genero: string;
+    fechaNacimiento: string;
+    pesoKg: number;
+    estaturaCm: number;
+    nivelActividad: string;
 }) {
 
     const emailRegex =
@@ -93,10 +98,25 @@ export async function register(body: {
         !body.apellido ||
         !body.username ||
         !body.email ||
-        !body.password
+        !body.password ||
+        !body.genero ||
+        !body.fechaNacimiento ||
+        !body.pesoKg ||
+        !body.estaturaCm ||
+        !body.nivelActividad
     ) {
         throw new Error(
             "Todos los campos son obligatorios"
+        );
+    }
+
+    if (
+        body.pesoKg <= 20 ||
+        body.pesoKg >= 450 ||
+        body.estaturaCm <= 80 
+    ) {
+        throw new Error(
+            "Datos físicos inválidos"
         );
     }
 
@@ -138,6 +158,11 @@ export async function register(body: {
             username: body.username,
             email: body.email,
             passwordHash,
+            genero: body.genero,
+            fechaNacimiento: body.fechaNacimiento,
+            pesoKg: body.pesoKg,
+            estaturaCm: body.estaturaCm,
+            nivelActividad: body.nivelActividad,
         });
 
     await sendVerificationEmail({

@@ -1,6 +1,13 @@
 import { FastifyInstance } from "fastify";
 
 import * as authService from "../services/auth.service.js";
+import {
+  RegisterBody,
+  LoginBody,
+  VerifyEmailBody,
+  ForgotPasswordBody,
+  ResetPasswordBody,
+} from "../types/authVariables.js";
 
 export async function authRoutes(
   fastify: FastifyInstance
@@ -61,9 +68,13 @@ export async function authRoutes(
             username: string;
             email: string;
             password: string;
+            genero: string;
+            fechaNacimiento: string;
+            pesoKg: number;
+            estaturaCm: number;
+            nivelActividad: string;
           }
         );
-
       return reply
         .status(201)
         .send(result);

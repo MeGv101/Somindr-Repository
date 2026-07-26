@@ -64,6 +64,27 @@
       "when": 1783646718516,
       "tag": "0008_cold_stardust",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1785025150611,
+      "tag": "0009_abandoned_whirlwind",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1785026217616,
+      "tag": "0010_regular_dagger",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1785026879267,
+      "tag": "0011_amazing_madame_hydra",
+      "breakpoints": true
     }
   ]
 }

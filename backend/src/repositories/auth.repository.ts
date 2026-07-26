@@ -41,6 +41,11 @@ export async function createUser(data: {
   username: string;
   email: string;
   passwordHash: string;
+  genero: string;
+  fechaNacimiento: string;
+  pesoKg: number;
+  estaturaCm: number;
+  nivelActividad: string;
 }) {
   const [user] = await db
     .insert(users)

@@ -13,6 +13,8 @@ import type {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const EMAILS_ENABLED = process.env.EMAILS_ENABLED === "true";
+
 const FRONTEND_URL = process.env.FRONTEND_URL!;
 const TOKEN_EXPIRATION_HOURS = 24;
 
@@ -32,6 +34,12 @@ async function sendEmail(
   subject: string,
   html: string
 ): Promise<void> {
+
+  if (!EMAILS_ENABLED) {
+    console.log(`[DEV] Correo de verificación omitido por motivos de testeo.`);
+    return;
+  }
+
   const { error } = await resend.emails.send({
     from: "Somindr <onboarding@resend.dev>",
     to,

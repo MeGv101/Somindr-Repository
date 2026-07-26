@@ -11,44 +11,79 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-	id: serial("id").primaryKey(),
+  id: serial("id").primaryKey(),
 
-	nombre: text("name")
-		.notNull(),
+  nombre: text("name")
+    .notNull(),
 
   apellido: text("lastname")
-      .notNull(),
+    .notNull(),
 
-	email: text("email")
-		.notNull()
-		.unique(),
-  
+  email: text("email")
+    .notNull()
+    .unique(),
+
   username: text("username")
     .notNull()
     .unique(),
 
-	passwordHash: text("password_hash")
-		.notNull(),
+  passwordHash: text("password_hash")
+    .notNull(),
 
-	role: text("role")
-		.notNull()
-		.default("user"),
-		
+  role: text("role")
+    .notNull()
+    .default("user"),
+
   emailVerified: boolean("email_verified")
     .default(false)
     .notNull(),
 
-	createdAt: timestamp("created_at")
-		.defaultNow()
-		.notNull(),
-});
+  genero: varchar("gender", {
+    length: 10,
+  })
+  .notNull(),
 
+  fechaNacimiento: date("birth_date")
+  .notNull(),
+
+  pesoKg: integer("weight_kg")
+  .notNull(),
+
+  estaturaCm: integer("height_cm")
+  .notNull(),
+
+  nivelActividad: varchar(
+    "activity_level",
+    {
+      length: 30,
+    }
+  )
+  .notNull(),
+
+  biografia: text("bio"),
+
+  fotoPerfil: integer("profile_picture")
+  .default(1)
+  .notNull(),
+
+  isProfessional: boolean(
+    "is_professional"
+  )
+    .default(false)
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
 
 export const sessions = pgTable("sessions", {
   id: serial("id").primaryKey(),
 
   userId: integer("user_id")
-    .references(() => users.id)
+    .references(() => users.id, {
+        onDelete: "cascade",
+    })
     .notNull(),
 
   tokenId: text("token_id")
@@ -67,7 +102,9 @@ export const moodEntries = pgTable(
 
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
     weekStart: date("week_start")
       .notNull(),
@@ -116,8 +153,9 @@ export const exerciseRoutines = pgTable(
     categoryId: integer("category_id")
       .notNull()
       .references(
-        () => exerciseCategories.id
-      ),
+        () => exerciseCategories.id, {
+        onDelete: "cascade",
+    }),
 
     name: varchar("name", {
       length: 100,
@@ -161,13 +199,16 @@ export const routineExercises = pgTable(
     routineId: integer("routine_id")
       .notNull()
       .references(
-        () => exerciseRoutines.id
-      ),
+        () => exerciseRoutines.id, {
+          onDelete: "cascade",
+      }),
 
     exerciseId: integer("exercise_id")
       .notNull()
       .references(
-        () => exercises.id
+        () => exercises.id, {
+        onDelete: "cascade",
+      }
       ),
 
     orderIndex: integer(
@@ -192,8 +233,9 @@ export const userRoutines = pgTable(
     userId: integer("user_id")
       .notNull()
       .references(
-        () => users.id
-      ),
+        () => users.id, {
+          onDelete: "cascade",
+      }),
 
     routineId: integer("routine_id")
       .notNull()
@@ -231,8 +273,9 @@ export const userRoutineExercises =
       )
         .notNull()
         .references(
-          () => userRoutines.id
-        ),
+          () => userRoutines.id, {
+            onDelete: "cascade",
+        }),
 
       exerciseId: integer(
         "exercise_id"
@@ -258,7 +301,9 @@ export const userRoutineExercises =
 
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
   createdAt: timestamp("created_at")
     .defaultNow()
@@ -269,7 +314,9 @@ export const messages = pgTable("messages", {
 
   chatId: integer("chat_id")
     .notNull()
-    .references(() => chats.id),
+    .references(() => chats.id, {
+        onDelete: "cascade",
+    }),
 
   role: text("role")
     .notNull(),
@@ -286,7 +333,9 @@ export const summaries = pgTable("summaries", {
 
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
   summary: text("summary")
     .notNull(),
@@ -331,7 +380,9 @@ export const posts = pgTable("posts", {
 
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
   title: varchar("title", {
     length: 150,
@@ -362,11 +413,15 @@ export const comments = pgTable("comments", {
 
   postId: integer("post_id")
     .notNull()
-    .references(() => posts.id),
+    .references(() => posts.id, {
+        onDelete: "cascade",
+    }),
 
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
   content: text("content")
     .notNull(),
@@ -389,11 +444,15 @@ export const postReactions = pgTable("post_reactions", {
 
   postId: integer("post_id")
     .notNull()
-    .references(() => posts.id),
+    .references(() => posts.id, {
+        onDelete: "cascade",
+    }),
 
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, {
+        onDelete: "cascade",
+    }),
 
   type: varchar("type", {
     length: 10,
@@ -403,6 +462,7 @@ export const postReactions = pgTable("post_reactions", {
     .defaultNow()
     .notNull(),
 },
+
 (table) => ({
   uniqueReaction: unique().on(
     table.postId,
@@ -411,3 +471,118 @@ export const postReactions = pgTable("post_reactions", {
 })
 );
 
+export const professionals = pgTable(
+  "professionals",
+  {
+    id: serial("id").primaryKey(),
+
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "cascade",
+      }),
+
+    profession: varchar(
+      "profession",
+      {
+        length: 50,
+      }
+    ).notNull(),
+
+    description: text(
+      "description"
+    ),
+
+    pricePerHour: integer(
+      "price_per_hour"
+    ).notNull(),
+
+    verified: boolean(
+      "verified"
+    )
+      .default(false)
+      .notNull(),
+
+    acceptingClients: boolean("accepting_clients")
+      .default(true)
+      .notNull(),
+
+    createdAt: timestamp(
+      "created_at"
+    )
+      .defaultNow()
+      .notNull(),
+  }
+);
+
+export const professionalClients =
+pgTable(
+  "professional_clients",
+  {
+
+    id: serial("id").primaryKey(),
+
+    professionalId: integer(
+      "professional_id"
+    )
+      .notNull()
+      .references(
+        () => professionals.id,
+        {
+          onDelete: "cascade",
+        }
+      ),
+
+    userId: integer(
+      "user_id"
+    )
+      .notNull()
+      .references(
+        () => users.id,
+        {
+          onDelete: "cascade",
+        }
+      ),
+
+    startedAt: timestamp(
+      "started_at"
+    )
+      .defaultNow()
+      .notNull(),
+
+    expiresAt: timestamp(
+      "expires_at"
+    ),
+
+    active: boolean(
+      "active"
+    )
+      .default(true)
+      .notNull(),
+
+  }
+);
+
+export const professionalContacts = pgTable(
+  "professional_contacts",
+  {
+    id: serial("id").primaryKey(),
+
+    professionalId: integer("professional_id")
+      .notNull()
+      .references(() => professionals.id, {
+        onDelete: "cascade",
+      }),
+
+    type: varchar("type", {
+      length: 30,
+    }).notNull(),
+
+    value: text("value")
+      .notNull(),
+
+    visible: boolean("visible")
+      .default(true)
+      .notNull(),
+  }
+);
