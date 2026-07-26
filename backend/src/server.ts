@@ -11,6 +11,7 @@ import { moodRoutes } from "./routes/mood.route.js";
 import { fitnessRoutes } from "./routes/fitness.route.js";
 import { aiRoutes } from "./routes/ai.route.js";
 import { communityRoutes } from "./routes/comunidad.route.js";
+import { profileRoutes } from "./routes/profile.route.js";
 
 const app = Fastify()
 
@@ -40,6 +41,10 @@ await app.register(aiRoutes, {
 
 await app.register(communityRoutes, {
   prefix: "/api/community",
+});
+
+await app.register(profileRoutes, {
+  prefix: "/api",
 });
 
 app.get('/', async () => {

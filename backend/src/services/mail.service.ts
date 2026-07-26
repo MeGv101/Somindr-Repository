@@ -13,7 +13,6 @@ import type {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const EMAILS_ENABLED = process.env.EMAILS_ENABLED === "true";
 
 const FRONTEND_URL = process.env.FRONTEND_URL!;
 const TOKEN_EXPIRATION_HOURS = 24;
@@ -35,7 +34,7 @@ async function sendEmail(
   html: string
 ): Promise<void> {
 
-  if (!EMAILS_ENABLED) {
+  if (process.env.EMAILS_ENABLED !== "true") {
     console.log(`[DEV] Correo de verificación omitido por motivos de testeo.`);
     return;
   }
