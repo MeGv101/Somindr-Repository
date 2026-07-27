@@ -15,6 +15,7 @@ import { communityRoutes } from "./routes/comunidad.route.js";
 import { profileRoutes } from "./routes/profile.route.js";
 import { userRoutes } from "./routes/user.route.js";
 import {searchRoutes } from "./routes/search.routes.js"
+import { professionalRoutes } from "./routes/professional.route.js"
 const app = Fastify()
 
 await app.register(jwt, {
@@ -53,7 +54,13 @@ await app.register(userRoutes, {
     prefix:"/api/users"
 });
 
-await app.register(searchRoutes);
+await app.register(professionalRoutes, {
+    prefix:"/api"
+});
+
+await app.register(searchRoutes, {
+    prefix: "/api"
+});
 
 app.get('/', async () => {
   return {

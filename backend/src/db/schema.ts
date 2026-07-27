@@ -586,3 +586,54 @@ export const professionalContacts = pgTable(
       .notNull(),
   }
 );
+
+export const payments = pgTable(
+  "payments",
+  {
+    id: serial("id").primaryKey(),
+
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "cascade",
+      }),
+
+    professionalId: integer(
+      "professional_id"
+    )
+      .notNull()
+      .references(() => professionals.id, {
+        onDelete: "cascade",
+      }),
+
+    orderId: text("order_id")
+      .notNull()
+      .unique(),
+
+    captureId: text("capture_id"),
+
+    amount: integer("amount")
+      .notNull(),
+
+    currency: varchar("currency", {
+      length: 5,
+    })
+      .default("USD")
+      .notNull(),
+
+    status: varchar("status", {
+      length: 20,
+    })
+      .notNull(),
+
+    payerEmail: text(
+      "payer_email"
+    ),
+
+    createdAt: timestamp(
+      "created_at"
+    )
+      .defaultNow()
+      .notNull(),
+  }
+);
