@@ -23,7 +23,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://soul-homes-popular-dear.trycloudflare.com"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://pages-rap-status-arrived.trycloudflare.com"]
 })
 
 await app.register(authRoutes, {
