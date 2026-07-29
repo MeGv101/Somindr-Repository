@@ -15,6 +15,8 @@ export async function searchRoutes(fastify: FastifyInstance) {
             .select({
                 id: users.id,
                 username: users.username,
+                fotoPerfil: users.fotoPerfil,
+
             })
             .from(users)
             .where(ilike(users.username, `%${q}%`));

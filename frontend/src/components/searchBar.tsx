@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/searchBar.css";
 
 interface Usuario {
@@ -9,6 +10,7 @@ interface Usuario {
 export function SearchBar() {
   const [query, setQuery] = useState("");
   const [resultados, setResultados] = useState<Usuario[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (query.trim().length === 0) {
@@ -25,6 +27,12 @@ export function SearchBar() {
     return () => clearTimeout(timeout);
   }, [query]);
 
+  const irAlPerfil = (username: string) => {
+    setQuery("");
+    setResultados([]);
+    navigate(`/perfil/${username}`);
+  };
+
   return (
     <div className="search-wrapper">
       <input
@@ -37,7 +45,13 @@ export function SearchBar() {
       {resultados.length > 0 && (
         <ul className="search-results">
           {resultados.map((user) => (
-            <li key={user.id} className="search-result-item">{user.username}</li>
+            <li
+              key={user.username}
+              className="search-result-item"
+              onClick={() => irAlPerfil(user.username)}
+            >
+              {user.username}
+            </li>
           ))}
         </ul>
       )}
