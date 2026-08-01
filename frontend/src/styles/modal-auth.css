@@ -122,7 +122,8 @@ body.modal-abierto {
   margin-bottom: 12px;
 }
 
-.campo input {
+.campo input,
+.campo select {
   width: 100%;
   padding: 12px 14px;
   border: 1.5px solid #252525;
@@ -133,9 +134,68 @@ body.modal-abierto {
   background-color: #1a1a1a;
 }
 
-.campo input:focus {
+.campo input:focus,
+.campo select:focus {
   outline: none;
   border-color: #3cb878;
+}
+
+.campo input:hover,
+.campo select:hover {
+  border-color: #333;
+}
+
+/* Select: quitar apariencia nativa y usar una flecha propia acorde al tema */
+.campo select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233cb878' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.campo select option {
+  background-color: #1a1a1a;
+  color: #e5e5e5;
+}
+
+/* El select de género/nivel de actividad muestra la opción vacía en gris,
+   igual que un placeholder de input */
+.campo select:invalid,
+.campo select option[value=""] {
+  color: #7a7a7a;
+}
+
+/* Input tipo fecha: adaptar el ícono nativo del navegador al tema oscuro */
+.campo input[type="date"] {
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.campo input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7) sepia(1) saturate(3) hue-rotate(80deg) brightness(1.1);
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.campo input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Input tipo number: ocultar flechas nativas para un look más limpio,
+   sin forzar ningún mínimo — la validación real ocurre en JS al enviar */
+.campo input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.campo input[type="number"]::-webkit-outer-spin-button,
+.campo input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .btn-principal {

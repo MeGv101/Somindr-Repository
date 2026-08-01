@@ -57,6 +57,7 @@ export default function Profile() {
     }
 
     interface ProfessionalProfile {
+      id: number;
       profession: string;
       description: string;
       pricePerHour: number;
@@ -109,10 +110,54 @@ export default function Profile() {
 
       const data =
         await response.json();
-
+      
       setProfessional(data);
 
     }
+  }
+  async function contratarProfesional(professionalId: number) {
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `/api/professionals/${professionalId}/hire`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({})
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("ERROR PAYPAL:", error);
+        return;
+      }
+
+      const data = await response.json();
+
+      console.log("PAYPAL ORDER:", data);
+
+      const approveLink = data.links?.find(
+        (link: any) => link.rel === "approve"
+      );
+
+      if (!approveLink) {
+        console.error("No se encontró link de aprobación.");
+        return;
+      }
+
+      window.location.href = approveLink.href;
+
+    } catch (error) {
+      console.error("Error creando orden:", error);
+    }
+
   }
 
   async function cargarPosts(username: string) {
@@ -247,8 +292,16 @@ export default function Profile() {
               <span className="verified">
                 ✔ Verificado
               </span>
+              
             )}
-
+            {professional && (
+              <button
+                className="btn-contratar"
+                onClick={() => contratarProfesional(professional.id)}
+              >
+                Contratar profesional
+              </button>
+              )}
             <h4>
               Contacto
             </h4>
@@ -281,7 +334,6 @@ export default function Profile() {
         {posts.length === 0 ? (
 
             <div className="post-empty">
-              <div className="post-empty-icon">📝</div>
               <h3>Sin publicaciones</h3>
               <p>Este usuario todavía no ha publicado nada.</p>
             </div>

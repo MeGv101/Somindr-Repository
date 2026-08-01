@@ -583,6 +583,22 @@ overflow-wrap:anywhere;
 word-break:break-word;
 }
 
+.btn-contratar{
+margin-left:auto;
+text-decoration:none;
+padding:14px 24px;
+border-radius:14px;
+background:var(--gradient-main);
+color:white;
+font-weight:700;
+transition:.25s;
+box-shadow:0 8px 24px rgba(60,184,120,.25);
+}
+
+.btn-contratar:hover{
+transform:translateY(-2px);
+}
+
 @media(max-width:900px){
 
 .pf-header{

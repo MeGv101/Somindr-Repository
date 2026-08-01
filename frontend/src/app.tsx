@@ -34,6 +34,8 @@ import Verificacion from "./pages/verificacion";
 
 import Profiles from "./pages/profiles";
 
+import PaymentSuccess from "./pages/payment";
+
 function App() {
 
   console.log("App cargado");
@@ -141,6 +143,15 @@ function App() {
               <Profiles />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+        path="/payment/success"
+        element={
+            <ProtectedRoute>
+              <PaymentSuccess />
+            </ProtectedRoute>
+        }
         />
 
         <Route
