@@ -139,16 +139,23 @@ export default function AI() {
         <div className="ai-messages" ref={messagesContainerRef}>
 
           {messages.map((message, index) => (
-            <div key={index}
-              className={`message ${message.role === "user"
-                  ? "user-message"
-                  : "assistant-message"}`}>
-              <ReactMarkdown>
-                {message.content}
-              </ReactMarkdown>
-            </div>
-          )
-          )}
+              <div
+                key={index}
+                className={`message ${
+                  message.role === "user" ? "user-message" : "assistant-message"
+                }`}
+              >
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              </div>
+            ))}
+            {loading && (
+              <div className="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
+          
         </div>
         <div className="ai-input-area">
           <input
@@ -164,6 +171,7 @@ export default function AI() {
           >
             {loading
               ? "Pensando..."
+              
               : "Enviar"}
           </button>
         </div>
