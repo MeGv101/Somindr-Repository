@@ -109,6 +109,18 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
           </Link>
+          {
+            user?.isProfessional ? (
+              <Link to="/clients/me" className="sidebar-link" onClick={handleLinkClick}>
+                Tus Clientes
+              </Link>
+            ) : (
+              <Link to="/professionals/me" className="sidebar-link" onClick={handleLinkClick}>
+                Tus Profesionales
+              </Link>
+
+            )
+          }
           <div className='nav-profile'>
             <div onClick={(e) => e.stopPropagation()}>
               <LanguageSwitcher />

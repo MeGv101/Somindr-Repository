@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 
 import avatar1 from "../assets/avatars/avatar1.jpeg";
 import avatar2 from "../assets/avatars/avatar2.jpeg";
@@ -12,6 +12,7 @@ import avatar8 from "../assets/avatars/avatar8.jpeg";
 
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+import { useAuth } from "../context/authContext";
 
 import "../styles/perfil.css";
 
@@ -34,8 +35,13 @@ type Post = {
 
 export default function Profile() {
   const { username } = useParams();
+    const { user } = useAuth();
+  
 
-  const esMiPerfil = !username;
+  const esMiPerfil =
+  !username ||
+  username === user?.username;
+
 
   const [loading, setLoading] = useState(true);
   const [perfil, setPerfil] = useState<Profile | null>(null);
@@ -50,6 +56,8 @@ export default function Profile() {
     avatar7,
     avatar8,
   ];
+
+
 
   interface ProfessionalContact {
       type: string;
@@ -95,24 +103,21 @@ export default function Profile() {
       setPerfil(data);
 
       await cargarPosts(data.username);
+      
+        const professionalResponse = await fetch(
+          `/api/profile/professional/${data.username}`
+        );
+
+        if (professionalResponse.ok) {
+          const professionalData =
+            await professionalResponse.json();
+
+          setProfessional(professionalData);
+        }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
-    }
-
-    const response =
-      await fetch(
-        `/api/profile/professional/${username}`
-      );
-
-    if (response.ok) {
-
-      const data =
-        await response.json();
-      
-      setProfessional(data);
-
     }
   }
   async function contratarProfesional(professionalId: number) {
@@ -201,6 +206,10 @@ export default function Profile() {
     );
   }
 
+  if (user?.username === username){
+    return <Navigate to="/perfil" replace />;
+  }
+
   return (
     <>
 
@@ -236,6 +245,17 @@ export default function Profile() {
             )}
 
           </div>
+            {
+              professional &&
+              !user?.isProfessional && (
+                <button
+                  className="btn-guardar"
+                  onClick={() => contratarProfesional(professional.id)}
+                >
+                  Contratar profesional
+                </button>
+              )
+            }
 
           {esMiPerfil && (
             <Link
@@ -294,14 +314,6 @@ export default function Profile() {
               </span>
               
             )}
-            {professional && (
-              <button
-                className="btn-contratar"
-                onClick={() => contratarProfesional(professional.id)}
-              >
-                Contratar profesional
-              </button>
-              )}
             <h4>
               Contacto
             </h4>

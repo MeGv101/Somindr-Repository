@@ -11,6 +11,8 @@ type User = {
   id: number;
   username: string;
   fotoPerfil: number;
+  role: string;
+  isProfessional: boolean;
 };
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -62,6 +64,8 @@ export function AuthProvider({
         id: data.id,
         username: data.username,
         fotoPerfil: data.fotoPerfil,
+        isProfessional: data.isProfessional,
+        role: data.role,
       });
     }
   }

@@ -40,3 +40,13 @@ export async function getPurchasedProfessionals(
     userId
   );
 }
+
+export async function getClients(
+  userId:number
+){
+  return await repository
+    .findClients(userId);
+}
+export async function getProfessionals() {
+  return await repository.findAllProfessionals();
+}
