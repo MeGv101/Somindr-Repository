@@ -91,5 +91,27 @@ export async function professionalRoutes(
       }
     }
   );
+  fastify.get(
+    "/professionals/clients",
+    async (request) => {
+
+      const payload =
+        await request.jwtVerify() as {
+          id:number;
+        };
+
+      return await service
+        .getClients(
+          payload.id
+        );
+
+    }
+  );
+  fastify.get(
+    "/professionals",
+    async () => {
+      return await service.getProfessionals();
+    }
+  );
 
 }

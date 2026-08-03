@@ -14,6 +14,9 @@ import Comunidad from './pages/comunidad'
 
 import AboutUs from './pages/aboutus'
 
+import Professionals from './pages/professionals'
+
+import Clients from './pages/clients'
 
 import PsicoEmocional from './pages/psicoemocional'
 
@@ -152,6 +155,24 @@ function App() {
               <PaymentSuccess />
             </ProtectedRoute>
         }
+        />
+
+        <Route
+          path="/professionals/me"
+          element={
+            <ProtectedRoute>
+              <Professionals />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/clients/me"
+          element={
+            <ProtectedRoute>
+              <Clients />
+            </ProtectedRoute>
+          }
         />
 
         <Route

@@ -1,0 +1,138 @@
+.clients-page{
+
+    display:flex;
+    flex-direction:column;
+    gap:2rem;
+
+}
+
+.clients-header{
+
+    text-align:center;
+
+}
+
+.clients-header h1{
+
+    font-size:2.3rem;
+    margin-bottom:.5rem;
+
+}
+
+.clients-header p{
+
+    color:#888;
+
+}
+
+.clients-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(280px,1fr)
+        );
+
+    gap:1.5rem;
+
+}
+
+.client-card{
+
+    background:#1c1c1c;
+
+    border:1px solid #303030;
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.8rem;
+
+    transition:.25s;
+
+}
+
+.client-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#3fb950;
+
+}
+
+.client-card h3{
+
+    margin:0;
+
+}
+
+.status{
+
+    width:max-content;
+
+    padding:.3rem .7rem;
+
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+}
+
+.active-sub{
+
+    background:#2d5d36;
+
+    color:#7df58b;
+
+}
+
+.inactive{
+
+    background:#5a2f2f;
+
+    color:#ff8d8d;
+
+}
+
+.btn-profile{
+
+    margin-top:auto;
+
+    background:#3fb950;
+
+    color:white;
+
+    text-decoration:none;
+
+    text-align:center;
+
+    padding:.8rem;
+
+    border-radius:10px;
+
+    transition:.2s;
+
+}
+
+.btn-profile:hover{
+
+    background:#349443;
+
+}
+
+.empty-card{
+
+    text-align:center;
+
+    padding:2rem;
+
+}
