@@ -261,3 +261,30 @@ a{
     align-items: center;
     width: 100%;
 }
+
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang-btn {
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  opacity: 0.65;
+  border-radius: 4px;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.lang-btn:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.lang-btn.active {
+  opacity: 1;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.12);
+}

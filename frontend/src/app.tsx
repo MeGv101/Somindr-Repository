@@ -36,6 +36,8 @@ import Profiles from "./pages/profiles";
 
 import PaymentSuccess from "./pages/payment";
 
+import LanguageSwitcher from './components/LanguageSwitcher'
+
 function App() {
 
   console.log("App cargado");
@@ -67,6 +69,8 @@ function App() {
     <BrowserRouter>
 
       <Navbar onOpenAuth={openAuth} />
+
+      <LanguageSwitcher />
 
       <ModalAuth ref={modalRef} />
 
@@ -173,4 +177,3 @@ function App() {
 
 
 export default App
-
