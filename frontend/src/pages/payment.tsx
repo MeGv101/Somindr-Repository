@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import '../styles/payment.css';
 
 export default function PaymentSuccess() {
 
@@ -46,16 +47,29 @@ export default function PaymentSuccess() {
     }
     capturePayment();
   }, []);
+
   if(loading){
     return (
-      <main>
+      <main className="payment-page loading">
         <h1>Validando pago...</h1>
       </main>
     );
   }
+
   if(success){
     return (
-      <main>
+      <main className="payment-page success">
+        <div className="icon-circle success-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5 13l4 4L19 7"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
         <h1>Pago confirmado</h1>
         <p>Ya tienes acceso al profesional.</p>
 
@@ -68,8 +82,20 @@ export default function PaymentSuccess() {
       </main>
     );
   }
+
   return (
-    <main>
+    <main className="payment-page error">
+      <div className="icon-circle error-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
       <h1>Error procesando pago</h1>
     </main>
   );
