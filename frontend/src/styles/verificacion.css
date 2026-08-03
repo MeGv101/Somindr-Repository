@@ -1,0 +1,83 @@
+.verify-page {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #0f1117;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 2rem;
+
+}
+
+.verify-page h1 {
+
+  font-size: 5rem;
+
+  color: #298a5a;
+
+  margin-bottom: .5rem;
+
+}
+
+.verify-page h2 {
+
+  margin: 0;
+
+}
+
+.verify-page p {
+
+  margin-top: 1rem;
+
+  max-width: 500px;
+
+  color: #b8b8b8;
+
+}
+
+.verify-loading {
+
+  color: #facc15;
+
+}
+
+.verify-success {
+
+  color: #22c55e;
+
+}
+
+.verify-error {
+
+  color: #ef4444;
+
+}
+
+.return {
+
+  margin-top: 2rem;
+
+  color: #298a5a;
+
+  text-decoration: none;
+
+  transition: .2s;
+
+}
+
+.return:hover {
+
+  text-decoration: underline;
+
+}

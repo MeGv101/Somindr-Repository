@@ -1,0 +1,66 @@
+.modal-tarjeta-verificacion {
+  text-align: center;
+}
+
+.panel-verificacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.panel-verificacion .titulo {
+  margin-top: 4px;
+}
+
+.panel-verificacion .subtitulo {
+  margin-bottom: 8px;
+}
+
+.check-animado {
+  width: 88px;
+  height: 88px;
+  margin: 8px auto 12px;
+  display: block;
+}
+
+.pie-link-login {
+  font-size: 0.95rem;
+  color: #3cb878;
+}
+
+.check-animado svg {
+  width: 100%;
+  height: 100%;
+}
+
+.check-circulo {
+  stroke: #3cb878;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: dibujar-circulo 0.5s ease-out forwards;
+}
+
+.check-marca {
+  stroke: #3cb878;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  animation: dibujar-marca 0.35s 0.45s ease-out forwards;
+}
+
+@keyframes dibujar-circulo {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dibujar-marca {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
