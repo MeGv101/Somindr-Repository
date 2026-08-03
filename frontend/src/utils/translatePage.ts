@@ -1,12 +1,19 @@
 import { translateText } from "./translator";
-
 const originalTextMap = new WeakMap<Text, string>();
 let currentLang = "es";
 let observer: MutationObserver | null = null;
 
 function shouldSkip(node: Node): boolean {
-  const parentTag = node.parentElement?.tagName;
-  return parentTag === "SCRIPT" || parentTag === "STYLE" || parentTag === "NOSCRIPT";
+  const parent = node.parentElement;
+  if (!parent) return true;
+
+  const tag = parent.tagName;
+  if (tag === "SCRIPT" || tag === "STYLE" || tag === "NOSCRIPT") return true;
+
+
+  if (parent.closest(".lang-switcher")) return true;
+
+  return false;
 }
 
 function getAllTextNodes(root: Node): Text[] {
@@ -26,7 +33,6 @@ function getAllTextNodes(root: Node): Text[] {
 async function translateNode(node: Text, targetLang: string) {
   if (shouldSkip(node)) return;
 
-
   const original = originalTextMap.get(node) ?? node.textContent?.trim() ?? "";
   if (!original) return;
   originalTextMap.set(node, original);
@@ -38,7 +44,6 @@ async function translateNode(node: Text, targetLang: string) {
 
   node.textContent = await translateText(original, targetLang);
 }
-
 
 export async function setLanguage(targetLang: string) {
   currentLang = targetLang;
