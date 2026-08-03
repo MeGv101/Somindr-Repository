@@ -1,7 +1,7 @@
 import { getAccessToken, getPaypalBaseUrl } from "../providers/paypal.provider.js";
 import { db } from "../db/index.js";
 import { professionals, professionalClients, users } from "../db/schema.js";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export async function createOrder(
   professionalId: number
@@ -173,4 +173,26 @@ export async function findClients(
           true
         )
       );
+  }
+  export async function hasActivePurchase(
+    userId: number,
+    professionalId: number
+  ) {
+
+    const purchase = await db
+      .select()
+      .from(professionalClients)
+      .where(
+        and(
+          eq(professionalClients.userId, userId),
+          eq(
+            professionalClients.professionalId,
+            professionalId
+          ),
+          eq(professionalClients.active, true)
+        )
+      );
+
+    return purchase.length > 0;
+
   }

@@ -50,3 +50,15 @@ export async function getClients(
 export async function getProfessionals() {
   return await repository.findAllProfessionals();
 }
+
+export async function validatePurchase(
+  userId: number,
+  professionalId: number
+) {
+
+  return await repository.hasActivePurchase(
+    userId,
+    professionalId
+  );
+
+}

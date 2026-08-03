@@ -73,6 +73,9 @@ export default function Profile() {
       contacts: ProfessionalContact[];
     }
 
+  const [purchased, setPurchased] =
+  useState(false);
+
   const [professional, setProfessional] =
   useState<ProfessionalProfile | null>(null);
 
@@ -82,6 +85,7 @@ export default function Profile() {
 
   async function cargarPerfil() {
     try {
+
       const token = localStorage.getItem("token");
 
       const endpoint = esMiPerfil
@@ -97,29 +101,42 @@ export default function Profile() {
       });
 
       if (!response.ok) throw new Error();
-
       const data = await response.json();
-
       setPerfil(data);
-
       await cargarPosts(data.username);
-      
-        const professionalResponse = await fetch(
-          `/api/profile/professional/${data.username}`
-        );
-
-        if (professionalResponse.ok) {
-          const professionalData =
-            await professionalResponse.json();
-
-          setProfessional(professionalData);
+      const professionalResponse = await fetch(
+        `/api/profile/professional/${data.username}`
+      );
+      if (professionalResponse.ok) {
+        const professionalData =
+          await professionalResponse.json();
+        setProfessional(professionalData);
+        if (token) {
+          const purchaseResponse =
+            await fetch(
+              `/api/professionals/${professionalData.id}/purchased`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+          if (purchaseResponse.ok) {
+            const purchaseData =
+              await purchaseResponse.json();
+            setPurchased(
+              purchaseData.purchased
+            );
+          }
         }
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   }
+
   async function contratarProfesional(professionalId: number) {
 
     try {
@@ -184,6 +201,8 @@ export default function Profile() {
         console.error(err);
     }
     }
+
+  
   if (loading) {
     return (
       <>
@@ -248,12 +267,30 @@ export default function Profile() {
             {
               professional &&
               !user?.isProfessional && (
-                <button
-                  className="btn-guardar"
-                  onClick={() => contratarProfesional(professional.id)}
-                >
-                  Contratar profesional
-                </button>
+
+                purchased ? (
+
+                  <button
+                    className="btn-guardar"
+                  >
+                    Chatear con profesional
+                  </button>
+
+                ) : (
+
+                  <button
+                    className="btn-guardar"
+                    onClick={() =>
+                      contratarProfesional(
+                        professional.id
+                      )
+                    }
+                  >
+                    Contratar profesional
+                  </button>
+
+                )
+
               )
             }
 
@@ -273,11 +310,6 @@ export default function Profile() {
           <h3>
             Sobre <span className="verde">mí</span>
           </h3>
-
-          <p>
-            Información pública del usuario.
-          </p>
-
           <p>
             {perfil.biografia?.trim()
               ? perfil.biografia
