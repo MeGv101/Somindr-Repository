@@ -13,6 +13,7 @@ import avatar5 from "../assets/avatars/avatar5.jpeg";
 import avatar6 from "../assets/avatars/avatar6.jpeg";
 import avatar7 from "../assets/avatars/avatar7.jpeg";
 import avatar8 from "../assets/avatars/avatar8.jpeg";
+import LanguageSwitcher from './LanguageSwitcher'
 
 import type { AuthTab } from '../types/auth'
 
@@ -121,9 +122,13 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             )
           }
           <div className='nav-profile'>
+            <div onClick={(e) => e.stopPropagation()}>
+              <LanguageSwitcher />
+            </div>
             <Link
               to="/perfil"
               className="sidebar-link profile-link"
+              
               onClick={handleLinkClick}
             >
               <img
@@ -138,7 +143,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
                     : "Invitado"
                 }
               </span>
-          </Link> 
+            </Link>
           </div>
           
         </div>
