@@ -170,10 +170,17 @@ export default function Clients() {
                     </span>
 
                     <Link
-                      to={`/profile/${client.username}`}
+                      to={`/perfil/${client.username}`}
                       className="btn-profile"
                     >
                       Ver perfil
+                    </Link>
+
+                    <Link
+                      to={`/clients/${client.id}`}
+                      className="btn-profile"
+                    >
+                      Ver historiales
                     </Link>
 
                   </article>

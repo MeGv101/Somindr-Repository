@@ -1,7 +1,7 @@
 import { getAccessToken, getPaypalBaseUrl } from "../providers/paypal.provider.js";
 import { db } from "../db/index.js";
-import { professionals, professionalClients, users } from "../db/schema.js";
-import { eq, and } from "drizzle-orm";
+import { professionals, professionalClients, moodEntries, userRoutines, summaries, users } from "../db/schema.js";
+import { eq, and, desc } from "drizzle-orm";
 
 export async function createOrder(
   professionalId: number
@@ -194,5 +194,91 @@ export async function findClients(
       );
 
     return purchase.length > 0;
+
+  }
+  export async function findClientDashboard(
+    professionalUserId: number,
+    clientId: number
+  ) {
+
+    const relation = await db
+      .select({
+        startedAt: professionalClients.startedAt,
+        expiresAt: professionalClients.expiresAt,
+        active: professionalClients.active,
+      })
+      .from(professionalClients)
+      .innerJoin(
+        professionals,
+        eq(
+          professionalClients.professionalId,
+          professionals.id
+        )
+      )
+      .where(
+        and(
+          eq(
+            professionals.userId,
+            professionalUserId
+          ),
+          eq(
+            professionalClients.userId,
+            clientId
+          ),
+          eq(
+            professionalClients.active,
+            true
+          )
+        )
+      );
+
+    if (!relation.length) {
+      throw new Error("No autorizado");
+    }
+
+    const profile = await db
+      .select({
+        id: users.id,
+        nombre: users.nombre,
+        apellido: users.apellido,
+        username: users.username,
+        fotoPerfil: users.fotoPerfil,
+        genero: users.genero,
+        fechaNacimiento: users.fechaNacimiento,
+        pesoKg: users.pesoKg,
+        estaturaCm: users.estaturaCm,
+        nivelActividad: users.nivelActividad,
+        biografia: users.biografia,
+      })
+      .from(users)
+      .where(eq(users.id, clientId));
+
+    const moods = await db
+      .select()
+      .from(moodEntries)
+      .where(eq(moodEntries.userId, clientId))
+      .orderBy(desc(moodEntries.weekStart));
+
+    const routines = await db
+      .select()
+      .from(userRoutines)
+      .where(eq(userRoutines.userId, clientId))
+      .orderBy(desc(userRoutines.startedAt));
+
+    const insights = await db
+      .select()
+      .from(summaries)
+      .where(eq(summaries.userId, clientId))
+      .orderBy(desc(summaries.createdAt));
+
+    return {
+      profile: profile[0],
+      startedAt: relation[0].startedAt,
+      expiresAt: relation[0].expiresAt,
+      active: relation[0].active,
+      moods,
+      routines,
+      insights,
+    };
 
   }

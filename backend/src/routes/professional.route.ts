@@ -158,4 +158,37 @@ export async function professionalRoutes(
     }
 
   }
+
+  fastify.get(
+    "/client/:id/dashboard",
+    async (request, reply) => {
+      
+      try {
+
+        const payload =
+          await request.jwtVerify() as {
+            id: number;
+          };
+
+        const { id } =
+          request.params as {
+            id: string;
+          };
+
+        return await service.getClientDashboard(
+          payload.id,
+          Number(id)
+        );
+        
+      } catch {
+
+        return reply.status(403).send({
+          message:
+            "No tienes acceso a este cliente.",
+        });
+
+      }
+
+    }
+  );
 }

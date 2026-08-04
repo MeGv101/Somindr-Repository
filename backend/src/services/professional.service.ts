@@ -62,3 +62,15 @@ export async function validatePurchase(
   );
 
 }
+
+
+export async function getClientDashboard(
+  professionalUserId: number,
+  clientId: number
+) {
+  
+  return await repository.findClientDashboard(
+    professionalUserId,
+    clientId
+  );
+}

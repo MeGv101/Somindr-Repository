@@ -380,7 +380,7 @@ const confirmPreset = () => {
               </div>
 
               <div className="card-sub">
-                *Esta información no aparecerá en tu perfil
+                *Información visible únicamente para tus profesionales
               </div>
 
               <div className="form-2">

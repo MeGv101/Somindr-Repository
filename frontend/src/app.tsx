@@ -18,6 +18,8 @@ import Professionals from './pages/professionals'
 
 import Clients from './pages/clients'
 
+import ClientDashboard from './pages/client-dashboard'
+
 import PsicoEmocional from './pages/psicoemocional'
 
 import Fitness from './pages/fitness'
@@ -175,6 +177,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Clients />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/clients/:id"
+          element={
+            <ProtectedRoute>
+              <ClientDashboard />
             </ProtectedRoute>
           }
         />

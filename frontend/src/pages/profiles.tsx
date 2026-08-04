@@ -308,7 +308,7 @@ export default function Profile() {
         <div className="card">
 
           <h3>
-            Sobre <span className="verde">mí</span>
+            Sobre <span className="verde"> mí</span>
           </h3>
           <p>
             {perfil.biografia?.trim()

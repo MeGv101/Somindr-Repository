@@ -120,7 +120,7 @@ export default function Professionals() {
         </section>
         <section className="professionals-section">
           <h2>
-            Mis <span className="verde">profesionales</span>
+            Mis <span className="verde"> profesionales</span>
           </h2>
           {
             myProfessionals.length === 0 ? (
