@@ -66,12 +66,6 @@ export const users = pgTable("users", {
   .default(1)
   .notNull(),
 
-  isProfessional: boolean(
-    "is_professional"
-  )
-    .default(false)
-    .notNull(),
-
   createdAt: timestamp("created_at")
     .defaultNow()
     .notNull(),

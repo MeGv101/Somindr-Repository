@@ -79,6 +79,17 @@ export async function captureOrder(
 
 }
 
+export async function findProfessionalByUserId(
+  userId: number
+) {
+  const [professional] = await db
+    .select()
+    .from(professionals)
+    .where(eq(professionals.userId, userId));
+
+  return professional ?? null;
+}
+
 export async function savePurchase(
   professionalId: number,
   userId: number

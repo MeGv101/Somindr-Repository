@@ -110,7 +110,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             Asesor IA
           </Link>
           {
-            user?.isProfessional ? (
+            user?.professional ? (
               <Link to="/clients/me" className="sidebar-link" onClick={handleLinkClick}>
                 Tus Clientes
               </Link>

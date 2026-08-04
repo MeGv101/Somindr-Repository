@@ -1,5 +1,5 @@
-import * as userRepository
-from "../repositories/user.repository.js";
+import * as userRepository from "../repositories/user.repository.js";
+import * as professionalRepository from "../repositories/professional.repository.js";
 
 export async function getPublicProfile(
   username:string
@@ -17,16 +17,24 @@ export async function getPublicProfile(
 }
 
 export async function getMyProfile(
-  id:number
-){
+  id: number
+) {
+
   const user =
     await userRepository.findMyProfile(id);
 
-  if(!user){
+  if (!user) {
     throw new Error("USER_NOT_FOUND");
   }
 
-  return user;
+  const professional =
+    await professionalRepository.findProfessionalByUserId(id);
+
+  return {
+    ...user,
+    professional,
+  };
+
 }
 
 export async function updateMyProfile(

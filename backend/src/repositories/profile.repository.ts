@@ -6,25 +6,45 @@ import { users, professionals, professionalContacts } from "../db/schema.js";
 export async function getProfileByUserId(
   userId: number
 ) {
-  const result = await db
-    .select({
-      nombre: users.nombre,
-      apellido: users.apellido,
-      username: users.username,
-      email: users.email,
-      genero: users.genero,
-      fechaNacimiento: users.fechaNacimiento,
-      pesoKg: users.pesoKg,
-      estaturaCm: users.estaturaCm,
-      nivelActividad: users.nivelActividad,
-      biografia: users.biografia,
-      fotoPerfil: users.fotoPerfil,
-      isProfessional: users.isProfessional,
-    })
-    .from(users)
-    .where(eq(users.id, userId));
+  const [result] = await db
+  .select({
+    nombre: users.nombre,
+    apellido: users.apellido,
+    username: users.username,
+    email: users.email,
+    genero: users.genero,
+    fechaNacimiento: users.fechaNacimiento,
+    pesoKg: users.pesoKg,
+    estaturaCm: users.estaturaCm,
+    nivelActividad: users.nivelActividad,
+    biografia: users.biografia,
+    fotoPerfil: users.fotoPerfil,
 
-  return result[0] ?? null;
+    professional: {
+      id: professionals.id,
+      profession: professionals.profession,
+      verified: professionals.verified,
+      acceptingClients: professionals.acceptingClients,
+    },
+  })
+  .from(users)
+  .leftJoin(
+    professionals,
+    eq(professionals.userId, users.id)
+  )
+  .where(eq(users.id, userId));
+
+if (!result) {
+  return null;
+}
+
+return {
+  ...result,
+  professional:
+    result.professional?.id != null
+      ? result.professional
+      : null,
+};
 }
 
 export async function updateProfile(

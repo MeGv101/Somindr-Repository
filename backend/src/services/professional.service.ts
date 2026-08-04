@@ -1,5 +1,6 @@
 import * as repository from "../repositories/professional.repository.js";
 
+
 export async function createPaypalOrder(
   professionalId: number
 ) {
@@ -39,6 +40,14 @@ export async function getPurchasedProfessionals(
   return await repository.findPurchasedProfessionals(
     userId
   );
+}
+
+export async function isProfessional(
+  userId: number
+){
+    return (
+        await repository.findProfessionalByUserId(userId)
+    ) !== null;
 }
 
 export async function getClients(

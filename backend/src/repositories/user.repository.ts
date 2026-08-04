@@ -1,9 +1,8 @@
 import { db } from "../db/index.js";
-import { users } from "../db/schema.js";
+import { users, professionals } from "../db/schema.js";
 
-import {
-  eq,
-} from "drizzle-orm";
+import { eq } from "drizzle-orm";
+
 export async function findPublicProfile(
   username: string
 ) {
@@ -15,16 +14,34 @@ export async function findPublicProfile(
       fotoPerfil: users.fotoPerfil,
       genero: users.genero,
       biografia: users.biografia,
-      isProfessional: users.isProfessional,
+
+      professional: {
+        id: professionals.id,
+        profession: professionals.profession,
+        verified: professionals.verified,
+        acceptingClients: professionals.acceptingClients,
+      },
     })
     .from(users)
+    .leftJoin(
+      professionals,
+      eq(professionals.userId, users.id)
+    )
     .where(
-      eq(
-        users.username,
-        username
-      )
+      eq(users.username, username)
     );
-  return result[0] ?? null;
+
+  if (!result.length) {
+    return null;
+  }
+
+  return {
+    ...result[0],
+    professional:
+      result[0].professional?.id != null
+        ? result[0].professional
+        : null,
+  };
 }
 
 export async function findMyProfile(
@@ -38,41 +55,54 @@ export async function findMyProfile(
       username: users.username,
       email: users.email,
       genero: users.genero,
-      biografia:users.biografia,
-      fotoPerfil:users.fotoPerfil,
-      isProfessional:users.isProfessional,
+      biografia: users.biografia,
+      fotoPerfil: users.fotoPerfil,
+
+      professional: {
+        id: professionals.id,
+        profession: professionals.profession,
+        verified: professionals.verified,
+        acceptingClients: professionals.acceptingClients,
+      },
     })
     .from(users)
-    .where(
-      eq(
-        users.id,
-        id
-      )
+    .leftJoin(
+      professionals,
+      eq(professionals.userId, users.id)
     )
-  return result[0] ?? null;
-}
-export async function updateProfile(
-  id:number,
-  data:any
-){
+    .where(
+      eq(users.id, id)
+    );
 
+  if (!result.length) {
+    return null;
+  }
+
+  return {
+    ...result[0],
+    professional:
+      result[0].professional?.id != null
+        ? result[0].professional
+        : null,
+  };
+}
+
+export async function updateProfile(
+  id: number,
+  data: any
+) {
   await db
     .update(users)
     .set({
-      nombre:data.nombre,
-      apellido:data.apellido,
-      genero:data.genero,
-      fechaNacimiento:data.fechaNacimiento,
-      pesoKg:data.pesoKg,
-      estaturaCm:data.estaturaCm,
-      nivelActividad:data.nivelActividad,
-      biografia:data.biografia,
-      fotoPerfil:data.fotoPerfil,
+      nombre: data.nombre,
+      apellido: data.apellido,
+      genero: data.genero,
+      fechaNacimiento: data.fechaNacimiento,
+      pesoKg: data.pesoKg,
+      estaturaCm: data.estaturaCm,
+      nivelActividad: data.nivelActividad,
+      biografia: data.biografia,
+      fotoPerfil: data.fotoPerfil,
     })
-    .where(
-      eq(users.id,id)
-    );
-
+    .where(eq(users.id, id));
 }
-
-

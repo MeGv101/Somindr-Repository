@@ -16,13 +16,20 @@ import { useAuth } from "../context/authContext";
 
 import "../styles/perfil.css";
 
+type ProfessionalInfo = {
+  id: number;
+  profession: string;
+  verified: boolean;
+  acceptingClients: boolean;
+};
+
 type Profile = {
   nombre: string;
   apellido: string;
   username: string;
   fotoPerfil: number;
   biografia: string;
-  isProfessional: boolean;
+  professional: ProfessionalInfo | null;
 };
 
 type Post = {
@@ -257,7 +264,7 @@ export default function Profile() {
               @{perfil.username}
             </p>
 
-            {perfil.isProfessional && (
+            {perfil.professional && (
               <span className="badge-profesional">
                 Profesional verificado
               </span>
@@ -266,7 +273,7 @@ export default function Profile() {
           </div>
             {
               professional &&
-              !user?.isProfessional && (
+              !user?.professional && (
 
                 purchased ? (
 

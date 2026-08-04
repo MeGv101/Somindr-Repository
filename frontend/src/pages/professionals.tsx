@@ -103,7 +103,7 @@ export default function Professionals() {
         )
     );
 
-    if (user?.isProfessional) {
+    if (user?.professional) {
         return <Navigate to="/clients/me" replace />;
     }
   return (
