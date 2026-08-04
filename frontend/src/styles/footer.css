@@ -48,7 +48,7 @@ footer > div:first-child p {
   align-items: flex-start;
 }
 
-.menu-left {
+.footer-left {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -96,7 +96,7 @@ footer > div:first-child p {
     font-size: 1.75rem;
   }
 
-  .menu-left {
+  .footer-left {
     flex-direction: column;
     gap: 1rem;
   }

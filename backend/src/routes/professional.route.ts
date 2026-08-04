@@ -100,8 +100,17 @@ export async function professionalRoutes(
   );
   fastify.get(
     "/professionals",
-    async () => {
-      return await service.getProfessionals();
+    async (request) => {
+
+      const payload =
+        await request.jwtVerify() as {
+          id: number;
+        };
+
+      return await service.getProfessionals(
+        payload.id
+      );
+
     }
   );
   fastify.get(
@@ -130,31 +139,50 @@ export async function professionalRoutes(
   );
 
   async function validatePurchase(
-    request: FastifyRequest,
-    reply: FastifyReply
-  ) {
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
 
-    const payload =
-      await request.jwtVerify() as {
-        id: number;
-      };
+  const payload =
+    await request.jwtVerify() as {
+      id: number;
+    };
 
-    const { id } =
-      request.params as {
-        id: string;
-      };
+  const { id } =
+    request.params as {
+      id: string;
+    };
+
+  const professionalId = Number(id);
+
+  const selfPurchase =
+    await service.validateSelfPurchase(
+      payload.id,
+      professionalId
+    );
+
+    if (selfPurchase) {
+
+      return reply.status(400).send({
+        message:
+          "No puedes contratarte a ti mismo."
+      });
+
+    }
 
     const purchased =
       await service.validatePurchase(
         payload.id,
-        Number(id)
+        professionalId
       );
 
     if (purchased) {
+
       return reply.status(409).send({
         message:
           "Ya has contratado a este profesional."
       });
+
     }
 
   }

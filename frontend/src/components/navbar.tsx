@@ -91,9 +91,10 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <img src="../src/assets/logo.svg" className="logo-img" alt="logo" />
         </div>
 
-        <SearchBar />
+        
 
         <div className="menu-left">
+          <SearchBar />
           <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
             Inicio
           </Link>
@@ -110,21 +111,17 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             Asesor IA
           </Link>
           {
-            user?.professional ? (
+            user?.professional && (
               <Link to="/clients/me" className="sidebar-link" onClick={handleLinkClick}>
                 Tus Clientes
               </Link>
-            ) : (
-              <Link to="/professionals/me" className="sidebar-link" onClick={handleLinkClick}>
-                Tus Profesionales
-              </Link>
-
             )
           }
+
+          <Link to="/professionals/me" className="sidebar-link" onClick={handleLinkClick}>
+                Tus Profesionales
+              </Link>
           <div className='nav-profile'>
-            <div onClick={(e) => e.stopPropagation()}>
-              <LanguageSwitcher />
-            </div>
             <Link
               to="/perfil"
               className="sidebar-link profile-link"

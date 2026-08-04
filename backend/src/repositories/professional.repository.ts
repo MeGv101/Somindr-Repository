@@ -1,7 +1,7 @@
 import { getAccessToken, getPaypalBaseUrl } from "../providers/paypal.provider.js";
 import { db } from "../db/index.js";
 import { professionals, professionalClients, moodEntries, userRoutines, summaries, users } from "../db/schema.js";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, ne } from "drizzle-orm";
 
 export async function createOrder(
   professionalId: number
@@ -159,32 +159,35 @@ export async function findClients(
       );
 
   }
-  export async function findAllProfessionals() {
-    return await db
-      .select({
-        id: professionals.id,
-        nombre: users.nombre,
-        apellido: users.apellido,
-        username: users.username,
-        fotoPerfil: users.fotoPerfil,
-        profession: professionals.profession,
-        description: professionals.description,
-        pricePerHour: professionals.pricePerHour,
-        verified: professionals.verified,
-        acceptingClients: professionals.acceptingClients,
-      }).from(professionals).innerJoin(
-        users,
-        eq(
-          professionals.userId,
-          users.id
-        )
-      ).where(
-        eq(
-          professionals.acceptingClients,
-          true
-        )
-      );
-  }
+
+export async function findAllProfessionals(
+  userId: number
+) {
+  return await db
+    .select({
+      id: professionals.id,
+      nombre: users.nombre,
+      apellido: users.apellido,
+      username: users.username,
+      fotoPerfil: users.fotoPerfil,
+      profession: professionals.profession,
+      description: professionals.description,
+      pricePerHour: professionals.pricePerHour,
+      verified: professionals.verified,
+      acceptingClients: professionals.acceptingClients,
+    })
+    .from(professionals)
+    .innerJoin(
+      users,
+      eq(professionals.userId, users.id)
+    )
+    .where(
+      and(
+        eq(professionals.acceptingClients, true),
+        ne(users.id, userId)
+      )
+    );
+}
   export async function hasActivePurchase(
     userId: number,
     professionalId: number
@@ -293,3 +296,24 @@ export async function findClients(
     };
 
   }
+
+  export async function findProfessionalById(
+  professionalId: number
+) {
+
+  const [professional] = await db
+    .select({
+      id: professionals.id,
+      userId: professionals.userId,
+    })
+    .from(professionals)
+    .where(
+      eq(
+        professionals.id,
+        professionalId
+      )
+    );
+
+  return professional ?? null;
+
+}

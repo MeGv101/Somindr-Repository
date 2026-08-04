@@ -56,8 +56,12 @@ export async function getClients(
   return await repository
     .findClients(userId);
 }
-export async function getProfessionals() {
-  return await repository.findAllProfessionals();
+export async function getProfessionals(
+  userId: number
+) {
+  return await repository.findAllProfessionals(
+    userId
+  );
 }
 
 export async function validatePurchase(
@@ -72,6 +76,25 @@ export async function validatePurchase(
 
 }
 
+export async function validateSelfPurchase(
+  userId: number,
+  professionalId: number
+) {
+
+  const professional =
+    await repository.findProfessionalById(
+      professionalId
+    );
+
+  if (!professional) {
+    throw new Error(
+      "PROFESSIONAL_NOT_FOUND"
+    );
+  }
+
+  return professional.userId === userId;
+
+}
 
 export async function getClientDashboard(
   professionalUserId: number,

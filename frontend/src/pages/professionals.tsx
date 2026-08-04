@@ -103,9 +103,6 @@ export default function Professionals() {
         )
     );
 
-    if (user?.professional) {
-        return <Navigate to="/clients/me" replace />;
-    }
   return (
     <>
       <main className="main professionals-page">
@@ -120,7 +117,7 @@ export default function Professionals() {
         </section>
         <section className="professionals-section">
           <h2>
-            Mis <span className="verde"> profesionales</span>
+            Mis<span className="verde">&nbsp;profesionales</span>
           </h2>
           {
             myProfessionals.length === 0 ? (
@@ -165,7 +162,7 @@ export default function Professionals() {
         </section>
         <section className="professionals-section">
           <h2>
-            Profesionales <span className="verde">disponibles</span>
+            Profesionales <span className="verde">&nbsp;disponibles</span>
           </h2>
           {
             availableProfessionals.length === 0 ? (

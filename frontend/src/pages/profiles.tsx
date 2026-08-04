@@ -273,7 +273,7 @@ export default function Profile() {
           </div>
             {
               professional &&
-              !user?.professional && (
+              !esMiPerfil && (
 
                 purchased ? (
 
@@ -381,6 +381,7 @@ export default function Profile() {
         <h3>
             Publicaciones
         </h3>
+        <hr />
 
         {posts.length === 0 ? (
 
@@ -425,6 +426,7 @@ export default function Profile() {
                     </span>
 
                   </div>
+                  <hr></hr>
 
                 </article>
 

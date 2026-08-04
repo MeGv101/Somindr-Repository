@@ -16,7 +16,7 @@ export default function Footer({ handleLinkClick }: FooterProps) {
         <p> Informacion acerca de Somindr en Sobre Nosotros</p>
       </div>
       <div className="footer-links">
-        <div className="menu-left">
+        <div className="footer-left">
           <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
             Inicio
           </Link>
