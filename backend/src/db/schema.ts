@@ -66,6 +66,10 @@ export const users = pgTable("users", {
   .default(1)
   .notNull(),
 
+  suspended: boolean("suspended")
+  .notNull()
+  .default(false),
+
   createdAt: timestamp("created_at")
     .defaultNow()
     .notNull(),
@@ -500,6 +504,12 @@ export const professionals = pgTable(
     acceptingClients: boolean("accepting_clients")
       .default(true)
       .notNull(),
+
+    active: boolean("active")
+      .notNull()
+      .default(true),
+
+deactivatedAt: timestamp("deactivated_at"),
 
     createdAt: timestamp(
       "created_at"

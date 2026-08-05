@@ -469,7 +469,101 @@ const confirmPreset = () => {
             </div>
 
           </div>
+          <div className="card">
 
+              <div className="card-titulo">
+                Datos físicos
+              </div>
+
+              <div className="card-sub">
+                *Información visible únicamente para tus profesionales
+              </div>
+
+              <div className="form-2">
+
+                <div className="campo-perfil">
+
+                  <label>Peso (kg)</label>
+
+                  <input
+                    type="number"
+                    value={perfil.pesoKg}
+                    onChange={(e) =>
+                      setPerfil({
+                        ...perfil,
+                        pesoKg: Number(
+                          e.target.value
+                        ),
+                      })
+                    }
+                  />
+
+                </div>
+
+                <div className="campo-perfil">
+
+                  <label>Estatura (cm)</label>
+
+                  <input
+                    type="number"
+                    value={perfil.estaturaCm}
+                    onChange={(e) =>
+                      setPerfil({
+                        ...perfil,
+                        estaturaCm: Number(
+                          e.target.value
+                        ),
+                      })
+                    }
+                  />
+
+                </div>
+
+              </div>
+
+              <div className="campo-perfil">
+
+                <label>
+                  Nivel de actividad
+                </label>
+
+                <select
+                  value={perfil.nivelActividad}
+                  onChange={(e) =>
+                    setPerfil({
+                      ...perfil,
+                      nivelActividad:
+                        e.target.value,
+                    })
+                  }
+                >
+
+                  <option value="Sedentario">
+                    Sedentario
+                  </option>
+
+                  <option value="Ligero">
+                    Ligero
+                  </option>
+
+                  <option value="Moderado">
+                    Moderado
+                  </option>
+
+                  <option value="Activo">
+                    Activo
+                  </option>
+
+                  <option value="Muy activo">
+                    Muy activo
+                  </option>
+
+                </select>
+
+              </div>
+
+          </div>
+            
         </div>
 
       </main>

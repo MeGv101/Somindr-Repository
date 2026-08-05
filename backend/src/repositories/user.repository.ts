@@ -57,6 +57,7 @@ export async function findMyProfile(
       genero: users.genero,
       biografia: users.biografia,
       fotoPerfil: users.fotoPerfil,
+      role: users.role,
 
       professional: {
         id: professionals.id,

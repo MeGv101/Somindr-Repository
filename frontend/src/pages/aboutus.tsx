@@ -12,7 +12,7 @@ interface Integrante {
   rol: string;
   bio: string;
   foto?: string;
-  anchor: string; // ruta de la imagen, ej: "/imagenes/equipo/nombre.jpg"
+  anchor: string;
 }
 
 const PILARES: Pilar[] = [
@@ -36,7 +36,6 @@ const PILARES: Pilar[] = [
   },
 ];
 
-// Reemplaza "foto" por la ruta real de cada imagen cuando la tengan lista.
 const EQUIPO: Integrante[] = [
   { nombre: "Adán Bonilla", rol: "Desarrollo Frontend", bio: "Encargado de la experiencia visual e interfaz de Somindr.", foto: "../media/SRC/New Adan.png", anchor: "https://github.com/adansho" },
   { nombre: "Mario Guzmán", rol: "Desarrollo Fullstack",  bio: "Encargado de la lógica, datos y funcionamiento de la plataforma.", foto: "../media/SRC/New Mario.png", anchor: "https://github.com/MeGv101"},

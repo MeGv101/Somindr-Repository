@@ -51,6 +51,10 @@ export async function login(
         );
     }
 
+    if (usuario.suspended) {
+        throw new Error("USER_SUSPENDED");
+    }
+
     const tokenId = uuidv4();
 
     await authRepository.createSession(

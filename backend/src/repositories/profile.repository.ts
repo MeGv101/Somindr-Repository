@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 import { db } from "../db/index.js";
 import { users, professionals, professionalContacts } from "../db/schema.js";
@@ -105,12 +105,10 @@ export async function findProfessionalByUsername(
           users.id
         )
       )
-      .where(
-        eq(
-          users.username,
-          username
-        )
-      );
+      .where(and(
+        eq( users.username, username),
+        eq(professionals.active, true),
+      ));
 
   if (!professional.length) {
     return null;

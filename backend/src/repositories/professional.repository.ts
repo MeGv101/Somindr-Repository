@@ -85,7 +85,10 @@ export async function findProfessionalByUserId(
   const [professional] = await db
     .select()
     .from(professionals)
-    .where(eq(professionals.userId, userId));
+    .where(
+      and(
+        eq(professionals.userId, userId), 
+        eq(professionals.active, true)));
 
   return professional ?? null;
 }
@@ -184,6 +187,7 @@ export async function findAllProfessionals(
     .where(
       and(
         eq(professionals.acceptingClients, true),
+        eq(professionals.active, true),
         ne(users.id, userId)
       )
     );
@@ -311,7 +315,7 @@ export async function findAllProfessionals(
       eq(
         professionals.id,
         professionalId
-      )
+      ),
     );
 
   return professional ?? null;

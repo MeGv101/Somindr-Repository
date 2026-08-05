@@ -45,6 +45,15 @@ export async function authRoutes(
 
       }
 
+      if (
+        error instanceof Error &&
+        error.message === "USER_SUSPENDED"
+      ) {
+        return reply.status(403).send({
+          message: "Esta cuenta ha sido suspendida."
+        });
+      }
+
       return reply.status(401).send({
         message:
           "Credenciales inválidas",
