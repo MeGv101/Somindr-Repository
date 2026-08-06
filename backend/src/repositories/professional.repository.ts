@@ -1,6 +1,6 @@
 import { getAccessToken, getPaypalBaseUrl } from "../providers/paypal.provider.js";
 import { db } from "../db/index.js";
-import { professionals, professionalClients, moodEntries, userRoutines, summaries, users } from "../db/schema.js";
+import { professionals, professionalClients, moodEntries, userRoutines, summaries, users, professionalContacts } from "../db/schema.js";
 import { eq, and, desc, ne } from "drizzle-orm";
 
 export async function createOrder(
@@ -319,5 +319,183 @@ export async function findAllProfessionals(
     );
 
   return professional ?? null;
+
+}
+export async function findProfessionalByUserIdIncludingInactive(
+  userId: number
+) {
+
+  const [professional] =
+    await db
+      .select()
+      .from(professionals)
+      .where(
+        eq(
+          professionals.userId,
+          userId
+        )
+      );
+
+  return professional ?? null;
+
+}
+
+export async function createProfessional(
+  data: {
+    userId: number;
+    profession: string;
+  }
+) {
+
+  const [professional] =
+    await db
+      .insert(professionals)
+      .values({
+        userId: data.userId,
+        profession: data.profession,
+        description: "",
+        pricePerHour: 5,
+        verified: true,
+        acceptingClients: true,
+        active: true,
+      })
+      .returning();
+  return professional;
+}
+
+export async function reactivateProfessional(
+  professionalId: number,
+  data: {
+    profession: string;
+    description: string;
+    pricePerHour: number;
+  }
+) {
+
+  await db
+    .update(professionals)
+    .set({
+
+      profession: data.profession,
+
+      description: data.description,
+
+      pricePerHour: data.pricePerHour,
+
+      active: true,
+
+      acceptingClients: true,
+
+      verified: false,
+
+      deactivatedAt: null,
+
+    })
+    .where(
+      eq(
+        professionals.id,
+        professionalId
+      )
+    );
+
+}
+
+export async function deactivateProfessional(
+  userId:number
+){
+
+  await db
+    .update(professionals)
+    .set({
+
+      active:false,
+
+      acceptingClients:false,
+
+      deactivatedAt:new Date(),
+
+    })
+    .where(
+      eq(
+        professionals.userId,
+        userId
+      )
+    );
+
+}
+
+export async function updateProfessionalProfile(
+  professionalId:number,
+  data:{
+    profession?:string;
+    description?:string;
+    pricePerHour?:number;
+    acceptingClients?:boolean;
+  }
+){
+
+  const [professional] =
+    await db
+      .update(professionals)
+      .set(data)
+      .where(
+        eq(
+          professionals.id,
+          professionalId
+        )
+      )
+      .returning();
+
+
+  return professional;
+
+}
+
+export async function createProfessionalContacts(
+  data:{
+    professionalId:number;
+    type:string;
+    value:string;
+  }[]
+){
+
+  if(data.length === 0){
+    return;
+  }
+
+
+  await db
+    .insert(professionalContacts)
+    .values(data);
+
+}
+export async function deleteProfessionalContacts(
+  professionalId:number
+){
+
+  await db
+    .delete(professionalContacts)
+    .where(
+      eq(
+        professionalContacts.professionalId,
+        professionalId
+      )
+    );
+
+}
+
+export async function findProfessionalContacts(
+  professionalId:number
+){
+
+  return await db
+    .select()
+    .from(professionalContacts)
+    .where(
+      eq(
+        professionalContacts.professionalId,
+        professionalId
+      )
+    );
 
 }

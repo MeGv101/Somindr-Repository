@@ -4,7 +4,7 @@ import { eq, and, isNull } from "drizzle-orm";
 import { Resend } from "resend";
 
 import { db } from "../db/index.js";
-import { authTokens } from "../db/schema.js";
+import { authTokens, users } from "../db/schema.js";
 
 import type {
   AuthTokenType,
@@ -185,5 +185,84 @@ export async function sendPasswordResetEmail(
   `;
 
   await sendEmail(user.email, "Restablece tu contraseña", emailWrapper(content));
+}
+
+export async function sendProfessionalApprovedEmail(
+  user: MailUser
+): Promise<void> {
+
+  const content = `
+    <h2 style="margin:0 0 12px; color:#111827; font-size:20px;">
+      Hola ${user.nombre}
+    </h2>
+
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      Tu solicitud para convertirte en especialista de Somindr fue aprobada.
+    </p>
+
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      Ya puedes configurar tu perfil profesional desde la sección de configuración.
+    </p>
+  `;
+
+
+  await sendEmail(
+    user.email,
+    "Tu solicitud de especialista fue aprobada",
+    emailWrapper(content)
+  );
+
+}
+
+export async function sendProfessionalRejectedEmail(
+  user: MailUser,
+  reason?: string
+): Promise<void> {
+
+  const content = `
+    <h2 style="margin:0 0 12px; color:#111827; font-size:20px;">
+      Hola ${user.nombre}
+    </h2>
+
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      Revisamos tu solicitud para convertirte en especialista de Somindr.
+    </p>
+
+    <p style="margin:0 0 8px; color:#374151; font-size:15px; line-height:1.5;">
+      En esta ocasión no fue aprobada.
+    </p>
+
+    ${
+      reason
+      ?
+      `
+      <div style="
+        background:#f3f4f6;
+        padding:16px;
+        border-radius:6px;
+        margin:20px 0;
+      ">
+        <strong>Motivo:</strong>
+        <p style="margin:8px 0 0;">
+          ${reason}
+        </p>
+      </div>
+      `
+      :
+      "El Administrador no dió más detalles"
+    }
+
+    <p style="margin:0; color:#374151; font-size:15px; line-height:1.5;">
+      Puedes volver a enviar una solicitud cuando lo consideres.
+    </p>
+  `;
+
+
+  await sendEmail(
+    user.email,
+    "Resultado de tu solicitud de especialista",
+    emailWrapper(content)
+  );
+
 }
 

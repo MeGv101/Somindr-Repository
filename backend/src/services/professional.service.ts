@@ -106,3 +106,157 @@ export async function getClientDashboard(
     clientId
   );
 }
+
+export async function getMyProfessionalProfile(
+  userId:number
+){
+
+  const professional =
+    await repository.findProfessionalByUserIdIncludingInactive(
+      userId
+    );
+
+
+  if(!professional){
+    throw new Error(
+      "NOT_PROFESSIONAL"
+    );
+  }
+
+
+  const contacts =
+    await repository.findProfessionalContacts(
+      professional.id
+    );
+
+
+  return {
+    ...professional,
+    contacts,
+  };
+
+}
+
+export async function updateMyProfessionalProfile(
+  userId:number,
+  data:{
+    profession?:string;
+    description?:string;
+    pricePerHour?:number;
+    acceptingClients?:boolean;
+
+    contacts?:{
+      type:string;
+      value:string;
+    }[];
+  }
+){
+
+  const professional =
+    await repository.findProfessionalByUserIdIncludingInactive(
+      userId
+    );
+
+
+  if(!professional){
+    throw new Error(
+      "NOT_PROFESSIONAL"
+    );
+  }
+
+
+  const updated =
+    await repository.updateProfessionalProfile(
+      professional.id,
+      {
+        profession:data.profession,
+        description:data.description,
+        pricePerHour:data.pricePerHour,
+        acceptingClients:data.acceptingClients,
+      }
+    );
+
+
+  if(data.contacts){
+
+    await repository.deleteProfessionalContacts(
+      professional.id
+    );
+
+
+    await repository.createProfessionalContacts(
+
+      data.contacts.map(contact=>({
+
+        professionalId:
+          professional.id,
+
+        type:
+          contact.type,
+
+        value:
+          contact.value,
+
+      }))
+
+    );
+
+  }
+
+
+  return updated;
+
+}
+
+
+export async function deactivateMyProfessionalAccount(
+  userId:number
+){
+
+  const professional =
+    await repository.findProfessionalByUserIdIncludingInactive(
+      userId
+    );
+
+
+  if(!professional){
+    throw new Error(
+      "NOT_PROFESSIONAL"
+    );
+  }
+
+
+  return await repository.deactivateProfessional(
+    userId
+  );
+
+}
+
+
+export async function reactivateMyProfessionalAccount(
+  userId:number
+){
+
+  const professional =
+    await repository.findProfessionalByUserIdIncludingInactive(
+      userId
+    );
+
+
+  if(!professional){
+    throw new Error(
+      "NOT_PROFESSIONAL"
+    );
+  }
+
+
+  return await repository.reactivateProfessional(
+    professional.id,
+    {
+      profession: professional.profession,
+      description: professional.description ?? "",
+      pricePerHour: professional.pricePerHour ?? 5,
+    }
+  );
+
+}

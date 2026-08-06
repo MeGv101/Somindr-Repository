@@ -17,6 +17,7 @@ import { userRoutes } from "./routes/user.route.js";
 import {searchRoutes } from "./routes/search.routes.js"
 import { professionalRoutes } from "./routes/professional.route.js"
 import { adminRoutes } from "./routes/admin.route.js";
+import { professionalRequestRoutes } from "./routes/professional-req.route.js";
 
 const app = Fastify()
 
@@ -62,6 +63,10 @@ await app.register(professionalRoutes, {
 
 await app.register(searchRoutes, {
     prefix: "/api"
+});
+
+await app.register(professionalRequestRoutes, {
+    prefix: "/api/professional-requests"
 });
 
 await app.register(adminRoutes, {

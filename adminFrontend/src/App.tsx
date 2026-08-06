@@ -13,6 +13,7 @@ import AdminLayout from "./layouts/layout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Users from "./pages/users";
+import Solicitudes from "./pages/solicitudes";
 
 export default function App() {
 
@@ -46,6 +47,11 @@ export default function App() {
               <Route
                 path="users"
                 element={<Users />}
+              />
+
+              <Route
+                path="solicitudes"
+                element={<Solicitudes />}
               />
 
             </Route>

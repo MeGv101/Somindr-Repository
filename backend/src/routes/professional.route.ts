@@ -219,4 +219,77 @@ export async function professionalRoutes(
 
     }
   );
+
+  fastify.get(
+  "/professionals/me",
+  async(request)=>{
+
+    const payload =
+      await request.jwtVerify() as {
+        id:number;
+      };
+
+
+    return await service.getMyProfessionalProfile(
+      payload.id
+    );
+
+  }
+);
+
+
+fastify.patch(
+  "/professionals/me",
+  async(request)=>{
+
+    const payload =
+      await request.jwtVerify() as {
+        id:number;
+      };
+
+
+    return await service.updateMyProfessionalProfile(
+      payload.id,
+      request.body as any
+    );
+
+  }
+);
+
+
+fastify.patch(
+  "/professionals/me/deactivate",
+  async(request)=>{
+
+    const payload =
+      await request.jwtVerify() as {
+        id:number;
+      };
+
+
+    return await service.deactivateMyProfessionalAccount(
+      payload.id
+    );
+
+  }
+);
+
+
+  fastify.patch(
+    "/professionals/me/reactivate",
+    async(request)=>{
+
+      const payload =
+        await request.jwtVerify() as {
+          id:number;
+        };
+
+
+      return await service.reactivateMyProfessionalAccount(
+        payload.id
+      );
+
+    }
+  );
 }
+

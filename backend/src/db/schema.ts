@@ -641,3 +641,60 @@ export const payments = pgTable(
       .notNull(),
   }
 );
+export const professionalRequests = pgTable("professional_requests",{
+      id:
+        serial("id")
+          .primaryKey(),
+
+      userId:
+        integer("user_id")
+          .notNull()
+          .references(
+            () => users.id,
+            {
+              onDelete: "cascade",
+            }
+          ),
+
+      profession:
+        varchar(
+          "profession",
+          { length: 50 }
+        ).notNull(),
+
+      message:
+        text("message"),
+
+      adminComment: text("admin_comment"),
+
+      status:
+        varchar(
+          "status",
+          { length: 20 }
+        )
+          .notNull()
+          .default("PENDING"),
+
+      reviewedBy:
+        integer("reviewed_by")
+          .references(
+            () => users.id,
+            {
+              onDelete: "set null",
+            }
+          ),
+
+      reviewedAt:
+        timestamp(
+          "reviewed_at"
+        ),
+
+      createdAt:
+        timestamp(
+          "created_at"
+        )
+          .defaultNow()
+          .notNull(),
+
+    }
+  );
