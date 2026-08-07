@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { openChat } from "../services/chat";
 
 import Footer from "../components/footer";
 
@@ -8,6 +9,8 @@ import "../styles/clients.css";
 interface Client {
 
   id: number;
+
+  userId:number;
 
   nombre: string;
 
@@ -56,6 +59,35 @@ export default function Clients() {
     );
 
   }
+
+
+  const navigate =
+  useNavigate();
+
+    async function handleOpenChat(
+      clientUserId:number
+    ){
+
+      try{
+
+        const channelId =
+          await openChat(
+            clientUserId
+          );
+
+        navigate(
+          `/messages/${channelId}`
+        );
+
+      }
+
+      catch(error){
+
+        console.error(error);
+
+      }
+
+    }
 
   return (
 
@@ -182,6 +214,17 @@ export default function Clients() {
                     >
                       Ver historiales
                     </Link>
+
+                    <button
+                      className="btn-profile"
+                      onClick={() =>
+                        handleOpenChat(
+                          client.userId
+                        )
+                      }
+                    >
+                      Abrir chat
+                    </button>
 
                   </article>
 

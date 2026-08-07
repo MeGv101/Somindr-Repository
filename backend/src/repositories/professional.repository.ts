@@ -1,7 +1,7 @@
 import { getAccessToken, getPaypalBaseUrl } from "../providers/paypal.provider.js";
 import { db } from "../db/index.js";
 import { professionals, professionalClients, moodEntries, userRoutines, summaries, users, professionalContacts } from "../db/schema.js";
-import { eq, and, desc, ne } from "drizzle-orm";
+import { eq, and, desc, ne, or } from "drizzle-orm";
 
 export async function createOrder(
   professionalId: number
@@ -116,16 +116,72 @@ export async function savePurchase(
 }
 
 export async function findPurchasedProfessionals(
-  userId: number
-) {
+  userId:number
+){
 
   return await db
-    .select()
+    .select({
+
+      id: professionals.id,
+
+      userId: professionals.userId,
+
+      nombre: users.nombre,
+
+      apellido: users.apellido,
+
+      username: users.username,
+
+      profession: professionals.profession,
+
+      description: professionals.description,
+
+      pricePerHour:
+        professionals.pricePerHour,
+
+      verified:
+        professionals.verified,
+
+      fotoPerfil:
+        users.fotoPerfil,
+
+      startedAt:
+        professionalClients.startedAt,
+
+      expiresAt:
+        professionalClients.expiresAt,
+
+      active:
+        professionalClients.active,
+
+    })
+
     .from(professionalClients)
-    .where(eq(professionalClients.userId, userId));
+
+    .innerJoin(
+      professionals,
+      eq(
+        professionalClients.professionalId,
+        professionals.id
+      )
+    )
+
+    .innerJoin(
+      users,
+      eq(
+        professionals.userId,
+        users.id
+      )
+    )
+
+    .where(
+      eq(
+        professionalClients.userId,
+        userId
+      )
+    );
 
 }
-
 export async function findClients(
     professionalUserId: number
   ) {
@@ -133,6 +189,7 @@ export async function findClients(
     return await db
       .select({
         id: users.id,
+        userId: users.id,
         nombre: users.nombre,
         apellido: users.apellido,
         username: users.username,
@@ -497,5 +554,137 @@ export async function findProfessionalContacts(
         professionalId
       )
     );
+
+}
+export async function findProfessionalClient(
+  userAId: number,
+  userBId: number
+) {
+
+  const [relation] =
+    await db
+      .select({
+
+        id:
+          professionalClients.id,
+
+        active:
+          professionalClients.active,
+
+        professionalId:
+          professionalClients.professionalId,
+
+      })
+
+      .from(
+        professionalClients
+      )
+
+      .innerJoin(
+
+        professionals,
+
+        eq(
+
+          professionalClients.professionalId,
+
+          professionals.id
+
+        )
+
+      )
+
+      .where(
+
+        or(
+
+          and(
+
+            eq(
+              professionalClients.userId,
+              userAId
+            ),
+
+            eq(
+              professionals.userId,
+              userBId
+            )
+
+          ),
+
+          and(
+
+            eq(
+              professionalClients.userId,
+              userBId
+            ),
+
+            eq(
+              professionals.userId,
+              userAId
+            )
+
+          )
+
+        )
+
+      );
+
+  return relation ?? null;
+
+}
+export async function findProfessionalClientById(
+  relationId:number
+){
+
+  const [relation] =
+    await db
+      .select({
+
+        id:
+          professionalClients.id,
+
+        clientId:
+          professionalClients.userId,
+
+        professionalUserId:
+          professionals.userId,
+
+        active:
+          professionalClients.active,
+
+      })
+
+      .from(
+        professionalClients
+      )
+
+      .innerJoin(
+
+        professionals,
+
+        eq(
+
+          professionalClients.professionalId,
+
+          professionals.id
+
+        )
+
+      )
+
+      .where(
+
+        eq(
+
+          professionalClients.id,
+
+          relationId
+
+        )
+
+      );
+
+  return relation ?? null;
 
 }

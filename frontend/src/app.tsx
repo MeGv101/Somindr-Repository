@@ -41,6 +41,8 @@ import Profiles from "./pages/profiles";
 
 import PaymentSuccess from "./pages/payment";
 
+import Messages from './pages/chats'
+
 import LanguageSwitcher from './components/LanguageSwitcher'
 
 function App() {
@@ -186,6 +188,15 @@ function App() {
           element={
             <ProtectedRoute>
               <ClientDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/messages/:channelId"
+          element={
+            <ProtectedRoute>
+              <Messages />
             </ProtectedRoute>
           }
         />

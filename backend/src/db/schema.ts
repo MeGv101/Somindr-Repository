@@ -547,7 +547,6 @@ pgTable(
           onDelete: "cascade",
         }
       ),
-
     startedAt: timestamp(
       "started_at"
     )

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useEffect, useState, } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { openChat } from "../services/chat";
 
 import Footer from "../components/footer";
 
@@ -16,20 +17,38 @@ interface Professional {
   pricePerHour: number;
   verified: boolean;
   fotoPerfil: number;
+  userId: number;
 }
 
-interface PurchasedProfessional {
+interface PurchasedProfessional{
 
-  professionalId: number;
+  id:number;
 
-  startedAt: string;
+  userId:number;
 
-  expiresAt: string;
+  nombre:string;
 
-  active: boolean;
+  apellido:string;
+
+  username:string;
+
+  profession:string;
+
+  description:string;
+
+  pricePerHour:number;
+
+  verified:boolean;
+
+  fotoPerfil:number;
+
+  startedAt:string;
+
+  expiresAt:string;
+
+  active:boolean;
 
 }
-
 export default function Professionals() {
   const { user } = useAuth();
   const [available, setAvailable] =
@@ -42,40 +61,98 @@ export default function Professionals() {
     loadData();
   }, []);
 
-  async function loadData() {
+  const navigate = useNavigate();
 
+  async function handleOpenChat(
+    professionalUserId:number
+  ){
+
+    try{
+
+      const channelId =
+        await openChat(
+          professionalUserId
+        );
+
+      navigate(
+        `/messages/${channelId}`
+      );
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+    }
+
+  }
+
+  async function loadData(){
     const token =
-      localStorage.getItem("token");
+      localStorage.getItem(
+        "token"
+      );
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
+    const headers={
+
+      Authorization:
+        `Bearer ${token}`
+
     };
 
-    const [
+    const[
+
       availableResponse,
+
       purchasedResponse,
-    ] = await Promise.all([
 
-      fetch("/api/professionals", {
-        headers,
-      }),
+    ]=
 
-      fetch("/api/professionals/my", {
-        headers,
-      }),
+    await Promise.all([
+
+      fetch(
+        "/api/professionals",
+        {
+          headers
+        }
+      ),
+
+      fetch(
+        "/api/professionals/my",
+        {
+          headers
+        }
+      ),
 
     ]);
 
-    if (availableResponse.ok) {
+    if(
+
+      availableResponse.ok
+
+    ){
+
       setAvailable(
+
         await availableResponse.json()
+
       );
+
     }
 
-    if (purchasedResponse.ok) {
+    if(
+
+      purchasedResponse.ok
+
+    ){
+
       setPurchased(
+
         await purchasedResponse.json()
+
       );
+
     }
 
   }
@@ -83,7 +160,7 @@ export default function Professionals() {
   const purchasedIds =
     new Set(
       purchased.map(
-        p => p.professionalId
+        p => p.id
       )
     );
 
@@ -96,12 +173,7 @@ export default function Professionals() {
     );
 
   const myProfessionals =
-    available.filter(
-      professional =>
-        purchasedIds.has(
-          professional.id
-        )
-    );
+  purchased;
 
   return (
     <>
@@ -152,6 +224,19 @@ export default function Professionals() {
                         >
                           Ver perfil
                         </Link>
+                        <button
+  className="btn-profile"
+  onClick={() => {
+    console.log("BOTÓN FUNCIONA");
+
+    handleOpenChat(
+      professional.userId
+    );
+  }}
+>
+  Abrir chat
+</button>
+                                                
                       </article>
                     )
                   )

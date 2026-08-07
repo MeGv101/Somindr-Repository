@@ -18,6 +18,7 @@ import {searchRoutes } from "./routes/search.routes.js"
 import { professionalRoutes } from "./routes/professional.route.js"
 import { adminRoutes } from "./routes/admin.route.js";
 import { professionalRequestRoutes } from "./routes/professional-req.route.js";
+import { chatRoutes } from "./routes/chat.route.js";
 
 const app = Fastify()
 
@@ -26,7 +27,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://pages-rap-status-arrived.trycloudflare.com"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://decreased-forest-wrist-jones.trycloudflare.com"]
 })
 
 await app.register(authRoutes, {
@@ -71,6 +72,10 @@ await app.register(professionalRequestRoutes, {
 
 await app.register(adminRoutes, {
     prefix: "/api/admin"
+});
+
+await app.register(chatRoutes, {
+    prefix: "/api/chat"
 });
 
 app.get('/', async () => {
