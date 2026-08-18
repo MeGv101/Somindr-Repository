@@ -14,7 +14,7 @@ export async function generateResponse(
         const completion =
             await client.chat.completions.create({
                 model:
-                    "llama-3.3-70b-versatile",
+                    "groq/compound",
                 messages: [
                     {
                         role: "user",

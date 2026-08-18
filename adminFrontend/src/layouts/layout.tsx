@@ -30,9 +30,11 @@ export default function AdminLayout() {
 
       <header className="admin-header">
 
+        <a href="/">
         <h2>
           Panel de Administración
         </h2>
+        </a>
 
         <div>
 
@@ -50,6 +52,10 @@ export default function AdminLayout() {
 
         <Link to="/users">
           Usuarios
+        </Link>
+
+        <Link to="/solicitudes">
+          Solicitudes
         </Link>
 
       </header>
