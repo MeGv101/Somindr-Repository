@@ -11,7 +11,7 @@ body,
   margin: 0;
 }
 
-body {
+.ai-layout {
   background: #0b1020;
   overflow: hidden;
 }
