@@ -14,17 +14,18 @@
   --som-accent: #3cb878;
   --som-accent-dim: rgba(60, 184, 120, 0.14);
 
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
+  /* ARREGLADO: Ajustado para no tapar la Navbar */
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 60px); /* Resta la altura exacta de tu Navbar */
   background: var(--som-bg);
   color: var(--som-text);
-  z-index: 9999;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 .chat-page__status {
@@ -43,7 +44,7 @@
   letter-spacing: 0.01em;
 }
 
-
+/* Stream Chat Overrides */
 .chat-page .str-chat {
   --str-chat__background-color: var(--som-bg);
   --str-chat__surface-color: var(--som-surface);
@@ -317,19 +318,16 @@
   fill: var(--som-text-dim) !important;
 }
 
-
 .chat-page .str-chat__message-composer-container,
 .chat-page .str-chat__dropzone-root {
   background: var(--som-bg) !important;
   border-top: 1px solid var(--som-border) !important;
 }
 
-
 .chat-page .str-chat__textarea,
 .chat-page .str-chat__textarea-container {
   background: transparent !important;
 }
-
 
 .chat-page .str-chat__message-composer button svg,
 .chat-page .str-chat__message-input-inner button svg,
@@ -337,7 +335,6 @@
   fill: var(--som-text-dim) !important;
   color: var(--som-text-dim) !important;
 }
-
 
 .chat-page .str-chat__message-composer button:hover svg,
 .chat-page .str-chat__message-input-inner button:hover svg {
