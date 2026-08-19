@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "/src/styles/comunidad.css";
 import Footer from '../components/footer';
 import { SearchBar } from "../components/searchBar";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 interface Reply {
   id: number;

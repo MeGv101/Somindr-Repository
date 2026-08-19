@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/footer.css";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface FooterProps {
   handleLinkClick?: () => void;
@@ -15,6 +16,7 @@ export default function Footer({ handleLinkClick }: FooterProps) {
         <p>© 2026 Somindr.</p>
         <p> Informacion acerca de Somindr en Sobre Nosotros</p>
       </div>
+      <LanguageSwitcher />
       <div className="footer-links">
         <div className="footer-left">
           <Link to="/" className="sidebar-link" onClick={handleLinkClick}>
