@@ -45,6 +45,89 @@ interface ProfessionalRequest {
   status:string;
 }
 
+// Claves posibles para identificar qué acción de guardado
+// está mostrando el ícono de resultado (check / x)
+type SaveKey = "perfil" | "professional";
+
+interface SaveStatus {
+  key:SaveKey;
+  status:"success" | "error";
+  // Identificador único por cada disparo, para forzar que
+  // React remonte el ícono (y así reinicie su animación)
+  // incluso si se guarda dos veces seguidas con el mismo resultado
+  token:number;
+}
+
+// Ícono animado de resultado de guardado (check o x).
+// Maneja su propio ciclo de vida: entra, se mantiene visible
+// y luego sale con la misma transición pero en reversa,
+// avisando al padre (onDone) cuando ya puede desmontarse.
+function SaveStatusIcon({
+  status,
+  onDone,
+}:{
+  status:"success" | "error";
+  onDone:()=>void;
+}){
+
+  const [phase,setPhase] =
+    useState<"enter" | "visible" | "leaving">("enter");
+
+  useEffect(()=>{
+
+    // Se espera un frame para que el navegador pinte el
+    // estado inicial ("enter") antes de pasar a "visible",
+    // así la transición de entrada sí se reproduce
+    const raf = requestAnimationFrame(()=>{
+      setPhase("visible");
+    });
+
+    const leaveTimer = setTimeout(()=>{
+      setPhase("leaving");
+    },2600);
+
+    const doneTimer = setTimeout(()=>{
+      onDone();
+    },3000);
+
+    return ()=>{
+      cancelAnimationFrame(raf);
+      clearTimeout(leaveTimer);
+      clearTimeout(doneTimer);
+    };
+
+  },[]);
+
+  return(
+    <span
+      className={`save-status-icon ${status} ${phase}`}
+      role="status"
+      aria-label={
+        status === "success"
+        ? "Guardado correctamente"
+        : "Error al guardar"
+      }
+    >
+
+      {
+        status === "success"
+        ?
+        <svg viewBox="0 0 24 24">
+          <path d="M4 12.5l5 5L20 6.5" />
+        </svg>
+        :
+        <svg viewBox="0 0 24 24">
+          <path d="M5 5l14 14" />
+          <path d="M19 5L5 19" />
+        </svg>
+      }
+
+    </span>
+  );
+
+}
+
+
 export default function Perfil(){
 
   const [loading,setLoading] = useState(true);
@@ -83,6 +166,22 @@ export default function Perfil(){
 
   const [modalOpen,setModalOpen] =
     useState(false);
+
+  // Estado del ícono de resultado de guardado (check / x).
+  // El tiempo de vida (entrada, espera y salida) lo maneja
+  // internamente el propio SaveStatusIcon.
+  const [saveStatus,setSaveStatus] =
+    useState<SaveStatus | null>(null);
+
+  // Muestra el ícono de check o x junto al botón correspondiente.
+  // Un token distinto por cada llamada obliga a React a montar
+  // una instancia nueva del ícono, así la animación siempre
+  // se reproduce desde el principio.
+  function showSaveStatus(key:SaveKey,status:"success" | "error"){
+
+    setSaveStatus({ key, status, token:Date.now() });
+
+  }
 
   useEffect(()=>{
     cargarPerfil();
@@ -214,9 +313,7 @@ export default function Perfil(){
 
       if(!response.ok){
 
-        alert(
-          "No se pudo actualizar el perfil."
-        );
+        showSaveStatus("perfil","error");
 
         return;
 
@@ -225,18 +322,14 @@ export default function Perfil(){
 
       await cargarPerfil();
 
-      alert(
-        "Perfil actualizado correctamente."
-      );
+      showSaveStatus("perfil","success");
 
 
     }catch(error){
 
       console.error(error);
 
-      alert(
-        "Error del servidor."
-      );
+      showSaveStatus("perfil","error");
 
     }
 
@@ -311,33 +404,42 @@ export default function Perfil(){
         localStorage.getItem("token");
 
 
-      await fetch("/api/professionals/me",{
+      const response =
+        await fetch("/api/professionals/me",{
 
-        method:"PATCH",
+          method:"PATCH",
 
-        headers:{
-          "Content-Type":"application/json",
-          Authorization:`Bearer ${token}`,
-        },
+          headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${token}`,
+          },
 
-        body:JSON.stringify(
-          professional
-        ),
+          body:JSON.stringify(
+            professional
+          ),
 
-      });
+        });
+
+
+      if(!response.ok){
+
+        showSaveStatus("professional","error");
+
+        return;
+
+      }
 
 
       await cargarProfessionalData();
 
-
-      alert(
-        "Datos profesionales actualizados."
-      );
+      showSaveStatus("professional","success");
 
 
     }catch(error){
 
       console.error(error);
+
+      showSaveStatus("professional","error");
 
     }
 
@@ -507,15 +609,31 @@ export default function Perfil(){
         </div>
 
 
-        <button
-          className="btn-guardar"
+        <div
+          className="guardar-action"
           style={{
             marginLeft:"auto"
           }}
-          onClick={guardarPerfil}
         >
-          Guardar cambios
-        </button>
+
+          <button
+            className="btn-guardar"
+            onClick={guardarPerfil}
+          >
+            Guardar cambios
+          </button>
+
+          {
+            saveStatus?.key === "perfil" && (
+              <SaveStatusIcon
+                key={saveStatus.token}
+                status={saveStatus.status}
+                onDone={()=>setSaveStatus(null)}
+              />
+            )
+          }
+
+        </div>
 
 
       </div>
@@ -1089,20 +1207,33 @@ export default function Perfil(){
               
 
 
+              <div className="guardar-action">
 
-              <button
+                <button
 
-                className="btn-guardar"
+                  className="btn-guardar"
 
-                onClick={
-                  updateProfessional
+                  onClick={
+                    updateProfessional
+                  }
+
+                >
+
+                  Guardar datos profesionales
+
+                </button>
+
+                {
+                  saveStatus?.key === "professional" && (
+                    <SaveStatusIcon
+                      key={saveStatus.token}
+                      status={saveStatus.status}
+                      onDone={()=>setSaveStatus(null)}
+                    />
+                  )
                 }
 
-              >
-
-                Guardar datos profesionales
-
-              </button>
+              </div>
 
 
 
