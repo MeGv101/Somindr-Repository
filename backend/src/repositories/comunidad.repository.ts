@@ -4,6 +4,7 @@ import {
   posts,
   comments,
   postReactions,
+  postReports,
 } from "../db/schema.js";
 
 import {
@@ -242,4 +243,40 @@ export async function findPostsByUsername(
       eq(users.username, username)
     )
     .orderBy(desc(posts.createdAt));
+}
+
+// REPORTES
+
+export async function createPostReport(data: {
+  postId: number;
+  reporterId: number;
+  reason: string;
+  description?: string;
+}) {
+  return db
+    .insert(postReports)
+    .values({
+      postId: data.postId,
+      reporterId: data.reporterId,
+      reason: data.reason,
+      description: data.description ?? null,
+    })
+    .returning();
+}
+
+export async function getPostReport(
+  postId: number,
+  reporterId: number
+) {
+  const result = await db
+    .select()
+    .from(postReports)
+    .where(
+      and(
+        eq(postReports.postId, postId),
+        eq(postReports.reporterId, reporterId)
+      )
+    );
+
+  return result[0] ?? null;
 }

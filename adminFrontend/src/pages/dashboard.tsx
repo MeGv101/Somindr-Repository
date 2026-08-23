@@ -50,7 +50,7 @@ export default function Dashboard() {
       {/* HEADER */}
       <header className="dashboard-header">
         <div className="header-left">
-          <div className="header-icon">📊</div>
+          <div className="header-icon"></div>
           <div>
             <h1>Panel de Administración</h1>
             <p className="subtitle">Visión general del sistema</p>
@@ -69,7 +69,7 @@ export default function Dashboard() {
       {/* STATS GRID */}
       <div className="dashboard-stats">
         <div className="stat-card accent-green">
-          <div className="stat-icon">👥</div>
+          <div className="stat-icon"></div>
           <div className="stat-label">Total Usuarios</div>
           <div className="stat-number">{dashboard?.totalUsers ?? 0}</div>
           <div className="stat-change positive">
@@ -78,7 +78,7 @@ export default function Dashboard() {
         </div>
 
         <div className="stat-card accent-gold">
-          <div className="stat-icon">👨‍💼</div>
+          <div className="stat-icon"></div>
           <div className="stat-label">Profesionales</div>
           <div className="stat-number">{dashboard?.totalProfessionals ?? 0}</div>
           <div className="stat-change positive">
@@ -87,7 +87,7 @@ export default function Dashboard() {
         </div>
 
         <div className="stat-card accent-rose">
-          <div className="stat-icon">⏳</div>
+          <div className="stat-icon"></div>
           <div className="stat-label">Pendientes</div>
           <div className="stat-number">0</div>
           <div className="stat-change negative">
@@ -96,7 +96,7 @@ export default function Dashboard() {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon">✅</div>
+          <div className="stat-icon"></div>
           <div className="stat-label">Aprobados</div>
           <div className="stat-number">0</div>
           <div className="stat-change positive">
@@ -105,14 +105,14 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ACTIVITY SECTION */}
+      {}
       <div className="dashboard-activity">
         <div className="section-header">
           <h2>Actividad Reciente</h2>
           <span className="see-all">Ver todo →</span>
         </div>
         <div className="activity-empty">
-          <div className="empty-icon">📭</div>
+          <div className="empty-icon"></div>
           <p>No hay actividad reciente para mostrar</p>
           <span className="empty-sub">Los movimientos aparecerán aquí</span>
         </div>

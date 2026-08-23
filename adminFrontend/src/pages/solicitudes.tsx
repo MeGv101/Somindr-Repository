@@ -167,19 +167,19 @@ export default function Solicitudes() {
           className={`filter-btn ${filter === "pending" ? "active" : ""}`}
           onClick={() => setFilter("pending")}
         >
-          ⏳ Pendientes
+         Pendientes
         </button>
         <button
           className={`filter-btn ${filter === "approved" ? "active" : ""}`}
           onClick={() => setFilter("approved")}
         >
-          ✅ Aprobadas
+          Aprobadas
         </button>
         <button
           className={`filter-btn ${filter === "rejected" ? "active" : ""}`}
           onClick={() => setFilter("rejected")}
         >
-          ❌ Rechazadas
+         Rechazadas
         </button>
       </div>
 
@@ -191,7 +191,7 @@ export default function Solicitudes() {
         </div>
       ) : filteredRequests.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">📋</div>
+          <div className="empty-icon"></div>
           <h3>No hay solicitudes</h3>
           <p>
             {filter === "all"
@@ -249,7 +249,7 @@ export default function Solicitudes() {
                         className="btn btn-sm btn-outline"
                         onClick={() => viewRequest(request.id)}
                       >
-                        👁 Ver
+                         Ver
                       </button>
                     </div>
                   </td>
@@ -323,10 +323,10 @@ export default function Solicitudes() {
 
             <div className="modal-actions">
               <button className="btn btn-success" onClick={approve}>
-                ✅ Aprobar
+                 Aprobar
               </button>
               <button className="btn btn-danger" onClick={() => setRejectModal(true)}>
-                ❌ Rechazar
+                 Rechazar
               </button>
               <button className="btn btn-outline" onClick={() => setSelected(null)}>
                 Cerrar
@@ -364,7 +364,7 @@ export default function Solicitudes() {
 
             <div className="modal-actions">
               <button className="btn btn-danger" onClick={reject}>
-                ✅ Confirmar rechazo
+                Confirmar rechazo
               </button>
               <button className="btn btn-outline" onClick={() => setRejectModal(false)}>
                 Cancelar

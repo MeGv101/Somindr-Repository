@@ -222,14 +222,14 @@ export default function Users() {
                           className="btn btn-success btn-sm"
                           onClick={() => unsuspendUser(user.id)}
                         >
-                          🔓 Reactivar
+                         Reactivar
                         </button>
                       ) : (
                         <button
                           className="btn btn-danger btn-sm"
                           onClick={() => suspendUser(user.id)}
                         >
-                          🔒 Suspender
+                         Suspender
                         </button>
                       )}
 
@@ -238,7 +238,7 @@ export default function Users() {
                           className="btn btn-warning btn-sm"
                           onClick={() => deactivateProfessional(user.id)}
                         >
-                          ⏸ Desactivar
+                         Desactivar
                         </button>
                       )}
 
@@ -247,13 +247,10 @@ export default function Users() {
                           className="btn btn-success btn-sm"
                           onClick={() => reactivateProfessional(user.id)}
                         >
-                          ▶ Reactivar
+                         Reactivar
                         </button>
                       )}
 
-                      <button className="btn btn-outline btn-sm">
-                        👁 Ver
-                      </button>
                     </div>
                   </td>
                 </tr>

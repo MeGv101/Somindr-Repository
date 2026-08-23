@@ -94,7 +94,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <span className="input-icon">🔒</span>
+              <span className="input-icon"></span>
             </div>
           </div>
 
