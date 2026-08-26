@@ -344,7 +344,7 @@ export default function Profile() {
             </p>
 
             <p>
-              ${professional.pricePerHour}/hora
+              ${professional.pricePerHour}
             </p>
 
             {professional.verified && (
