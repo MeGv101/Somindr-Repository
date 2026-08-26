@@ -4,14 +4,14 @@
 }
 
 .chat-page {
-  --som-bg: #000000;
-  --som-surface: #131313;
-  --som-surface-hover: #1c1c1c;
-  --som-border: rgba(255, 255, 255, 0.07);
-  --som-text: #f5f5f5;
-  --som-text-dim: #8f8f8f;
-  --som-text-faint: #55565c;
-  --som-accent: #3cb878;
+  --som-bg: var(--bg-primary);
+  --som-surface: var(--bg-surface);
+  --som-surface-hover: var(--bg-card-hover);
+  --som-border: var(--border-color);
+  --som-text: var(--text-primary);
+  --som-text-dim: var(--text-secondary);
+  --som-text-faint: var(--text-tertiary);
+  --som-accent: var(--verde-medio);
   --som-accent-dim: rgba(60, 184, 120, 0.14);
 
   /* ARREGLADO: Ajustado para no tapar la Navbar */

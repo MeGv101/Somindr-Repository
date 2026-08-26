@@ -29,10 +29,10 @@ body.modal-abierto {
   max-width: 420px;
   max-height: 90vh;
   overflow-y: auto;
-  background: #1a1a1a;
+  background: var(--bg-surface-2);
   border-radius: 20px;
   padding: 32px 28px 28px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-card);
 }
 
 .modal-cerrar {
@@ -43,22 +43,22 @@ body.modal-abierto {
   height: 36px;
   border: none;
   border-radius: 50%;
-  background: #090909;
-  color: #e1e1e1;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 1rem;
   cursor: pointer;
   line-height: 1;
 }
 
 .modal-cerrar:hover {
-  background: #232323;
+  background: var(--bg-card-hover);
 }
 
 .modal-tabs {
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
-  background: #090909;
+  background: var(--bg-primary);
   border-radius: 12px;
   padding: 4px;
 }
@@ -72,13 +72,13 @@ body.modal-abierto {
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  color: #e1e1e1;
+  color: var(--text-primary);
   transition: background 0.15s, color 0.15s;
 }
 
 .modal-tabs .tab.activo {
-  background: #484848;
-  color: #e9e9e9;
+  background: var(--border-strong);
+  color: var(--text-primary);
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -108,12 +108,12 @@ body.modal-abierto {
   font-weight: 700;
   margin-bottom: 6px;
   text-align: center;
-  color: #e1e1e1;
+  color: var(--text-primary);
 }
 
 .subtitulo {
   font-size: 0.875rem;
-  color: #9e9e9e;
+  color: var(--text-secondary);
   text-align: center;
   margin-bottom: 20px;
 }
@@ -126,23 +126,23 @@ body.modal-abierto {
 .campo select {
   width: 100%;
   padding: 12px 14px;
-  border: 1.5px solid #252525;
+  border: 1.5px solid var(--border-strong);
   border-radius: 10px;
   font-size: 0.9rem;
   font-family: inherit;
-  color: #e5e5e5;
-  background-color: #1a1a1a;
+  color: var(--text-primary);
+  background-color: var(--bg-surface-2);
 }
 
 .campo input:focus,
 .campo select:focus {
   outline: none;
-  border-color: #3cb878;
+  border-color: var(--verde-medio);
 }
 
 .campo input:hover,
 .campo select:hover {
-  border-color: #333;
+  border-color: var(--border-strong);
 }
 
 /* Select: quitar apariencia nativa y usar una flecha propia acorde al tema */
@@ -158,21 +158,22 @@ body.modal-abierto {
 }
 
 .campo select option {
-  background-color: #1a1a1a;
-  color: #e5e5e5;
+  background-color: var(--bg-surface-2);
+  color: var(--text-primary);
 }
 
-/* El select de género/nivel de actividad muestra la opción vacía en gris,
-   igual que un placeholder de input */
 .campo select:invalid,
 .campo select option[value=""] {
-  color: #7a7a7a;
+  color: var(--text-tertiary);
 }
 
-/* Input tipo fecha: adaptar el ícono nativo del navegador al tema oscuro */
 .campo input[type="date"] {
   color-scheme: dark;
   cursor: pointer;
+}
+
+[data-theme="light"] .campo input[type="date"] {
+  color-scheme: light;
 }
 
 .campo input[type="date"]::-webkit-calendar-picker-indicator {
@@ -185,8 +186,6 @@ body.modal-abierto {
   opacity: 1;
 }
 
-/* Input tipo number: ocultar flechas nativas para un look más limpio,
-   sin forzar ningún mínimo — la validación real ocurre en JS al enviar */
 .campo input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
@@ -204,7 +203,7 @@ body.modal-abierto {
   padding: 14px;
   border: none;
   border-radius: 12px;
-  background: #3cb878;
+  background: var(--verde-medio);
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -220,21 +219,21 @@ body.modal-abierto {
   margin-bottom: 10px;
 }
 .btn-principal:hover {
-  background: #298a5a;
+  background: var(--verde-oscuro);
 }
 
 .pie {
   margin-top: 16px;
   text-align: center;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .pie-link {
   border: none;
   background: none;
   padding: 0;
-  color: #3cb878;
+  color: var(--verde-medio);
   font-weight: 600;
   cursor: pointer;
   font-size: inherit;
