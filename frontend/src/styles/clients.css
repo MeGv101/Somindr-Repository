@@ -21,7 +21,7 @@
 
 .clients-header p{
 
-    color:#888;
+    color:var(--text-secondary);
 
 }
 
@@ -41,9 +41,9 @@
 
 .client-card{
 
-    background:#1c1c1c;
+    background:var(--bg-card);
 
-    border:1px solid #303030;
+    border:1px solid var(--border-strong);
 
     border-radius:16px;
 
@@ -63,7 +63,7 @@
 
     transform:translateY(-4px);
 
-    border-color:#3fb950;
+    border-color:var(--verde-medio);
 
 }
 
@@ -89,17 +89,17 @@
 
 .active-sub{
 
-    background:#2d5d36;
+    background:rgba(60, 184, 120, 0.2);
 
-    color:#7df58b;
+    color:var(--verde-claro);
 
 }
 
 .inactive{
 
-    background:#5a2f2f;
+    background:rgba(139, 26, 26, 0.2);
 
-    color:#ff8d8d;
+    color:var(--rojo-claro);
 
 }
 
@@ -107,9 +107,9 @@
 
     margin-top:auto;
 
-    background:#3fb950;
+    background:var(--verde-medio);
 
-    color:white;
+    color:var(--text-primary);
 
     text-decoration:none;
 
@@ -125,7 +125,7 @@
 
 .btn-profile:hover{
 
-    background:#349443;
+    background:var(--verde-oscuro);
 
 }
 
