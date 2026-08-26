@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 .mood-page {
-  --bg: #0a0c0b;
-  --surface: #141715;
-  --surface-2: #191d1a;
-  --border: #262b27;
-  --text: #f2f4f2;
-  --text-muted: #8b948d;
+  --bg: var(--bg-primary);
+  --surface: var(--bg-surface);
+  --surface-2: var(--bg-surface-2);
+  --border: var(--border-strong);
+  --text: var(--text-primary);
+  --text-muted: var(--text-muted);
   --accent: #4ade80;
   --accent-soft: rgba(74, 222, 128, 0.14);
   --accent-dim: #2f6b4a;

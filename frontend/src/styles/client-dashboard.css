@@ -1,21 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root{
---verde-claro:#7BCB9E;
---verde-medio:#3CB878;
---verde-oscuro:#1F7A52;
---rojo-oscuro:#8B1A1A;
-
---gradient-main:linear-gradient(135deg,var(--verde-claro),var(--verde-medio),var(--verde-oscuro),var(--rojo-oscuro));
---gradient-card:linear-gradient(135deg,rgba(123,203,158,.05),rgba(60,184,120,.05),rgba(139,26,26,.05));
-
---bg-card:rgba(255,255,255,.05);
---border:rgba(255,255,255,.08);
-
---text-primary:#f4f8f5;
---text-secondary:#a7b3ab;
-
---shadow:0 8px 30px rgba(0,0,0,.45);
+:root {
+  --border: var(--border-color);
 }
 
 .client-dashboard-page{

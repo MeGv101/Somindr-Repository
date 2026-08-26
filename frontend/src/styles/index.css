@@ -1,18 +1,18 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap');
 
 
 :root {
-  --verde:        #3CB878;
-  --verde-oscuro: #298a5a;
-  --verde-claro:  #eaf7f0;
-  --verde-medio:  #a8dfc0;
-  --negro:        #111;
-  --gris-texto:   #5a6672;
-  --gris-claro:   #f5f8f6;
-  --blanco:       #ffffff;
-  --sombra:       0 8px 40px rgba(0,0,0,0.08);
+  --verde: var(--verde-medio);
+  --negro: var(--text-primary);
+  --gris-texto: var(--text-secondary);
+  --gris-claro: var(--bg-secondary);
+  --blanco: var(--bg-card);
+  --sombra: var(--shadow-card);
+  --tint-verde: #eaf7f0;
+}
+
+[data-theme="dark"] {
+  --tint-verde: rgba(123, 203, 158, 0.08);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -92,7 +92,7 @@ nav {
   font-weight: 400;
 }
 
-.nav-links a:hover { background: var(--verde-claro); color: var(--verde); }
+.nav-links a:hover { background: var(--tint-verde); color: var(--verde); }
 .nav-links a.activo { background: var(--verde); color: #fff; font-weight: 600; }
 
 .nav-cta {
@@ -800,7 +800,7 @@ nav {
   padding: 5px 14px;
   border: 1px solid rgba(60,184,120,0.3);
   border-radius: 50px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
 }
 
 .seccion-titulo {
@@ -847,7 +847,7 @@ nav {
 .feature-icon {
   width: 48px; 
   height: 48px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
   border-radius: 12px;
   display: flex; 
   align-items: center; 
@@ -961,7 +961,7 @@ nav {
 .sobre-visual-badge-icon {
   width: 40px; 
   height: 40px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
   border-radius: 10px;
   display: flex; 
   align-items: center; 

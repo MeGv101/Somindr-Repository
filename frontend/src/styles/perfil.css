@@ -1,56 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-   
-    --verde-claro: #7BCB9E;
-    --verde-medio: #3CB878;
-    --verde-oscuro: #1F7A52;
-    --verde-muy-oscuro: #0F3D2A;
-    --rojo-claro: #E87474;
-    --rojo-medio: #C0392B;
-    --rojo-oscuro: #8B1A1A;
-    --rojo-muy-oscuro: #4A0E0E;
-    
-    /* Gradientes */
-    --gradient-main: linear-gradient(135deg, var(--verde-claro) 0%, var(--verde-medio) 40%, var(--verde-oscuro) 70%, var(--rojo-oscuro) 100%);
-    --gradient-soft: linear-gradient(135deg, rgba(123,203,158,0.15) 0%, rgba(60,184,120,0.15) 40%, rgba(31,122,82,0.15) 70%, rgba(139,26,26,0.15) 100%);
     --gradient-glow: linear-gradient(135deg, rgba(123,203,158,0.12) 0%, rgba(60,184,120,0.12) 40%, rgba(139,26,26,0.12) 100%);
-    --gradient-card: linear-gradient(135deg, rgba(123,203,158,0.05) 0%, rgba(60,184,120,0.05) 40%, rgba(139,26,26,0.05) 100%);
-    
-    /* Fondos */
-    --bg-primary: #0a0f0d;
-    --bg-secondary: #111a15;
-    --bg-card: rgba(255,255,255,0.04);
-    --bg-card-hover: rgba(255,255,255,0.07);
-    --bg-input: rgba(255,255,255,0.03);
     --bg-gradient-overlay: radial-gradient(ellipse at 20% 50%, rgba(60,184,120,0.06) 0%, transparent 60%),
                            radial-gradient(ellipse at 80% 20%, rgba(139,26,26,0.04) 0%, transparent 60%);
-    
-    /* Textos */
-    --text-primary: #f0f7f3;
-    --text-secondary: rgba(240,247,243,0.7);
-    --text-tertiary: rgba(240,247,243,0.4);
-    --text-verde-claro: #7BCB9E;
-    --text-rojo-suave: #E87474;
-    
-    /* Bordes */
-    --border-color: rgba(255,255,255,0.06);
     --border-verde: rgba(123,203,158,0.2);
     --border-rojo: rgba(232,116,116,0.2);
     --border-glow: rgba(60,184,120,0.15);
-    
-    /* Sombras */
-    --shadow-card: 0 8px 32px rgba(0,0,0,0.5);
-    --shadow-card-hover: 0 16px 48px rgba(0,0,0,0.7);
     --shadow-glow-verde: 0 0 40px rgba(60,184,120,0.08);
     --shadow-glow-rojo: 0 0 40px rgba(139,26,26,0.06);
-    
-    /* Espaciado */
-    --radius-sm: 12px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --radius-xl: 32px;
-    --radius-full: 9999px;
 }
 
 
@@ -200,7 +158,7 @@ body::after {
     border: 1px solid var(--border-verde);
     border-radius: var(--radius-full);
     font-size: 12px;
-    color: var(--text-verde-claro);
+    color: var(--verde-claro);
     font-weight: 600;
     margin-top: 8px;
     letter-spacing: 0.5px;
@@ -384,11 +342,11 @@ body::after {
 }
 
 .card-titulo .verde {
-    color: var(--text-verde-claro);
+    color: var(--verde-claro);
 }
 
 .card-titulo .rojo {
-    color: var(--text-rojo-suave);
+    color: var(--rojo-claro);
 }
 
 .card-sub {
@@ -424,11 +382,11 @@ body::after {
 }
 
 .campo-perfil label .verde {
-    color: var(--text-verde-claro);
+    color: var(--verde-claro);
 }
 
 .campo-perfil label .rojo {
-    color: var(--text-rojo-suave);
+    color: var(--rojo-claro);
 }
 
 /* ===== INPUTS, SELECTS Y TEXTAREA (incluye fecha, género, estatura, peso, biografía) ===== */
@@ -579,7 +537,7 @@ body::after {
     border: 1.5px solid var(--border-verde);
     border-radius: var(--radius-sm);
     background: transparent;
-    color: var(--text-verde-claro);
+    color: var(--verde-claro);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
@@ -742,11 +700,11 @@ body::after {
 }
 
 .av-modal-title .verde {
-    color: var(--text-verde-claro);
+    color: var(--verde-claro);
 }
 
 .av-modal-title .rojo {
-    color: var(--text-rojo-suave);
+    color: var(--rojo-claro);
 }
 
 .av-close-btn,

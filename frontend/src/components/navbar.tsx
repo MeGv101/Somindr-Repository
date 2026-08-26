@@ -13,6 +13,7 @@ import avatar5 from "../assets/avatars/avatar5.jpeg";
 import avatar6 from "../assets/avatars/avatar6.jpeg";
 import avatar7 from "../assets/avatars/avatar7.jpeg";
 import avatar8 from "../assets/avatars/avatar8.jpeg";
+import ThemeToggle from './ThemeToggle'
 
 import type { AuthTab } from '../types/auth'
 
@@ -34,6 +35,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
   ];
   const navigate = useNavigate()
   const auth = useContext(AuthContext);
+
 
   if (!auth) {
     throw new Error(
@@ -70,6 +72,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
 
   return (
     <>
+
       <div 
         className={`hamburger ${isOpen ? 'is-active' : ''}`} 
         onClick={toggleMenu}
@@ -109,6 +112,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
           </Link>
+          <ThemeToggle />
           {
             user?.professional && (
               <Link to="/clients/me" className="sidebar-link" onClick={handleLinkClick}>
