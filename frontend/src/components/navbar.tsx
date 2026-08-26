@@ -112,7 +112,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           <Link to="/ai" className="sidebar-link" onClick={handleLinkClick}>
             Asesor IA
           </Link>
-          <ThemeToggle />
+          
           {
             user?.professional && (
               <Link to="/clients/me" className="sidebar-link" onClick={handleLinkClick}>
@@ -144,6 +144,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
                 }
               </span>
             </Link>
+            <ThemeToggle />
           </div>
           
         </div>

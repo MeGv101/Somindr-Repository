@@ -3,10 +3,10 @@
 
 :root {
   --verde: var(--verde-medio);
-  --negro: var(--text-primary);
+  --negro: var(--bg-primary);
   --gris-texto: var(--text-secondary);
   --gris-claro: var(--bg-secondary);
-  --blanco: var(--bg-card);
+  --blanco: var(--text-primary);
   --sombra: var(--shadow-card);
   --tint-verde: #eaf7f0;
 }
@@ -794,7 +794,7 @@ nav {
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--negro);
+  color: var(--verde-oscuro);
   font-weight: 600;
   margin-bottom: 12px;
   padding: 5px 14px;
@@ -835,7 +835,7 @@ nav {
   background: var(--blanco);
   border-radius: 16px;
   padding: 28px;
-  border: 1px solid #000000;
+  border: 1px solid var(--border-strong);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
