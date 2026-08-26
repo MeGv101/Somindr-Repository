@@ -10,9 +10,9 @@
 
   align-items: center;
 
-  background: #0f1117;
+  background: var(--bg-primary);
 
-  color: white;
+  color: var(--text-primary);
 
   text-align: center;
 
@@ -22,7 +22,7 @@
 
   font-size: 8rem;
 
-  color: #298a5a;
+  color: var(--verde-oscuro);
 
   margin-bottom: 0;
 
@@ -35,7 +35,7 @@
 }
 
 .return{
-    color: #298a5a;
+    color: var(--verde-oscuro);
 }
 .return:hover{
     text-decoration: underline;

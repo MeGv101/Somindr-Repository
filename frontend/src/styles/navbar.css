@@ -10,7 +10,8 @@
     padding: 30px 20px;
     z-index: 1000;
     position: relative;
-    background: var(--bg-surface-2);
+    background: #1a1a1a;
+    
 }
 
 .main-nav::before {
@@ -25,7 +26,7 @@
     pointer-events: none;
 }
 .main-nav a{
-    color: var(--text-primary);
+    color: #ffffff;
     text-decoration: none;
 }
 .hamburger {
@@ -37,7 +38,7 @@
     cursor: pointer;
     z-index: 1001 !important;
     padding: 10px;
-    background-color: var(--bg-surface-2) !important;
+    background-color: #1a1a1a!important;
     border-radius: 50%;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
     display: flex !important;
@@ -50,12 +51,12 @@
 }
 
 .hamburger:hover {
-    background-color: var(--bg-card-hover);
+    background-color: #262626;
     box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.3);
 }
 
 ._layer {
-    background: var(--text-primary);
+    background: rgb(255, 255, 255);
     width: 30px;
     height: 4px;
     transition: 0.3s;
@@ -80,8 +81,8 @@
     right: 0;
     width: 280px;
     height: 100%;
-    background: var(--bg-surface-2);
-    color: var(--text-primary);
+    background: #1a1a1a;
+    color: #ffffff;
     padding: 80px 25px 30px;
     transition: top 0.4s ease;
     z-index: 1000 !important;
@@ -128,7 +129,7 @@
 }
 a{
     text-decoration: none;
-    color: var(--text-primary);
+    color: #ffffff;
 }
 .menu-right {
     display: flex;
@@ -139,10 +140,10 @@ a{
     margin-top: auto;
     margin-left: 5%;
     padding-top: 20px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(216, 216, 216, 0.1);
 }
 .menuppal .sidebar-link {
-    color: var(--text-primary);
+    color: #ffffff;
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
@@ -162,7 +163,7 @@ a{
 }
 
 .menuppal .sidebar-link:hover {
-    color: var(--verde-medio);
+    color: #3CB878;
     background: rgba(60, 184, 120, 0.1);
     text-decoration: none;
 }
@@ -261,23 +262,4 @@ a{
     display: flex;
     align-items: center;
     width: 100%;
-}
-
-.theme-toggle-btn {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-primary);
-    transition: background 0.2s;
-}
-
-.theme-toggle-btn:hover {
-    background: var(--bg-card-hover);
 }
