@@ -92,7 +92,7 @@ export async function communityRoutes(
 
 
 
-  // COMMENTS
+  // COMENTARIOS
 
   fastify.post(
     "/posts/:id/comments",
@@ -190,7 +190,7 @@ export async function communityRoutes(
 
 
 
-  // REACTIONS
+  // REACCIONES
 
   fastify.post(
     "/posts/:id/reaction",
@@ -219,29 +219,97 @@ export async function communityRoutes(
     }
   );
   fastify.get(
-  "/user/:username",
-  async (request, reply) => {
+    "/user/:username",
+    async (request, reply) => {
 
-    try {
+      try {
 
-      const { username } =
-        request.params as {
-          username: string;
-        };
+        const { username } =
+          request.params as {
+            username: string;
+          };
 
-      return await communityService
-        .getPostsByUsername(username);
+        return await communityService
+          .getPostsByUsername(username);
 
-    } catch {
+      } catch {
 
-      return reply.status(400).send({
-        message:
-          "No se pudieron obtener las publicaciones",
-      });
+        return reply.status(400).send({
+          message:
+            "No se pudieron obtener las publicaciones",
+        });
+
+      }
 
     }
+  );
+  // REPORTES
+  fastify.post(
+    "/posts/:id/report",
+    async (request, reply) => {
 
-  }
-);
+      try {
+
+        const payload =
+          await request.jwtVerify<{
+            id: number;
+          }>();
+
+        const params =
+          request.params as {
+            id: string;
+          };
+
+        const body =
+          request.body as {
+            reason: string;
+            description?: string;
+          };
+
+        return await communityService.reportPost(
+          payload.id,
+          Number(params.id),
+          body
+        );
+
+      } catch (error) {
+
+        if (
+          error instanceof Error &&
+          error.message === "POST_NOT_FOUND"
+        ) {
+          return reply.status(404).send({
+            message:
+              "La publicación no existe.",
+          });
+        }
+
+        if (
+          error instanceof Error &&
+          error.message ===
+            "INVALID_REPORT_REASON"
+        ) {
+          return reply.status(400).send({
+            message:
+              "Motivo de reporte inválido.",
+          });
+        }
+
+        if (
+          error instanceof Error &&
+          error.message ===
+            "REPORT_ALREADY_EXISTS"
+        ) {
+          return reply.status(409).send({
+            message:
+              "Ya reportaste esta publicación.",
+          });
+        }
+
+        throw error;
+      }
+
+    }
+  );
 }
 

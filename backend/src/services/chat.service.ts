@@ -40,7 +40,7 @@ export async function generateToken(
   return{
 
     token:
-      chatRepository.createUserToken(
+      await chatRepository.createUserToken(
         userId
       )
 

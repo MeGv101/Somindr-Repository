@@ -10,7 +10,7 @@
 }
 
 body {
-  background: #080b12 !important;
+  background: var(--bg-primary) !important;
     overflow-x: hidden;
 }
 
@@ -48,7 +48,7 @@ body {
 .titulo-hero h1 {
   font-size: clamp(5rem, 7.8vw, 6.4rem);
   font-weight: 1200;
-  color: #f4f8f5;
+  color: var(--text-primary);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.5);
   letter-spacing: -2px;
   line-height: 1.2;
@@ -80,8 +80,8 @@ body {
 
 .foro {
   min-height: 100vh;
-  background: #19191a;
-  color: #e2e8f0;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
   font-family: system-ui, sans-serif;
 
 }
@@ -95,7 +95,7 @@ body {
 .foro .foro-header p {
   font-size: 11px;
   letter-spacing: .12em;
-  color: #4ade80;
+  color: var(--verde-medio);
   text-transform: uppercase;
   font-weight: 600;
   margin: 0 0 8px;
@@ -104,13 +104,13 @@ body {
 .foro .foro-header h1 {
   font-size: clamp(24px, 4vw, 36px);
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
   letter-spacing: -.02em;
   margin: 0 0 8px;
 }
 
 .foro .foro-header small {
-  color: #64748b;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -138,8 +138,8 @@ body {
 
 .foro .foro-filtros button {
   background: transparent !important;
-  color: #64748b !important;
-  border: 1px solid #1e293b !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--bg-card) !important;
   border-radius: 20px !important;
   padding: 5px 14px !important;
   font-size: 12px !important;
@@ -161,15 +161,15 @@ body {
 }
 
 .foro .foro-filtros button.foro-on {
-  background: #f8fafc !important;
-  color: #080b12 !important;
+  background: var(--text-primary) !important;
+  color: var(--bg-primary) !important;
   border-color: transparent !important;
   transition: background .25s ease, color .25s ease, transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .foro .foro-filtros .foro-btn-nuevo {
-  background: #4ade80 !important;
-  color: #080b12 !important;
+  background: var(--verde-medio) !important;
+  color: var(--bg-primary) !important;
   border-color: transparent !important;
   margin-left: auto !important;
   transition: transform .2s ease, box-shadow .2s ease;
@@ -181,8 +181,8 @@ body {
 }
 
 .foro .foro-form {
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-card);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
@@ -197,10 +197,10 @@ body {
 
 .foro .foro-form textarea {
   width: 100%;
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-strong) !important;
   border-radius: 8px;
-  color: #f1f5f9 !important;
+  color: var(--text-primary) !important;
   font-size: 14px;
   padding: 12px;
   font-family: inherit;
@@ -212,14 +212,14 @@ body {
 }
 
 .foro .foro-form textarea:focus {
-  border-color: #4ade80 !important;
+  border-color: var(--verde-medio) !important;
 }
 
 .foro .foro-form select {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-strong) !important;
   border-radius: 8px;
-  color: #94a3b8 !important;
+  color: var(--text-tertiary) !important;
   font-size: 13px;
   padding: 7px 12px;
   font-family: inherit;
@@ -235,8 +235,8 @@ body {
 }
 
 .foro .foro-btn-ok {
-  background: #4ade80 !important;
-  color: #080b12 !important;
+  background: var(--verde-medio) !important;
+  color: var(--bg-primary) !important;
   border: none !important;
   border-radius: 8px;
   padding: 8px 18px !important;
@@ -248,14 +248,14 @@ body {
 .foro .foro-btn-cancel {
   background: none !important;
   border: none !important;
-  color: #475569 !important;
+  color: var(--text-tertiary) !important;
   font-size: 13px;
   cursor: pointer;
 }
 
 .foro .foro-post {
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-card);
   border-radius: 12px;
   margin-bottom: 12px;
   overflow: hidden;
@@ -294,14 +294,14 @@ body {
 }
 
 .foro .foro-tiempo {
-  color: #7b7b7b;
+  color: var(--text-tertiary);
   font-size: 11px;
 }
 
 .foro .foro-post-body p {
   margin: 0;
   font-size: 15px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.65;
 }
 
@@ -327,14 +327,14 @@ body {
 
 .foro .foro-btn-voto.off {
   background: transparent !important;
-  border: 1px solid #1e293b !important;
-  color: #475569 !important;
+  border: 1px solid var(--bg-card) !important;
+  color: var(--text-tertiary) !important;
 }
 
 .foro .foro-btn-voto.on {
   background: #0d2d1a !important;
-  border: 1px solid #4ade8055 !important;
-  color: #4ade80 !important;
+  border: 1px solid var(--verde-medio)55 !important;
+  color: var(--verde-medio) !important;
   animation: votoPop .5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -343,7 +343,7 @@ body {
   position: absolute;
   inset: -6px;
   border-radius: 24px;
-  border: 2px solid #4ade80;
+  border: 2px solid var(--verde-medio);
   opacity: 0;
   pointer-events: none;
   animation: votoRing .6s ease-out;
@@ -364,7 +364,7 @@ body {
 .foro .foro-btn-ghost {
   background: none !important;
   border: none !important;
-  color: #878787 !important;
+  color: var(--text-secondary) !important;
   font-size: 13px !important;
   cursor: pointer;
   padding: 0 !important;
@@ -378,7 +378,7 @@ body {
   bottom: -2px;
   width: 0%;
   height: 1px;
-  background: #475569;
+  background: var(--text-tertiary);
   transition: width .25s ease;
 }
 
@@ -389,7 +389,7 @@ body {
 .foro .foro-btn-responder {
   background: none !important;
   border: none !important;
-  color: #4ade80 !important;
+  color: var(--verde-medio) !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   cursor: pointer;
@@ -405,7 +405,7 @@ body {
   bottom: -2px;
   width: 0%;
   height: 1px;
-  background: #4ade80;
+  background: var(--verde-medio);
   transition: width .25s ease;
 }
 
@@ -414,8 +414,8 @@ body {
 }
 
 .foro .foro-replies {
-  border-top: 1px solid #1e293b;
-  background: #080b12;
+  border-top: 1px solid var(--bg-card);
+  background: var(--bg-primary);
   animation: repliesIn .4s ease both;
 }
 
@@ -426,7 +426,7 @@ body {
 
 .foro .foro-reply {
   padding: 14px 18px;
-  border-bottom: 1px solid #0f172a;
+  border-bottom: 1px solid var(--bg-secondary);
   animation: replyPop .55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -442,7 +442,7 @@ body {
 .foro .foro-reply p {
   margin: 0 0 8px;
   font-size: 13.5px;
-  color: #94a3b8;
+  color: var(--text-tertiary);
   line-height: 1.6;
 }
 
@@ -467,11 +467,11 @@ body {
 }
 
 .foro .foro-btn-voto-sm.off {
-  color: #334155 !important;
+  color: var(--border-strong) !important;
 }
 
 .foro .foro-btn-voto-sm.on {
-  color: #4ade80 !important;
+  color: var(--verde-medio) !important;
   animation: votoPop .5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -480,7 +480,7 @@ body {
   position: absolute;
   inset: -5px;
   border-radius: 14px;
-  border: 1.5px solid #4ade80;
+  border: 1.5px solid var(--verde-medio);
   opacity: 0;
   pointer-events: none;
   animation: votoRing .55s ease-out;
@@ -488,16 +488,16 @@ body {
 
 .foro .foro-reply-form {
   padding: 12px 18px 16px;
-  border-top: 1px solid #0f172a;
+  border-top: 1px solid var(--bg-secondary);
   animation: materialize .45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .foro .foro-reply-form textarea {
   width: 100%;
-  background: #0f172a !important;
-  border: 1px solid #1e293b !important;
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--bg-card) !important;
   border-radius: 8px;
-  color: #cbd5e1 !important;
+  color: var(--text-secondary) !important;
   font-size: 13px;
   padding: 10px 12px;
   font-family: inherit;
@@ -509,7 +509,7 @@ body {
 }
 
 .foro .foro-reply-form textarea:focus {
-  border-color: #4ade80 !important;
+  border-color: var(--verde-medio) !important;
 }
 
 .foro .foro-reply-btns {
@@ -519,8 +519,8 @@ body {
 }
 
 .foro .foro-btn-ok-sm {
-  background: #4ade80 !important;
-  color: #080b12 !important;
+  background: var(--verde-medio) !important;
+  color: var(--bg-primary) !important;
   border: none !important;
   border-radius: 8px;
   padding: 7px 16px !important;
@@ -532,7 +532,7 @@ body {
 .foro .foro-btn-cancel-sm {
   background: none !important;
   border: none !important;
-  color: #475569 !important;
+  color: var(--text-tertiary) !important;
   font-size: 12px;
   cursor: pointer;
 }
@@ -542,7 +542,7 @@ body {
   padding: 10px 18px !important;
   background: none !important;
   border: none !important;
-  color: #334155 !important;
+  color: var(--border-strong) !important;
   font-size: 12px !important;
   cursor: pointer;
   text-align: left;
@@ -550,12 +550,12 @@ body {
 }
 
 .foro .foro-btn-add:hover {
-  color: #4ade80 !important;
+  color: var(--verde-medio) !important;
   padding-left: 24px !important;
 }
 
 .foro .foro-vacio {
-  color: #334155;
+  color: var(--border-strong);
   text-align: center;
   padding-top: 48px;
   font-size: 14px;
@@ -620,6 +620,64 @@ body {
   left: 15%;
   bottom: 10%;
   animation-delay: 11s;
+}
+
+.reporte-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.reporte-modal {
+  width: min(420px, 90vw);
+
+  padding: 24px;
+
+  border-radius: 16px;
+
+  background: var(--bg-primary);
+
+  color: white;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.reporte-modal h2 {
+  margin-top: 0;
+}
+
+.reporte-modal p {
+  color: var(--text-secondary);
+}
+
+.reporte-modal select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface-2);
+  color: white;
+}
+
+.reporte-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.reporte-acciones button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @keyframes float {
@@ -774,7 +832,7 @@ body {
 
 .foro .foro-btn-voto.off:hover {
   background: rgba(255, 255, 255, 0.05) !important;
-  border-color: #334155 !important;
+  border-color: var(--border-strong) !important;
 }
 
 
@@ -783,23 +841,23 @@ body {
 }
 
 .tit{
-  background-color: #1e293b;
+  background-color: var(--bg-card);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 28rem;
-  color: #ffffff;
+  color: var(--text-primary);
   height: 3vh;
   text-align: center;
   border-radius: 10px;
-  border-color:  #4ade80 ;
+  border-color:  var(--verde-medio) ;
   margin-bottom: 10px;
   transition: border-color .2s ease;
 }
 
 .tit input:focus ::before{
-  border-color: #4ade80;
+  border-color: var(--verde-medio);
 }
 
 .tit :hover::before {
   width: 100%;
-  border-color: #4ade80;
+  border-color: var(--verde-medio);
 }

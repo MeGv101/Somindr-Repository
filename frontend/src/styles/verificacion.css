@@ -10,9 +10,9 @@
 
   align-items: center;
 
-  background: #0f1117;
+  background: var(--bg-primary);
 
-  color: white;
+  color: var(--text-primary);
 
   text-align: center;
 
@@ -24,7 +24,7 @@
 
   font-size: 5rem;
 
-  color: #298a5a;
+  color: var(--verde-oscuro);
 
   margin-bottom: .5rem;
 
@@ -42,7 +42,7 @@
 
   max-width: 500px;
 
-  color: #b8b8b8;
+  color: var(--text-secondary);
 
 }
 
@@ -68,7 +68,7 @@
 
   margin-top: 2rem;
 
-  color: #298a5a;
+  color: var(--verde-oscuro);
 
   text-decoration: none;
 

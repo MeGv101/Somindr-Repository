@@ -338,3 +338,70 @@ export async function getPostsByUsername(
   return await repository
     .findPostsByUsername(username);
 }
+
+// REPORTES
+
+export async function reportPost(
+  userId: number,
+  postId: number,
+  body: {
+    reason: string;
+    description?: string;
+  }
+) {
+
+  const post =
+    await repository.getPostById(
+      postId
+    );
+
+  if (!post) {
+    throw new Error(
+      "POST_NOT_FOUND"
+    );
+  }
+
+  const validReasons = [
+    "spam",
+    "harassment",
+    "inappropriate",
+    "dangerous",
+    "impersonation",
+    "other",
+  ];
+
+  if (
+    !validReasons.includes(
+      body.reason
+    )
+  ) {
+    throw new Error(
+      "INVALID_REPORT_REASON"
+    );
+  }
+
+  const existingReport =
+    await repository.getPostReport(
+      postId,
+      userId
+    );
+
+  if (existingReport) {
+    throw new Error(
+      "REPORT_ALREADY_EXISTS"
+    );
+  }
+
+  await repository.createPostReport({
+    postId,
+    reporterId: userId,
+    reason: body.reason,
+    description:
+      body.description?.trim() || undefined,
+  });
+
+  return {
+    message:
+      "Reporte enviado correctamente.",
+  };
+}

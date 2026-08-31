@@ -26,7 +26,7 @@
 
 .pie-link-login {
   font-size: 0.95rem;
-  color: #3cb878;
+  color: var(--verde-medio);
 }
 
 .check-animado svg {
@@ -35,7 +35,7 @@
 }
 
 .check-circulo {
-  stroke: #3cb878;
+  stroke: var(--verde-medio);
   stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 151;
@@ -44,7 +44,7 @@
 }
 
 .check-marca {
-  stroke: #3cb878;
+  stroke: var(--verde-medio);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;

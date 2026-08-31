@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "/src/styles/comunidad.css";
 import Footer from '../components/footer';
 import { SearchBar } from "../components/searchBar";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 interface Reply {
   id: number;
@@ -67,6 +70,14 @@ export default function Comunidad() {
   useEffect(() => {
     loadPosts();
   }, []);
+  const [reportandoPost, setReportandoPost] =
+    useState<number | null>(null);
+
+  const [motivoReporte, setMotivoReporte] =
+    useState("");
+
+  const [enviandoReporte, setEnviandoReporte] =
+  useState(false);
   const formatDate = (date:string) =>
     new Date(date).toLocaleString(
       "es-SV",
@@ -98,6 +109,73 @@ export default function Comunidad() {
       )
     );
   };
+
+  async function reportar() {
+    if (
+      reportandoPost === null ||
+      !motivoReporte
+    ) {
+      return;
+    }
+
+    const token =
+      localStorage.getItem("token");
+
+    setEnviandoReporte(true);
+
+    try {
+
+      const response =
+        await fetch(
+          `/api/community/posts/${reportandoPost}/report`,
+          {
+            method:"POST",
+
+            headers:{
+              Authorization:
+                `Bearer ${token}`,
+              "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+              reason: motivoReporte
+            })
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if(!response.ok){
+
+        alert(
+          data.message ||
+          "No se pudo enviar el reporte."
+        );
+
+        return;
+      }
+
+      alert(
+        "Reporte enviado correctamente."
+      );
+
+      setReportandoPost(null);
+      setMotivoReporte("");
+
+    } catch {
+
+      alert(
+        "No se pudo conectar con el servidor."
+      );
+
+    } finally {
+
+      setEnviandoReporte(false);
+
+    }
+  }
 
   async function loadPosts(){
     const token =
@@ -468,6 +546,15 @@ export default function Comunidad() {
                       Responder
                     </button>
 
+                    <button
+                      className="foro-btn-ghost"
+                      onClick={() => {
+                        setReportandoPost(post.id);
+                        setMotivoReporte("");
+                      }}
+                    >
+                      Reportar
+                    </button>
                   </div>
 
               </div>
@@ -571,8 +658,93 @@ export default function Comunidad() {
       ))}
 
     </div>
+
+        {reportandoPost !== null && (
+
+      <div className="reporte-overlay">
+
+        <div className="reporte-modal">
+
+          <h2>
+            Reportar publicación
+          </h2>
+
+          <p>
+            Selecciona el motivo del reporte.
+          </p>
+
+          <select
+            value={motivoReporte}
+            onChange={(e) =>
+              setMotivoReporte(e.target.value)
+            }
+          >
+
+            <option value="">
+              Selecciona un motivo
+            </option>
+
+            <option value="spam">
+              Spam
+            </option>
+
+            <option value="harassment">
+              Acoso o insultos
+            </option>
+
+            <option value="inappropriate">
+              Contenido inapropiado
+            </option>
+
+            <option value="dangerous">
+              Contenido peligroso
+            </option>
+
+            <option value="impersonation">
+              Suplantación de identidad
+            </option>
+
+            <option value="other">
+              Otro
+            </option>
+
+          </select>
+
+          <div className="reporte-acciones">
+
+            <button
+              className="foro-btn-cancel"
+              disabled={enviandoReporte}
+              onClick={() => {
+                setReportandoPost(null);
+                setMotivoReporte("");
+              }}
+            >
+              Cancelar
+            </button>
+
+            <button
+              className="foro-btn-ok"
+              disabled={
+                !motivoReporte ||
+                enviandoReporte
+              }
+              onClick={reportar}
+            >
+              {enviandoReporte
+                ? "Enviando..."
+                : "Enviar reporte"}
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    )}
     
-      <Footer />
+    <Footer />
   </div>
 );
 }

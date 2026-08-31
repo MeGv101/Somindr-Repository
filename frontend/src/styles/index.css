@@ -1,18 +1,18 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap');
 
 
 :root {
-  --verde:        #3CB878;
-  --verde-oscuro: #298a5a;
-  --verde-claro:  #eaf7f0;
-  --verde-medio:  #a8dfc0;
-  --negro:        #111;
-  --gris-texto:   #5a6672;
-  --gris-claro:   #f5f8f6;
-  --blanco:       #ffffff;
-  --sombra:       0 8px 40px rgba(0,0,0,0.08);
+  --verde: var(--verde-medio);
+  --negro: var(--bg-primary);
+  --gris-texto: var(--text-secondary);
+  --gris-claro: var(--bg-secondary);
+  --blanco: var(--text-primary);
+  --sombra: var(--shadow-card);
+  --tint-verde: #eaf7f0;
+}
+
+[data-theme="dark"] {
+  --tint-verde: rgba(123, 203, 158, 0.08);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -92,7 +92,7 @@ nav {
   font-weight: 400;
 }
 
-.nav-links a:hover { background: var(--verde-claro); color: var(--verde); }
+.nav-links a:hover { background: var(--tint-verde); color: var(--verde); }
 .nav-links a.activo { background: var(--verde); color: #fff; font-weight: 600; }
 
 .nav-cta {
@@ -550,8 +550,8 @@ nav {
 .track .review-card {
   flex: 0 0 calc(50% - 12px);
   min-width: calc(50% - 12px);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 28px;
   box-sizing: border-box;
@@ -592,11 +592,11 @@ nav {
 }
 
 .track .star.empty {
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-tertiary);
 }
 
 .track .card-quote {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   font-size: 15px;
   line-height: 1.65;
   margin: 0 0 20px;
@@ -616,7 +616,7 @@ nav {
 }
 
 .track .card-date {
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-tertiary);
   font-size: 12px;
   margin: 0;
 }
@@ -637,9 +637,9 @@ nav {
 }
 
 .btn-nav {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: var(--blanco);
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -665,7 +665,7 @@ nav {
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--text-tertiary);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
@@ -794,13 +794,13 @@ nav {
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--negro);
+  color: var(--verde-oscuro);
   font-weight: 600;
   margin-bottom: 12px;
   padding: 5px 14px;
   border: 1px solid rgba(60,184,120,0.3);
   border-radius: 50px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
 }
 
 .seccion-titulo {
@@ -835,7 +835,7 @@ nav {
   background: var(--blanco);
   border-radius: 16px;
   padding: 28px;
-  border: 1px solid #000000;
+  border: 1px solid var(--border-strong);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -847,7 +847,7 @@ nav {
 .feature-icon {
   width: 48px; 
   height: 48px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
   border-radius: 12px;
   display: flex; 
   align-items: center; 
@@ -961,7 +961,7 @@ nav {
 .sobre-visual-badge-icon {
   width: 40px; 
   height: 40px;
-  background: var(--verde-claro);
+  background: var(--tint-verde);
   border-radius: 10px;
   display: flex; 
   align-items: center; 
@@ -1067,40 +1067,6 @@ nav {
 
 .btn-outline-blanco:hover { background: rgba(255,255,255,0.1); }
 
-
-footer {
-  background: #0a0a0a;
-  color: #555;
-  padding: 36px 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 700;
-}
-
-.footer-logo span { color: var(--verde); }
-
-footer p { font-size: 13px; }
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  font-size: 13px;
-  color: #555;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover { color: var(--verde); }
 
 
 @media (max-width: 1024px) {

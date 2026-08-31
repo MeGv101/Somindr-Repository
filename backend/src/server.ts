@@ -27,7 +27,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://pickup-round-occupations-baptist.trycloudflare.com"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://plaza-parenting-receiver-consciousness.trycloudflare.com"]
 })
 
 await app.register(authRoutes, {

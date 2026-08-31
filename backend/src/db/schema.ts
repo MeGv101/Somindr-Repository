@@ -697,3 +697,36 @@ export const professionalRequests = pgTable("professional_requests",{
 
     }
   );
+
+export const postReports = pgTable(
+  "post_reports",
+  {
+    id: serial("id").primaryKey(),
+
+    postId: integer("post_id")
+      .notNull()
+      .references(() => posts.id, { onDelete: "cascade" }),
+
+    reporterId: integer("reporter_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+
+    reason: varchar("reason", { length: 50 }).notNull(),
+
+    description: text("description"),
+
+    status: varchar("status", { length: 20 })
+      .notNull()
+      .default("pending"),
+
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    unique("post_reports_post_reporter_unique").on(
+      table.postId,
+      table.reporterId
+    ),
+  ]
+);

@@ -45,23 +45,14 @@ interface ProfessionalRequest {
   status:string;
 }
 
-// Claves posibles para identificar qué acción de guardado
-// está mostrando el ícono de resultado (check / x)
 type SaveKey = "perfil" | "professional";
 
 interface SaveStatus {
   key:SaveKey;
   status:"success" | "error";
-  // Identificador único por cada disparo, para forzar que
-  // React remonte el ícono (y así reinicie su animación)
-  // incluso si se guarda dos veces seguidas con el mismo resultado
   token:number;
 }
 
-// Ícono animado de resultado de guardado (check o x).
-// Maneja su propio ciclo de vida: entra, se mantiene visible
-// y luego sale con la misma transición pero en reversa,
-// avisando al padre (onDone) cuando ya puede desmontarse.
 function SaveStatusIcon({
   status,
   onDone,
@@ -75,9 +66,6 @@ function SaveStatusIcon({
 
   useEffect(()=>{
 
-    // Se espera un frame para que el navegador pinte el
-    // estado inicial ("enter") antes de pasar a "visible",
-    // así la transición de entrada sí se reproduce
     const raf = requestAnimationFrame(()=>{
       setPhase("visible");
     });
@@ -166,17 +154,9 @@ export default function Perfil(){
 
   const [modalOpen,setModalOpen] =
     useState(false);
-
-  // Estado del ícono de resultado de guardado (check / x).
-  // El tiempo de vida (entrada, espera y salida) lo maneja
-  // internamente el propio SaveStatusIcon.
   const [saveStatus,setSaveStatus] =
     useState<SaveStatus | null>(null);
 
-  // Muestra el ícono de check o x junto al botón correspondiente.
-  // Un token distinto por cada llamada obliga a React a montar
-  // una instancia nueva del ícono, así la animación siempre
-  // se reproduce desde el principio.
   function showSaveStatus(key:SaveKey,status:"success" | "error"){
 
     setSaveStatus({ key, status, token:Date.now() });

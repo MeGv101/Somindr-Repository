@@ -28,6 +28,8 @@ import {
 
 import "stream-chat-react/dist/css/index.css";
 
+import "../styles/chat.css";
+
 export default function Messages(){
 
   const { channelId } =
@@ -59,23 +61,15 @@ export default function Messages(){
   useEffect(()=>{
 
     if(
-
       !user ||
-
+      !user.id ||
       !channelId
-
     ){
-
       return;
-
     }
 
-    if (!user || !channelId) {
-        return;
-      }
-
-      const currentUser = user;
-      const currentChannelId = channelId;
+    const currentUser = user;
+    const currentChannelId = channelId;
 
     let mounted=true;
 
@@ -180,15 +174,19 @@ export default function Messages(){
 
     return(
 
-      <main>
+      <div className="chat-page">
 
-        <h2>
+        <div className="chat-page__status">
 
-          Cargando chat...
+          <h2>
 
-        </h2>
+            Cargando chat...
 
-      </main>
+          </h2>
+
+        </div>
+
+      </div>
 
     );
 
@@ -198,15 +196,19 @@ export default function Messages(){
 
     return(
 
-      <main>
+      <div className="chat-page">
 
-        <h2>
+        <div className="chat-page__status">
 
-          No se pudo abrir el chat.
+          <h2>
 
-        </h2>
+            No se pudo abrir el chat.
 
-      </main>
+          </h2>
+
+        </div>
+
+      </div>
 
     );
 
@@ -214,31 +216,35 @@ export default function Messages(){
 
   return(
 
-    <Chat
+    <div className="chat-page">
 
-      client={streamClient}
+      <Chat
 
-    >
-
-      <Channel
-
-        channel={channel}
+        client={streamClient}
 
       >
 
-        <Window>
+        <Channel
 
-          <ChannelHeader/>
+          channel={channel}
 
-          <MessageList/>
+        >
 
-          <MessageComposer/>
+          <Window>
 
-        </Window>
+            <ChannelHeader/>
 
-      </Channel>
+            <MessageList/>
 
-    </Chat>
+            <MessageComposer/>
+
+          </Window>
+
+        </Channel>
+
+      </Chat>
+
+    </div>
 
   );
 
