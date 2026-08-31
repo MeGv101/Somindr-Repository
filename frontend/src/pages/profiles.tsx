@@ -45,6 +45,9 @@ type Post = {
   commentsCount?: number;
 };
 
+// Voto local de la persona sobre un post: "up", "down" o ninguno
+type VoteValue = "up" | "down" | null;
+
 // Categorías fijas de publicación. Deben coincidir con los valores
 // que tu backend espera guardar en el campo "category" del post.
 const POST_CATEGORIES = [
@@ -113,6 +116,22 @@ export default function Profile() {
       category: POST_CATEGORIES[0] as string,
       content: "",
     });
+
+  // Voto actual del usuario por cada post (clave = id del post)
+  const [myVotes, setMyVotes] =
+    useState<Record<number, VoteValue>>({});
+
+  // Qué posts tienen su caja de "Responder" abierta
+  const [replyOpen, setReplyOpen] =
+    useState<Record<number, boolean>>({});
+
+  // Texto que se está escribiendo en cada caja de respuesta
+  const [replyText, setReplyText] =
+    useState<Record<number, string>>({});
+
+  // Envío en curso de una respuesta, para deshabilitar el botón
+  const [replySending, setReplySending] =
+    useState<Record<number, boolean>>({});
 
   const filteredPosts =
     selectedTab === "Todos"
@@ -244,6 +263,129 @@ export default function Profile() {
     }
     }
 
+  // Aplica (o retira) un voto sobre un post con actualización optimista:
+  // el conteo cambia al instante en pantalla y, en paralelo, se avisa
+  // al backend. Si la llamada falla, no revertimos el conteo visual
+  // porque igual quedaría inconsistente con el resto de la sesión;
+  // solo se registra el error en consola.
+  // NOTA: se asume el endpoint POST /api/community/:id/vote con
+  // body { value: 1 | -1 | 0 }. Ajusta la ruta si tu backend usa otra.
+  async function votarPost(postId: number, direccion: "up" | "down") {
+
+    const votoActual = myVotes[postId] ?? null;
+    const nuevoVoto: VoteValue =
+      votoActual === direccion ? null : direccion;
+
+    setPosts((prev) =>
+      prev.map((post) => {
+
+        if (post.id !== postId) return post;
+
+        let upvotes = post.upvotes ?? 0;
+        let downvotes = post.downvotes ?? 0;
+
+        // Quita el voto anterior, si había uno
+        if (votoActual === "up") upvotes -= 1;
+        if (votoActual === "down") downvotes -= 1;
+
+        // Aplica el nuevo voto, si no fue una anulación
+        if (nuevoVoto === "up") upvotes += 1;
+        if (nuevoVoto === "down") downvotes += 1;
+
+        return { ...post, upvotes, downvotes };
+
+      })
+    );
+
+    setMyVotes((prev) => ({ ...prev, [postId]: nuevoVoto }));
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      const value =
+        nuevoVoto === "up" ? 1 : nuevoVoto === "down" ? -1 : 0;
+
+      await fetch(`/api/community/${postId}/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ value }),
+      });
+
+    } catch (err) {
+      console.error(err);
+    }
+
+  }
+
+  function alternarRespuesta(postId: number) {
+
+    setReplyOpen((prev) => ({
+      ...prev,
+      [postId]: !prev[postId],
+    }));
+
+  }
+
+  // Envía un comentario/respuesta a un post.
+  // NOTA: se asume el endpoint POST /api/community/:id/comments con
+  // body { content }. Ajusta la ruta si tu backend usa otra.
+  async function enviarRespuesta(postId: number) {
+
+    const contenido = (replyText[postId] ?? "").trim();
+
+    if (!contenido) return;
+
+    setReplySending((prev) => ({ ...prev, [postId]: true }));
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `/api/community/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: contenido }),
+        }
+      );
+
+      if (!response.ok) {
+        alert("No se pudo enviar la respuesta.");
+        return;
+      }
+
+      setPosts((prev) =>
+        prev.map((post) =>
+          post.id === postId
+          ? { ...post, commentsCount: (post.commentsCount ?? 0) + 1 }
+          : post
+        )
+      );
+
+      setReplyText((prev) => ({ ...prev, [postId]: "" }));
+      setReplyOpen((prev) => ({ ...prev, [postId]: false }));
+
+    } catch (err) {
+
+      console.error(err);
+      alert("Error del servidor al responder.");
+
+    } finally {
+
+      setReplySending((prev) => ({ ...prev, [postId]: false }));
+
+    }
+
+  }
+
   // Envía la publicación nueva al backend.
   // NOTA: se asume el endpoint POST /api/community con body
   // { title, category, content }. Ajusta la ruta/campos si tu
@@ -273,6 +415,16 @@ export default function Profile() {
         return;
       }
 
+      // Intentamos leer el post recién creado desde la respuesta del
+      // backend para mostrarlo de inmediato, sin esperar a una recarga.
+      let publicacionCreada: Post | null = null;
+
+      try {
+        publicacionCreada = await response.json();
+      } catch {
+        publicacionCreada = null;
+      }
+
       setCreatePostOpen(false);
 
       setNewPost({
@@ -281,8 +433,16 @@ export default function Profile() {
         content: "",
       });
 
-      if (perfil) {
+      if (publicacionCreada && publicacionCreada.id) {
+
+        // Actualización optimista: aparece al instante arriba de la lista
+        setPosts((prev) => [publicacionCreada as Post, ...prev]);
+
+      } else if (perfil) {
+
+        // Si el backend no devolvió el post creado, recargamos la lista
         await cargarPosts(perfil.username);
+
       }
 
     } catch (err) {
@@ -570,14 +730,24 @@ export default function Profile() {
 
                       <button
                         type="button"
-                        className="post-vote-btn"
+                        className={
+                          `post-vote-btn ${
+                            myVotes[post.id] === "up" ? "active-up" : ""
+                          }`
+                        }
+                        onClick={() => votarPost(post.id, "up")}
                       >
                         {`↑ ${post.upvotes ?? 0}`}
                       </button>
 
                       <button
                         type="button"
-                        className="post-vote-btn"
+                        className={
+                          `post-vote-btn ${
+                            myVotes[post.id] === "down" ? "active-down" : ""
+                          }`
+                        }
+                        onClick={() => votarPost(post.id, "down")}
                       >
                         {`↓ ${post.downvotes ?? 0}`}
                       </button>
@@ -591,11 +761,59 @@ export default function Profile() {
                     <button
                       type="button"
                       className="post-reply-btn"
+                      onClick={() => alternarRespuesta(post.id)}
                     >
                       Responder
                     </button>
 
                   </div>
+
+                  {
+                    replyOpen[post.id] && (
+
+                      <div className="post-reply-box">
+
+                        <textarea
+                          rows={2}
+                          placeholder="Escribe una respuesta..."
+                          value={replyText[post.id] ?? ""}
+                          onChange={(e) =>
+                            setReplyText((prev) => ({
+                              ...prev,
+                              [post.id]: e.target.value,
+                            }))
+                          }
+                        />
+
+                        <div className="post-reply-actions">
+
+                          <button
+                            type="button"
+                            className="post-reply-cancel"
+                            onClick={() => alternarRespuesta(post.id)}
+                          >
+                            Cancelar
+                          </button>
+
+                          <button
+                            type="button"
+                            className="post-reply-send"
+                            disabled={!!replySending[post.id]}
+                            onClick={() => enviarRespuesta(post.id)}
+                          >
+                            {
+                              replySending[post.id]
+                              ? "Enviando..."
+                              : "Enviar"
+                            }
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    )
+                  }
 
                 </article>
 
