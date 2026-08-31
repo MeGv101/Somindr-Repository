@@ -104,7 +104,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             Comunidad
           </Link>
           <Link to="/psicoemocional" className="sidebar-link" onClick={handleLinkClick}>
-            Psico-Emocional
+           Apoyo Emocional
           </Link>
           <Link to="/fitness" className="sidebar-link" onClick={handleLinkClick}>
             Rutinas Físicas

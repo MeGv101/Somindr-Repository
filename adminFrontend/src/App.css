@@ -1,8 +1,4 @@
-/* ============================================
-   ADMIN GLOBAL - Premium Dark Green Theme
-   ============================================ */
 
-/* ----- RESET & BASE ----- */
 *,
 *::before,
 *::after {
@@ -26,14 +22,14 @@
 }
 
 :root {
-  /* === COLORES PRINCIPALES === */
+
   --bg-primary: #060b09;
   --bg-secondary: #0c1612;
   --bg-card: #111e19;
   --bg-elevated: #162b23;
   --bg-glass: rgba(17, 30, 25, 0.75);
 
-  /* === VERDES === */
+
   --green-dark: #0f2a1f;
   --green-mid: #1a4d38;
   --green-bright: #2d7a5a;
@@ -41,36 +37,31 @@
   --green-glow: #3dab7e;
   --green-pale: #b8f0d6;
 
-  /* === TEXTOS === */
   --text-primary: #e8f5ee;
   --text-secondary: #a8d5c0;
   --text-muted: #5f8a78;
   --text-dim: #3a5f4f;
 
-  /* === ACENTOS === */
   --accent-success: #2d7a5a;
   --accent-danger: #8b3a3a;
   --accent-warning: #8b7a2a;
   --accent-info: #2a6b8b;
 
-  /* === BORDES === */
+
   --border-subtle: rgba(45, 122, 90, 0.15);
   --border-mid: rgba(45, 122, 90, 0.3);
   --border-bold: rgba(45, 122, 90, 0.6);
 
-  /* === SOMBRAS === */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.8);
   --shadow-glow: 0 0 40px rgba(45, 122, 90, 0.08);
 
-  /* === RADIOS === */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-xl: 28px;
 
-  /* === TRANSICIONES === */
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -94,7 +85,7 @@ body {
   background-attachment: fixed;
 }
 
-/* ----- SCROLLBAR PREMIUM ----- */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -117,13 +108,12 @@ body {
   box-shadow: 0 0 20px rgba(45, 122, 90, 0.2);
 }
 
-/* ----- SELECTION ----- */
 ::selection {
   background: var(--green-bright);
   color: var(--bg-primary);
 }
 
-/* ----- TYPOGRAPHY ----- */
+
 h1,
 h2,
 h3,
@@ -134,7 +124,6 @@ h6 {
   letter-spacing: 0.5px;
 }
 
-/* ----- LINKS ----- */
 a {
   color: var(--green-light);
   text-decoration: none;
@@ -145,11 +134,7 @@ a:hover {
   color: var(--green-pale);
 }
 
-/* ============================================
-   COMPONENTES REUTILIZABLES
-   ============================================ */
 
-/* ----- BOTONES PREMIUM ----- */
 .btn {
   position: relative;
   display: inline-flex;
@@ -286,7 +271,7 @@ a:hover {
   opacity: 0;
 }
 
-/* ----- INPUTS PREMIUM ----- */
+
 .input-group {
   display: flex;
   flex-direction: column;
@@ -335,7 +320,7 @@ textarea.input-field {
   min-height: 100px;
 }
 
-/* ----- BADGES ----- */
+
 .badge {
   display: inline-block;
   padding: 4px 16px;
@@ -370,7 +355,6 @@ textarea.input-field {
   border: 1px solid rgba(42, 107, 139, 0.2);
 }
 
-/* ----- CARDS PREMIUM ----- */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -403,7 +387,7 @@ textarea.input-field {
   opacity: 1;
 }
 
-/* ----- GLASS EFFECT ----- */
+
 .glass {
   background: var(--bg-glass);
   backdrop-filter: blur(12px);
@@ -411,9 +395,7 @@ textarea.input-field {
   border: 1px solid rgba(45, 122, 90, 0.08);
 }
 
-/* ============================================
-   ANIMACIONES
-   ============================================ */
+
 
 @keyframes fadeIn {
   from {
