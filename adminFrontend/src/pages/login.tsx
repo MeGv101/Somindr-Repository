@@ -58,7 +58,7 @@ export default function Login() {
       <div className="login-box">
         {/* ICONO */}
         <div className="login-icon">
-          <span>⚡</span>
+          <span></span>
         </div>
 
         {/* TÍTULO */}
@@ -98,16 +98,6 @@ export default function Login() {
             </div>
           </div>
 
-          {/* OPCIONES */}
-          <div className="form-options">
-            <label className="remember-me">
-              <input type="checkbox" />
-              Recordarme
-            </label>
-            <button type="button" className="forgot-link">
-              ¿Olvidaste tu contraseña?
-            </button>
-          </div>
 
           {/* ERROR */}
           {error && (

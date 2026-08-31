@@ -25,9 +25,7 @@ body {
   padding: 0 20px;
   position: relative;
   background-image: url('https://images.pexels.com/photos/30311713/pexels-photo-30311713.jpeg');
-  opacity: 80%;
   background-size: cover;
-  background-position-y: 60%;
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
@@ -46,15 +44,18 @@ body {
 }
 
 .titulo-hero h1 {
+  position: relative;
+  z-index: 2;
   font-size: clamp(5rem, 7.8vw, 6.4rem);
   font-weight: 1200;
-  color: var(--text-primary);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.5);
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(0, 0, 0, 0.5);
   letter-spacing: -2px;
   line-height: 1.2;
   word-break: keep-all;
   white-space: nowrap;
-  z-index: 2;
   opacity: 0;
   animation: heroReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }

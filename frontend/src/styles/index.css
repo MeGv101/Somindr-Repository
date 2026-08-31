@@ -1102,3 +1102,40 @@ nav {
   height: 380px;
   width: 380px;
 }
+
+.track .card-quote {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 20px;
+}
+
+.track .card-author {
+  color: var(--blanco);
+}
+
+.track .card-quote {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 20px;
+}
+
+.track .card-author {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+
+.track .card-role {
+  color: var(--verde);
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.track .card-date {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 0;
+}
