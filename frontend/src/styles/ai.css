@@ -52,7 +52,7 @@ body,
 
   min-height: 0;
 
-  color: #e5e5e5;
+  color: var(--text-primary);
 }
 
 .background {
@@ -226,7 +226,7 @@ body,
   scroll-behavior: smooth;
 
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: var(--glass-scrollbar) transparent;
 }
 
 
@@ -239,12 +239,12 @@ body,
 }
 
 .ai-messages::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--glass-scrollbar);
   border-radius: 999px;
 }
 
 .ai-messages::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--glass-border-strong);
 }
 
 
@@ -270,15 +270,15 @@ body,
 .user-message {
   align-self: flex-end;
 
-  color: #f0f0f0;
+  color: var(--text-primary);
 
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.18),
-    rgba(255, 255, 255, 0.07)
+    var(--glass-3),
+    var(--glass-1)
   );
 
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--glass-border-strong);
 
   border-radius: 18px 18px 4px 18px;
 
@@ -293,11 +293,11 @@ body,
 .assistant-message {
   align-self: flex-start;
 
-  color: #e5e5e5;
+  color: var(--text-primary);
 
-  background: rgba(255, 255, 255, 0.045);
+  background: var(--glass-1);
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
 
   border-radius: 16px 16px 16px 4px;
 
@@ -329,7 +329,7 @@ body,
 .assistant-message code {
   padding: 0.15rem 0.35rem;
 
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-2);
 
   border-radius: 5px;
 
@@ -360,9 +360,9 @@ body,
 
   padding: 14px 18px;
 
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-1);
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
 
   border-radius: 18px;
 
@@ -378,7 +378,7 @@ body,
 
   border-radius: 50%;
 
-  background: #ffffff;
+  background: var(--text-primary);
 
   animation: typingDots 1.2s infinite ease-in-out;
 }
@@ -430,9 +430,9 @@ body,
 
   padding: 1rem;
 
-  background: rgba(20, 20, 30, 0.5);
+  background: var(--glass-bar);
 
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid var(--glass-border);
 
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -444,11 +444,11 @@ body,
 
   padding: 0.8rem 1rem;
 
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-2);
 
-  color: white;
+  color: var(--text-primary);
 
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--glass-border-strong);
 
   border-radius: 12px;
 
@@ -464,15 +464,15 @@ body,
 }
 
 .ai-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-tertiary);
 }
 
 .ai-input:focus {
   outline: none;
 
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: var(--glass-border-strong);
 
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-2);
 }
 
 .ai-input:disabled {
@@ -486,9 +486,9 @@ body,
 
   background: rgba(88, 166, 97, 0.35);
 
-  color: white;
+  color: var(--text-primary);
 
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--glass-border-strong);
 
   border-radius: 12px;
 

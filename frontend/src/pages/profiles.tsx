@@ -32,12 +32,33 @@ type Profile = {
   professional: ProfessionalInfo | null;
 };
 
-type Post = {
+// Versión de solo lectura del post de comunidad: no necesitamos
+// likes/dislikes/comments aquí porque esta vista no permite
+// interactuar con las publicaciones, solo mostrarlas.
+type CommunityPost = {
   id: number;
   title: string;
-  category: string;
   content: string;
+  category: string;
   createdAt: string;
+};
+
+const CAT_STYLE: Record<string, React.CSSProperties> = {
+  Nutrición: {
+    background: "rgba(74,222,128,.14)",
+    color: "#4ade80",
+    borderColor: "rgba(74,222,128,.24)",
+  },
+  Físico: {
+    background: "rgba(96,165,250,.14)",
+    color: "#60a5fa",
+    borderColor: "rgba(96,165,250,.24)",
+  },
+  Psicoemocional: {
+    background: "rgba(192,132,252,.14)",
+    color: "#c084fc",
+    borderColor: "rgba(192,132,252,.24)",
+  },
 };
 
 export default function Profile() {
@@ -52,7 +73,6 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(true);
   const [perfil, setPerfil] = useState<Profile | null>(null);
-  const [posts, setPosts] = useState<Post[]>([]);
   const avatars = [
     avatar1,
     avatar2,
@@ -86,9 +106,28 @@ export default function Profile() {
   const [professional, setProfessional] =
   useState<ProfessionalProfile | null>(null);
 
+  const [posts, setPosts] = useState<CommunityPost[]>([]);
+
   useEffect(() => {
     cargarPerfil();
   }, [username]);
+
+  async function cargarPosts(username: string) {
+    try {
+
+      const response = await fetch(
+        `/api/community/user/${username}`
+      );
+
+      if (!response.ok) throw new Error();
+
+      const data = await response.json();
+      setPosts(data);
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   async function cargarPerfil() {
     try {
@@ -188,26 +227,6 @@ export default function Profile() {
     }
 
   }
-
-  async function cargarPosts(username: string) {
-    console.log("Buscando publicaciones de:", username);
-
-    try {
-        const response = await fetch(
-        `/api/community/user/${username}`
-        );
-
-        console.log(response.status);
-
-        const data = await response.json();
-
-        console.log(data);
-
-        setPosts(data);
-    } catch (err) {
-        console.error(err);
-    }
-    }
 
   
   if (loading) {
@@ -376,66 +395,72 @@ export default function Profile() {
           )
           }
 
-
         <div className="card">
-        <h3>
+
+          <h3>
             Publicaciones
-        </h3>
-        <hr />
+          </h3>
 
-        {posts.length === 0 ? (
+          {
+            posts.length === 0 ? (
 
-            <div className="post-empty">
-              <h3>Sin publicaciones</h3>
-              <p>Este usuario todavía no ha publicado nada.</p>
-            </div>
+              <div className="post-empty">
+                <h3>Sin publicaciones</h3>
+                <p>
+                  Este usuario todavía no ha publicado nada en la comunidad.
+                </p>
+              </div>
 
-        ) : (
+            ) : (
 
-            <div className="posts-container">
+              <div className="posts-container">
 
-            {posts.map((post) => (
+                {posts.map((post) => (
 
-                <article
-                key={post.id}
-                className="post-card"
-                >
+                  <article
+                    key={post.id}
+                    className="post-card"
+                  >
 
-                  <div className="post-header">
+                    <div className="post-meta">
 
-                    <span className="post-category">
+                      <span
+                        className="post-category"
+                        style={CAT_STYLE[post.category]}
+                      >
                         {post.category}
-                    </span>
+                      </span>
 
-                  </div>
+                      <span className="post-date">
+                        {
+                          `${new Date(post.createdAt).toLocaleDateString()}, ${new Date(post.createdAt).toLocaleTimeString([], {
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}`
+                        }
+                      </span>
 
-                  <h3 className="post-title">
-                    {post.title}
-                  </h3>
+                    </div>
 
-                  <p className="post-content">
-                    {post.content}
-                  </p>
+                    <h3 className="post-title">
+                      {post.title}
+                    </h3>
 
-                  <div className="post-footer">
+                    <p className="post-content">
+                      {post.content}
+                    </p>
 
-                    <span className="post-date">
-                        {new Date(
-                        post.createdAt
-                        ).toLocaleDateString()}
-                    </span>
+                  </article>
 
-                  </div>
-                  <hr></hr>
+                ))}
 
-                </article>
+              </div>
 
-            ))}
+            )
+          }
 
-            </div>
-
-        )}
         </div>
+
       </main>
 
       <Footer />

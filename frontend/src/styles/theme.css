@@ -43,6 +43,14 @@
   --accent-neon-hover: #00ff00b2;
   --accent-fitness: #c62828;
   --accent-fitness-hover: #e53935;
+
+  --glass-1: rgba(255, 255, 255, 0.045);
+  --glass-2: rgba(255, 255, 255, 0.08);
+  --glass-3: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.25);
+  --glass-scrollbar: rgba(255, 255, 255, 0.2);
+  --glass-bar: rgba(20, 20, 30, 0.5);
 }
 
 [data-theme="light"] {
@@ -69,4 +77,12 @@
   --accent-neon-hover: #17c412;
   --accent-fitness: #c62828;
   --accent-fitness-hover: #e53935;
+
+  --glass-1: rgba(0, 0, 0, 0.035);
+  --glass-2: rgba(0, 0, 0, 0.055);
+  --glass-3: rgba(0, 0, 0, 0.1);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-strong: rgba(0, 0, 0, 0.16);
+  --glass-scrollbar: rgba(0, 0, 0, 0.15);
+  --glass-bar: rgba(255, 255, 255, 0.75);
 }

@@ -51,6 +51,105 @@ const CAT = {
     color: "#c084fc",
   },
 } as Record<string, React.CSSProperties>;
+
+// ==========================================================
+// Dropdown de categoría, todo en este mismo archivo.
+// Reemplaza al <select> nativo porque los navegadores no
+// dejan tematizar bien las <option> del popup nativo.
+// ==========================================================
+interface CategorySelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  getStyle: (category: string) => React.CSSProperties;
+}
+
+function CategorySelect({
+  value,
+  onChange,
+  getStyle,
+}: CategorySelectProps) {
+
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const categorias = ["Nutrición", "Físico", "Psicoemocional"];
+
+  useEffect(() => {
+
+    function onClickOutside(e: MouseEvent) {
+      if (
+        wrapRef.current &&
+        !wrapRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", onClickOutside);
+
+    return () =>
+      document.removeEventListener("mousedown", onClickOutside);
+
+  }, []);
+
+  return (
+    <div className="custom-select" ref={wrapRef}>
+
+      <button
+        type="button"
+        className="custom-select-trigger"
+        style={getStyle(value)}
+        onClick={() => setOpen((o) => !o)}
+      >
+
+        <span>{value}</span>
+
+        <svg
+          className={`custom-select-arrow ${open ? "open" : ""}`}
+          viewBox="0 0 12 8"
+          width="12"
+          height="8"
+        >
+          <path
+            d="M1 1l5 5 5-5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+
+      </button>
+
+      {open && (
+
+        <div className="custom-select-menu">
+
+          {categorias.map((categoria) => (
+
+            <div
+              key={categoria}
+              className={`custom-select-option ${
+                categoria === value ? "selected" : ""
+              }`}
+              style={getStyle(categoria)}
+              onClick={() => {
+                onChange(categoria);
+                setOpen(false);
+              }}
+            >
+              {categoria}
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
+    </div>
+  );
+}
+
 export default function Comunidad() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [titulo, setTitulo] = useState("");
@@ -424,14 +523,11 @@ export default function Comunidad() {
 
                 <div className="foro-form-acciones">
 
-                  <select
+                  <CategorySelect
                     value={cat}
-                    onChange={(e) => setCat(e.target.value)}
-                  >
-                    <option>Nutrición</option>
-                    <option>Físico</option>
-                    <option>Psicoemocional</option>
-                  </select>
+                    onChange={setCat}
+                    getStyle={getCategoryStyle}
+                  />
 
                   <button
                     className="foro-btn-ok"
