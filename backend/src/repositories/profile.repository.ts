@@ -86,6 +86,8 @@ export async function findProfessionalByUsername(
     await db
       .select({
         id: professionals.id,
+        userId:
+          professionals.userId,
         profession:
           professionals.profession,
         description:

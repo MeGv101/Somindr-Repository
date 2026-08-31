@@ -1,10 +1,13 @@
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useAuth } from "../context/authContext";
+
+import "../styles/layout.css";
 
 export default function AdminLayout() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     logout,
@@ -24,46 +27,69 @@ export default function AdminLayout() {
 
   }
 
+  const isActive = (path: string) =>
+    location.pathname === path;
+
   return (
 
     <div className="admin-layout">
 
-      <header className="admin-header">
+      <aside className="admin-sidebar">
 
-        <a href="/">
-        <h2>
-          Panel de Administración
-        </h2>
-        </a>
+        <Link to="/" className="admin-brand">
+          Somindr <span>Admin</span>
+        </Link>
 
-        <div>
+        <nav className="admin-nav">
 
-          <span>
-            {user?.nombre}
-          </span>
-
-          <button
-            onClick={handleLogout}
+          <Link
+            to="/"
+            className={isActive("/") ? "active" : ""}
           >
+            Panel
+          </Link>
+
+          <Link
+            to="/users"
+            className={isActive("/users") ? "active" : ""}
+          >
+            Usuarios
+          </Link>
+
+          <Link
+            to="/solicitudes"
+            className={isActive("/solicitudes") ? "active" : ""}
+          >
+            Solicitudes
+          </Link>
+
+          <Link
+            to="/moderacion"
+            className={isActive("/moderacion") ? "active" : ""}
+          >
+            Moderación
+          </Link>
+
+          <Link
+            to="/reportes"
+            className={isActive("/reportes") ? "active" : ""}
+          >
+            Reportes
+          </Link>
+
+        </nav>
+
+        <div className="admin-user">
+          <div className="admin-user-name">{user?.nombre}</div>
+          <button onClick={handleLogout}>
             Cerrar sesión
           </button>
-
         </div>
 
-        <Link to="/users">
-          Usuarios
-        </Link>
+      </aside>
 
-        <Link to="/solicitudes">
-          Solicitudes
-        </Link>
-
-      </header>
-
-      <main>
-
+      <main className="admin-main">
         <Outlet />
-
       </main>
 
     </div>
