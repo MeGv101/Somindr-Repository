@@ -81,6 +81,7 @@ ${historyText}
 Mensaje del usuario:
 
 ${message}
+Además, identifica el idioma de el mensaje del usuario y procura responder en el mismo idioma.
 
 Si la información está vacía, indícale que complete primero la sección psicoemocional.
 `;
