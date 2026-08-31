@@ -30,6 +30,6 @@ export async function generateResponse(
         );
     } catch (error) {
         console.error(error);
-        return "Lo siento, en este momento no puedo responder. Intenta nuevamente en unos segundos.";
+        return "Lo siento, en este momento no puedo responder por problemas con tu conexión a internet.";
     }
 }

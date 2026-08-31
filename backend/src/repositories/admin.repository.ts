@@ -4,13 +4,18 @@ import {
   users,
   professionals,
   professionalClients,
+  posts,
+  postReports,
 } from "../db/schema.js";
 
 import {
   eq,
   and,
   count,
+  desc,
 } from "drizzle-orm";
+
+import { alias } from "drizzle-orm/pg-core";
 
 export async function getDashboard() {
 
@@ -261,4 +266,151 @@ export async function reactivateProfessional(
       )
     );
 
+}
+
+export async function promoteToAdmin(
+  userId: number
+) {
+
+  await db
+    .update(users)
+    .set({
+      role: "ADMIN",
+    })
+    .where(
+      eq(
+        users.id,
+        userId
+      )
+    );
+
+}
+
+export async function findPostsWithReportCounts() {
+
+  return await db
+    .select({
+
+      id: posts.id,
+
+      title: posts.title,
+
+      category: posts.category,
+
+      content: posts.content,
+
+      createdAt: posts.createdAt,
+
+      authorId: users.id,
+
+      authorUsername: users.username,
+
+      reportCount: count(postReports.id),
+
+    })
+    .from(posts)
+    .innerJoin(
+      users,
+      eq(posts.userId, users.id)
+    )
+    .leftJoin(
+      postReports,
+      eq(postReports.postId, posts.id)
+    )
+    .groupBy(
+      posts.id,
+      users.id
+    )
+    .orderBy(desc(posts.createdAt));
+
+}
+
+export async function deletePostAsAdmin(
+  postId: number
+) {
+
+  await db
+    .delete(posts)
+    .where(
+      eq(posts.id, postId)
+    );
+
+}
+
+export async function findReports() {
+
+  const reporter = alias(users, "reporter");
+  const author = alias(users, "author");
+
+  return await db
+    .select({
+
+      id: postReports.id,
+
+      postId: postReports.postId,
+
+      postTitle: posts.title,
+
+      reason: postReports.reason,
+
+      description: postReports.description,
+
+      status: postReports.status,
+
+      createdAt: postReports.createdAt,
+
+      reporterUsername: reporter.username,
+
+      authorUsername: author.username,
+
+    })
+    .from(postReports)
+    .innerJoin(
+      posts,
+      eq(postReports.postId, posts.id)
+    )
+    .innerJoin(
+      reporter,
+      eq(postReports.reporterId, reporter.id)
+    )
+    .innerJoin(
+      author,
+      eq(posts.userId, author.id)
+    )
+    .orderBy(desc(postReports.createdAt));
+
+}
+
+export async function findReportById(
+  reportId: number
+) {
+
+  const [report] =
+    await db
+      .select()
+      .from(postReports)
+      .where(
+        eq(postReports.id, reportId)
+      );
+
+  return report ?? null;
+
+}
+
+export async function updateReportStatus(
+  reportId: number,
+  status: "resolved" | "dismissed"
+) {
+
+  await db
+    .update(postReports)
+    .set({ status })
+    .where(
+      eq(postReports.id, reportId)
+    );
+
+}
+
+export function deletePost(postId: number) {
+  throw new Error("Function not implemented.");
 }

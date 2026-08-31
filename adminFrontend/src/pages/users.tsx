@@ -67,7 +67,7 @@ export default function Users() {
     loadUsers();
   }
 
-  async function reactivateProfessional(id: number) {
+    async function reactivateProfessional(id: number) {
     const token = localStorage.getItem("token");
     await fetch(`/api/admin/users/${id}/reactivate-professional`, {
       method: "PATCH",
@@ -76,19 +76,30 @@ export default function Users() {
     loadUsers();
   }
 
-  const getRoleBadge = (role: string) => {
-    const roleMap: Record<string, string> = {
-      admin: "admin",
-      user: "user",
-      professional: "professional",
-    };
-    return roleMap[role.toLowerCase()] || "user";
-  };
+  async function promoteToAdmin(id: number) {
+    if (!confirm("¿Ascender este usuario a administrador?")) return;
 
-  const getStatusClass = (user: User) => {
-    if (user.suspended) return "suspended";
-    return "active";
-  };
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/admin/users/${id}/promote`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      alert("No se pudo ascender al usuario.");
+      return;
+    }
+
+    loadUsers();
+  }
+
+  function getRoleBadge(role: string): string {
+    return role.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  function getStatusClass(user: User): string {
+    return user.suspended ? "suspended" : "active";
+  }
 
   const filteredUsers = users.filter(
     (user) =>
@@ -248,6 +259,15 @@ export default function Users() {
                           onClick={() => reactivateProfessional(user.id)}
                         >
                          Reactivar
+                        </button>
+                      )}
+
+                      {user.role.toLowerCase() !== "admin" && (
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => promoteToAdmin(user.id)}
+                        >
+                         Ascender a admin
                         </button>
                       )}
 

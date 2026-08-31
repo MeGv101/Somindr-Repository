@@ -181,6 +181,8 @@ body {
 }
 
 .foro .foro-form {
+  position: relative;
+  z-index: 20;
   background: var(--bg-secondary);
   border: 1px solid var(--bg-card);
   border-radius: 12px;

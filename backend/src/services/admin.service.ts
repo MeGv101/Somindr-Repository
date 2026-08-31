@@ -177,6 +177,108 @@ export async function reactivateProfessional(
 
 }
 
+export async function promoteUser(
+  userId: number
+) {
+
+  const user =
+    await repository.findUserById(
+      userId
+    );
+
+  if (!user) {
+    throw new Error(
+      "USER_NOT_FOUND"
+    );
+  }
+
+  if (user.role === "ADMIN") {
+    throw new Error(
+      "USER_ALREADY_ADMIN"
+    );
+  }
+
+  await repository.promoteToAdmin(
+    userId
+  );
+
+  return {
+    message:
+      "Usuario promovido a administrador."
+  };
+
+}
+
+export async function getPostsForModeration() {
+
+  const posts =
+    await repository.findPostsWithReportCounts();
+
+  return posts;
+
+}
+
+export async function deletePostAsAdmin(
+  postId: number
+) {
+
+  await repository.deletePost(
+    postId
+  );
+
+  return {
+    message:
+      "Publicación eliminada."
+  };
+
+}
+
+export async function getReports() {
+
+  const reports =
+    await repository.findReports();
+
+  return reports;
+
+}
+
+export async function resolveReport(
+  reportId: number,
+  status: "resolved" | "dismissed"
+) {
+
+  const validStatuses =
+    ["resolved", "dismissed"];
+
+  if (!validStatuses.includes(status)) {
+    throw new Error(
+      "INVALID_STATUS"
+    );
+  }
+
+  const report =
+    await repository.findReportById(
+      reportId
+    );
+
+  if (!report) {
+    throw new Error(
+      "REPORT_NOT_FOUND"
+    );
+  }
+
+  await repository.updateReportStatus(
+    reportId,
+    status
+  );
+
+  return {
+    message:
+      "Reporte actualizado."
+  };
+
+}
+
 export async function getMe(
   userId: number
 ) {
