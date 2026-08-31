@@ -3,6 +3,8 @@ const originalTextMap = new WeakMap<Text, string>();
 let currentLang = "es";
 let observer: MutationObserver | null = null;
 
+const HAS_TRANSLATABLE_TEXT = /\p{L}/u;
+
 function shouldSkip(node: Node): boolean {
   const parent = node.parentElement;
   if (!parent) return true;
@@ -10,8 +12,10 @@ function shouldSkip(node: Node): boolean {
   const tag = parent.tagName;
   if (tag === "SCRIPT" || tag === "STYLE" || tag === "NOSCRIPT") return true;
 
-
   if (parent.closest(".lang-switcher")) return true;
+
+  const text = node.textContent?.trim() ?? "";
+  if (!HAS_TRANSLATABLE_TEXT.test(text)) return true;
 
   return false;
 }

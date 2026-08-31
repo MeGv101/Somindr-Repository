@@ -1,68 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-    --gradient-glow: linear-gradient(135deg, rgba(123,203,158,0.12) 0%, rgba(60,184,120,0.12) 40%, rgba(139,26,26,0.12) 100%);
-    --bg-gradient-overlay: radial-gradient(ellipse at 20% 50%, rgba(60,184,120,0.06) 0%, transparent 60%),
-                           radial-gradient(ellipse at 80% 20%, rgba(139,26,26,0.04) 0%, transparent 60%);
-    --border-verde: rgba(123,203,158,0.2);
-    --border-rojo: rgba(232,116,116,0.2);
-    --border-glow: rgba(60,184,120,0.15);
-    --shadow-glow-verde: 0 0 40px rgba(60,184,120,0.08);
-    --shadow-glow-rojo: 0 0 40px rgba(139,26,26,0.06);
+:root{
+--verde-claro:#7BCB9E;
+--verde-medio:#3CB878;
+--verde-oscuro:#1F7A52;
+--rojo-claro:#E87474;
+--rojo-oscuro:#8B1A1A;
+
+--gradient-main:linear-gradient(135deg,var(--verde-claro) 0%,var(--verde-medio) 45%,var(--verde-oscuro) 75%,var(--rojo-oscuro) 100%);
+--gradient-card:linear-gradient(135deg,rgba(123,203,158,.05),rgba(60,184,120,.05),rgba(139,26,26,.05));
+--gradient-glow:linear-gradient(135deg,rgba(123,203,158,.12),rgba(60,184,120,.12),rgba(139,26,26,.12));
+
+--border-verde:rgba(123,203,158,.2);
+
+--radius:20px;
+--radius-sm:12px;
+--radius-md:16px;
+--radius-lg:24px;
+--radius-xl:32px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:var(--bg-primary);
+color:var(--text-primary);
+font-family:Inter,sans-serif;
+overflow-x:hidden;
 }
 
 
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-primary);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    color: var(--text-primary);
-}
-
-
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: var(--bg-gradient-overlay);
-    pointer-events: none;
-    z-index: 0;
-    animation: bgPulse 12s ease-in-out infinite;
-}
-
-/* Grid de fondo con efecto orgánico */
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: 
-        radial-gradient(circle at 30% 40%, rgba(123,203,158,0.03) 0px, transparent 2px),
-        radial-gradient(circle at 70% 60%, rgba(232,116,116,0.03) 0px, transparent 2px),
-        radial-gradient(circle at 50% 80%, rgba(60,184,120,0.02) 0px, transparent 2px);
-    background-size: 60px 60px, 80px 80px, 100px 100px;
-    pointer-events: none;
-    z-index: 0;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-}
-
-/* ===== AISLAMIENTO ===== */
 .perfil-page {
     position: relative;
     z-index: 1;
 }
 
-/* ===== LAYOUT ===== */
+
 .main {
     flex: 1;
     padding: 40px 48px;
@@ -70,7 +47,7 @@ body::after {
     margin: 0 auto;
 }
 
-/* ===== HEADER ===== */
+
 .pf-header {
     position: relative;
     background: var(--bg-card);
@@ -88,7 +65,6 @@ body::after {
     animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Efecto de brillo con verde y rojo */
 .pf-header::before {
     content: '';
     position: absolute;
@@ -1257,3 +1233,12 @@ body::after {
         gap: 8px;
     }
 }
+
+.avatar-circle{
+width:100%;
+height:100%;
+border-radius:50%;
+overflow:hidden;
+background:var(--bg-secondary);
+}
+

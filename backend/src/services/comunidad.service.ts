@@ -405,3 +405,61 @@ export async function reportPost(
       "Reporte enviado correctamente.",
   };
 }
+
+async function requireAdmin(userId: number) {
+  const role = await repository.getUserRole(userId);
+
+  if (role !== "admin") {
+    throw new Error("FORBIDDEN");
+  }
+}
+
+export async function getCommunityForAdmin(adminId: number) {
+  await requireAdmin(adminId);
+
+  const rawPosts = await repository.getPostsForAdmin();
+
+  return Promise.all(
+    rawPosts.map(async (post) => {
+      const reactions = await repository.getPostReactions(post.id);
+      const comments = await repository.getCommentsByPost(post.id);
+      const reports = await repository.getReportsForPost(post.id);
+
+      return {
+        ...post,
+        likes: reactions.filter((r) => r.type === "LIKE").length,
+        dislikes: reactions.filter((r) => r.type === "DISLIKE").length,
+        comments,
+        reports,
+      };
+    })
+  );
+}
+
+export async function adminDeletePost(adminId: number, postId: number) {
+  await requireAdmin(adminId);
+
+  const post = await repository.getPostById(postId);
+
+  if (!post) {
+    throw new Error("POST_NOT_FOUND");
+  }
+
+  await repository.deletePost(postId);
+
+  return { message: "Publicación eliminada." };
+}
+
+export async function adminDeleteComment(adminId: number, commentId: number) {
+  await requireAdmin(adminId);
+
+  const comment = await repository.getCommentById(commentId);
+
+  if (!comment) {
+    throw new Error("COMMENT_NOT_FOUND");
+  }
+
+  await repository.deleteComment(commentId);
+
+  return { message: "Comentario eliminado." };
+}
