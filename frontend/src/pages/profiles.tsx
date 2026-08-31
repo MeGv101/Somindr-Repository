@@ -38,7 +38,20 @@ type Post = {
   category: string;
   content: string;
   createdAt: string;
+  // Estos tres campos son opcionales: si tu backend todavía no los
+  // devuelve, la interfaz simplemente muestra 0 en vez de romperse.
+  upvotes?: number;
+  downvotes?: number;
+  commentsCount?: number;
 };
+
+// Categorías fijas de publicación. Deben coincidir con los valores
+// que tu backend espera guardar en el campo "category" del post.
+const POST_CATEGORIES = [
+  "Nutrición",
+  "Físico",
+  "Psicoemocional",
+] as const;
 
 export default function Profile() {
   const { username } = useParams();
@@ -85,6 +98,28 @@ export default function Profile() {
 
   const [professional, setProfessional] =
   useState<ProfessionalProfile | null>(null);
+
+  // Pestaña activa del filtro de publicaciones ("Todos" o una categoría)
+  const [selectedTab, setSelectedTab] =
+    useState<string>("Todos");
+
+  // Modal para crear una publicación nueva (solo visible en tu propio perfil)
+  const [createPostOpen, setCreatePostOpen] =
+    useState(false);
+
+  const [newPost, setNewPost] =
+    useState({
+      title: "",
+      category: POST_CATEGORIES[0] as string,
+      content: "",
+    });
+
+  const filteredPosts =
+    selectedTab === "Todos"
+    ? posts
+    : posts.filter(
+        (post) => post.category === selectedTab
+      );
 
   useEffect(() => {
     cargarPerfil();
@@ -208,6 +243,54 @@ export default function Profile() {
         console.error(err);
     }
     }
+
+  // Envía la publicación nueva al backend.
+  // NOTA: se asume el endpoint POST /api/community con body
+  // { title, category, content }. Ajusta la ruta/campos si tu
+  // backend usa otro contrato.
+  async function crearPublicacion() {
+
+    if (!newPost.title.trim() || !newPost.content.trim()) {
+      alert("Completa el título y el contenido antes de publicar.");
+      return;
+    }
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("/api/community", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newPost),
+      });
+
+      if (!response.ok) {
+        alert("No se pudo publicar. Intenta de nuevo.");
+        return;
+      }
+
+      setCreatePostOpen(false);
+
+      setNewPost({
+        title: "",
+        category: POST_CATEGORIES[0],
+        content: "",
+      });
+
+      if (perfil) {
+        await cargarPosts(perfil.username);
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Error del servidor al publicar.");
+    }
+
+  }
 
   
   if (loading) {
@@ -378,33 +461,97 @@ export default function Profile() {
 
 
         <div className="card">
-        <h3>
-            Publicaciones
-        </h3>
-        <hr />
 
-        {posts.length === 0 ? (
+        <div className="post-toolbar">
+
+          <div className="post-tabs">
+
+            <button
+              type="button"
+              className={
+                `post-tab ${
+                  selectedTab === "Todos" ? "active" : ""
+                }`
+              }
+              onClick={() => setSelectedTab("Todos")}
+            >
+              Todos
+            </button>
+
+            {
+              POST_CATEGORIES.map((cat) => (
+
+                <button
+                  key={cat}
+                  type="button"
+                  className={
+                    `post-tab ${
+                      selectedTab === cat ? "active" : ""
+                    }`
+                  }
+                  onClick={() => setSelectedTab(cat)}
+                >
+                  {cat}
+                </button>
+
+              ))
+            }
+
+          </div>
+
+          {
+            esMiPerfil && (
+
+              <button
+                type="button"
+                className="btn-publicar"
+                onClick={() => setCreatePostOpen(true)}
+              >
+                + Publicar
+              </button>
+
+            )
+          }
+
+        </div>
+
+        {filteredPosts.length === 0 ? (
 
             <div className="post-empty">
               <h3>Sin publicaciones</h3>
-              <p>Este usuario todavía no ha publicado nada.</p>
+              <p>
+                {
+                  selectedTab === "Todos"
+                  ? "Este usuario todavía no ha publicado nada."
+                  : `No hay publicaciones en "${selectedTab}" todavía.`
+                }
+              </p>
             </div>
 
         ) : (
 
             <div className="posts-container">
 
-            {posts.map((post) => (
+            {filteredPosts.map((post) => (
 
                 <article
                 key={post.id}
                 className="post-card"
                 >
 
-                  <div className="post-header">
+                  <div className="post-meta">
 
                     <span className="post-category">
                         {post.category}
+                    </span>
+
+                    <span className="post-date">
+                        {
+                          `${new Date(post.createdAt).toLocaleDateString()}, ${new Date(post.createdAt).toLocaleTimeString([], {
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}`
+                        }
                     </span>
 
                   </div>
@@ -419,14 +566,36 @@ export default function Profile() {
 
                   <div className="post-footer">
 
-                    <span className="post-date">
-                        {new Date(
-                        post.createdAt
-                        ).toLocaleDateString()}
-                    </span>
+                    <div className="post-votes">
+
+                      <button
+                        type="button"
+                        className="post-vote-btn"
+                      >
+                        {`↑ ${post.upvotes ?? 0}`}
+                      </button>
+
+                      <button
+                        type="button"
+                        className="post-vote-btn"
+                      >
+                        {`↓ ${post.downvotes ?? 0}`}
+                      </button>
+
+                      <span className="post-comments-count">
+                        {`${post.commentsCount ?? 0} comentarios`}
+                      </span>
+
+                    </div>
+
+                    <button
+                      type="button"
+                      className="post-reply-btn"
+                    >
+                      Responder
+                    </button>
 
                   </div>
-                  <hr></hr>
 
                 </article>
 
@@ -437,6 +606,113 @@ export default function Profile() {
         )}
         </div>
       </main>
+
+      {
+        createPostOpen && (
+
+          <div className="av-overlay open">
+
+            <div className="av-modal">
+
+              <div className="av-modal-header">
+
+                <span className="av-modal-title">
+                  Nueva publicación
+                </span>
+
+                <button
+                  className="av-modal-close"
+                  onClick={() => setCreatePostOpen(false)}
+                >
+                  ✕
+                </button>
+
+              </div>
+
+              <p className="av-modal-sub">
+                Comparte algo con la comunidad.
+              </p>
+
+              <div className="campo-post">
+
+                <label>
+                  Categoría
+                </label>
+
+                <select
+                  value={newPost.category}
+                  onChange={(e) =>
+                    setNewPost({
+                      ...newPost,
+                      category: e.target.value,
+                    })
+                  }
+                >
+
+                  {
+                    POST_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))
+                  }
+
+                </select>
+
+              </div>
+
+              <div className="campo-post">
+
+                <label>
+                  Título
+                </label>
+
+                <input
+                  value={newPost.title}
+                  onChange={(e) =>
+                    setNewPost({
+                      ...newPost,
+                      title: e.target.value,
+                    })
+                  }
+                  placeholder="Título de tu publicación"
+                />
+
+              </div>
+
+              <div className="campo-post">
+
+                <label>
+                  Contenido
+                </label>
+
+                <textarea
+                  rows={5}
+                  value={newPost.content}
+                  onChange={(e) =>
+                    setNewPost({
+                      ...newPost,
+                      content: e.target.value,
+                    })
+                  }
+                  placeholder="Escribe tu publicación..."
+                />
+
+              </div>
+
+              <button
+                className="av-select-btn"
+                onClick={crearPublicacion}
+              >
+                Publicar
+              </button>
+
+            </div>
+
+          </div>
+
+        )
+      }
 
       <Footer />
     </>
