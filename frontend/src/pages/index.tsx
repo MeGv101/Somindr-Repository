@@ -569,7 +569,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <img src="/media/SRC/pexels-chente8888-35006998.jpg" alt="slide3" />
           </div>
           <div className="slide-content">
-            <div className="slide-badge">Evolución diaria</div>
+            <div className="slide-badge">Evolución semanal</div>
             <h2 className="slide-titulo">
               Evoluciona
               <br />
@@ -624,8 +624,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
           />
           <div className="split-overlay split-overlay-fit"></div>
           <div className="split-content">
-            <span className="split-tagFit">Fitness</span>
-            <h2 className="split-titulo">Fitness Adaptativo</h2>
+            <span className="split-tagFit">Físico</span>
+            <h2 className="split-titulo">Tus Rutinas</h2>
             <p className="split-desc">
               Entrena con propósito, mejora tu energía y transforma tu cuerpo con rutinas que
               tu mismo puedes personalizar.
