@@ -53,7 +53,7 @@ const ModalVerification = forwardRef<
 
     try {
       const response = await fetch(
-        'http://localhost:3000/resend-verification',
+        '/api/resend-verification',
         {
           method: 'POST',
           headers: {
