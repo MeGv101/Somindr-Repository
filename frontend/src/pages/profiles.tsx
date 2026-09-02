@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
+import { openChat } from "../services/chat";
 
 import avatar1 from "../assets/avatars/avatar1.jpeg";
 import avatar2 from "../assets/avatars/avatar2.jpeg";
@@ -64,7 +65,17 @@ const CAT_STYLE: Record<string, React.CSSProperties> = {
 export default function Profile() {
   const { username } = useParams();
     const { user } = useAuth();
-  
+    const navigate = useNavigate();
+
+  async function chatearConProfesional(professionalUserId: number) {
+    try {
+      const channelId = await openChat(professionalUserId);
+      navigate(`/messages/${channelId}`);
+    } catch (error) {
+      console.error("Error abriendo chat:", error);
+      alert("No se pudo abrir el chat.");
+    }
+  }
 
   const esMiPerfil =
   !username ||
@@ -93,6 +104,7 @@ export default function Profile() {
 
     interface ProfessionalProfile {
       id: number;
+      userId: number;
       profession: string;
       description: string;
       pricePerHour: number;
@@ -298,11 +310,18 @@ export default function Profile() {
 
                   <button
                     className="btn-guardar"
+                    onClick={() =>
+                      chatearConProfesional(
+                        professional.userId
+                      )
+                    }
                   >
                     Chatear con profesional
                   </button>
 
                 ) : (
+
+                  
 
                   <button
                     className="btn-guardar"
@@ -363,7 +382,7 @@ export default function Profile() {
             </p>
 
             <p>
-              ${professional.pricePerHour}/hora
+              ${professional.pricePerHour}
             </p>
 
             {professional.verified && (
