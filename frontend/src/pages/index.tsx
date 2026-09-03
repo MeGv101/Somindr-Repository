@@ -544,7 +544,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <img src="/media/SRC/pexels-phamthe-24251921.jpg" alt="slide2" />
           </div>
           <div className="slide-content">
-            <div className="slide-badge">Psico-Emocional</div>
+            <div className="slide-badge">Apoyo Emocional</div>
             <h2 className="slide-titulo">
               Cuerpo
               <br />y Mente
@@ -569,7 +569,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <img src="/media/SRC/pexels-chente8888-35006998.jpg" alt="slide3" />
           </div>
           <div className="slide-content">
-            <div className="slide-badge">Evolución diaria</div>
+            <div className="slide-badge">Evolución semanal</div>
             <h2 className="slide-titulo">
               Evoluciona
               <br />
@@ -607,7 +607,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
           <div className="split-overlay"></div>
           <div className="split-content">
             <span className="split-tag">Bienestar mental</span>
-            <h2 className="split-titulo">Psico Emocional</h2>
+            <h2 className="split-titulo">Apoyo Emocional</h2>
             <p className="split-desc">
               Conecta con tu estado de ánimo y trabaja desde la raíz de tus bloqueos emocionales.
             </p>
@@ -624,8 +624,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
           />
           <div className="split-overlay split-overlay-fit"></div>
           <div className="split-content">
-            <span className="split-tagFit">Fitness</span>
-            <h2 className="split-titulo">Fitness Adaptativo</h2>
+            <span className="split-tagFit">Físico</span>
+            <h2 className="split-titulo">Tus Rutinas</h2>
             <p className="split-desc">
               Entrena con propósito, mejora tu energía y transforma tu cuerpo con rutinas que
               tu mismo puedes personalizar.

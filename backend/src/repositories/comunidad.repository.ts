@@ -280,3 +280,38 @@ export async function getPostReport(
 
   return result[0] ?? null;
 }
+
+export async function getUserRole(userId: number) {
+  const result = await db
+    .select({ role: users.role })
+    .from(users)
+    .where(eq(users.id, userId));
+
+  return result[0]?.role ?? null;
+}
+
+export async function getPostsForAdmin() {
+  return db
+    .select({
+      id: posts.id,
+      title: posts.title,
+      category: posts.category,
+      content: posts.content,
+      edited: posts.edited,
+      createdAt: posts.createdAt,
+      updatedAt: posts.updatedAt,
+      authorId: users.id,
+      username: users.username,
+      nombre: users.nombre,
+    })
+    .from(posts)
+    .innerJoin(users, eq(posts.userId, users.id))
+    .orderBy(desc(posts.createdAt));
+}
+
+export async function getReportsForPost(postId: number) {
+  return db
+    .select()
+    .from(postReports)
+    .where(eq(postReports.postId, postId));
+}

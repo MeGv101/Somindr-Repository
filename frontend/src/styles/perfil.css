@@ -1,129 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root{
---verde-claro:#7BCB9E;
---verde-medio:#3CB878;
---verde-oscuro:#1F7A52;
---rojo-claro:#E87474;
---rojo-oscuro:#8B1A1A;
-
---gradient-main:linear-gradient(135deg,var(--verde-claro) 0%,var(--verde-medio) 45%,var(--verde-oscuro) 75%,var(--rojo-oscuro) 100%);
---gradient-card:linear-gradient(135deg,rgba(123,203,158,.05),rgba(60,184,120,.05),rgba(139,26,26,.05));
---gradient-glow:linear-gradient(135deg,rgba(123,203,158,.12),rgba(60,184,120,.12),rgba(139,26,26,.12));
-
---bg-primary:#080b12;
---bg-secondary:#111a15;
---bg-card:rgba(255,255,255,.05);
---bg-card-hover:rgba(255,255,255,.08);
---bg-input:rgba(255,255,255,.03);
-
---text-primary:#f4f8f5;
---text-secondary:#a7b3ab;
---text-tertiary:rgba(244,248,245,.4);
-
---border:rgba(255,255,255,.08);
---border-color:var(--border);
---border-verde:rgba(123,203,158,.2);
-
---radius:20px;
---radius-sm:12px;
---radius-md:16px;
---radius-lg:24px;
---radius-xl:32px;
---radius-full:9999px;
-
---shadow:0 8px 30px rgba(0,0,0,.45);
---shadow-glow-verde:0 0 40px rgba(60,184,120,.08);
---shadow-glow-rojo:0 0 40px rgba(139,26,26,.06);
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background:#080b12;
-color:var(--text-primary);
-font-family:Inter,sans-serif;
-overflow-x:hidden;
-}
-
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 20% 20%,rgba(60,184,120,.05),transparent 35%),
-radial-gradient(circle at 80% 10%,rgba(139,26,26,.04),transparent 35%),
-radial-gradient(circle at 50% 90%,rgba(60,184,120,.04),transparent 40%);
-pointer-events:none;
-z-index:0;
-}
-
-.main{
-position:relative;
-z-index:1;
-width:100%;
-max-width:100%;
-margin:auto;
-padding:40px 48px 80px;
-}
-
-.pf-header{
-display:flex;
-align-items:center;
-gap:28px;
-padding:32px;
-margin-bottom:28px;
-border-radius:26px;
-background:var(--bg-card);
-backdrop-filter:blur(16px);
-border:1px solid var(--border);
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-}
-
-.pf-header::before{
-content:"";
-position:absolute;
-top:-80%;
-right:-10%;
-width:380px;
-height:380px;
-border-radius:50%;
-background:radial-gradient(circle,rgba(60,184,120,.15),transparent 70%);
-pointer-events:none;
-}
-
-.avatar-wrap{
-width:110px;
-height:110px;
-border-radius:50%;
-padding:3px;
-background:var(--gradient-main);
-flex-shrink:0;
-position:relative;
-}
-
-.avatar-circle{
-width:100%;
-height:100%;
-border-radius:50%;
-overflow:hidden;
-background:#0d1016;
-}
-
-.avatar-circle img{
-width:100%;
-height:100%;
-display:block;
-object-fit:cover;
-}
-
-/* Botoncito de edición sobre el avatar (página de edición de perfil) */
 .avatar-edit-btn{
 position:absolute;
 bottom:-2px;
@@ -153,83 +28,7 @@ height:12px;
 fill:#fff;
 }
 
-.pf-info{
-flex:1;
-position:relative;
-z-index:2;
-}
 
-.pf-name{
-font-size:2rem;
-font-weight:800;
-background:var(--gradient-main);
-background-clip:text;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-bottom:6px;
-}
-
-.pf-sub{
-color:var(--text-secondary);
-font-size:.95rem;
-margin-bottom:12px;
-}
-
-.badge-profesional{
-display:inline-flex;
-align-items:center;
-gap:8px;
-padding:8px 16px;
-border-radius:999px;
-background:rgba(123,203,158,.12);
-border:1px solid rgba(123,203,158,.25);
-color:var(--verde-claro);
-font-size:.8rem;
-font-weight:700;
-}
-
-.badge-profesional::before{
-content:"";
-width:8px;
-height:8px;
-border-radius:50%;
-background:var(--verde-claro);
-}
-
-/* ===== BOTÓN PRINCIPAL ===== */
-
-.btn-guardar{
-text-decoration:none;
-padding:10px 18px;
-border:none;
-border-radius:12px;
-background:var(--gradient-main);
-color:white;
-font-weight:700;
-font-size:.82rem;
-font-family:'Inter',sans-serif;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 6px 18px rgba(60,184,120,.22);
-display:inline-flex;
-align-items:center;
-justify-content:center;
-}
-
-.btn-guardar:hover{
-transform:translateY(-2px);
-box-shadow:0 10px 28px rgba(60,184,120,.32);
-}
-
-.btn-guardar:active{
-transform:scale(.97);
-}
-
-.pf-header .btn-guardar{
-margin-left:auto;
-}
-
-.card h3,
 .card-titulo{
 font-size:1.2rem;
 font-weight:700;
@@ -243,116 +42,7 @@ color:var(--text-secondary);
 margin-bottom:20px;
 }
 
-.card{
-background:var(--bg-card);
-backdrop-filter:blur(16px);
-border:1px solid var(--border);
-border-radius:22px;
-padding:28px;
-margin-bottom:30px;
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-animation:fadeUp .6s cubic-bezier(.22,1,.36,1);
-}
 
-.card::before{
-content:"";
-position:absolute;
-inset:0;
-background:var(--gradient-card);
-opacity:0;
-transition:.35s;
-pointer-events:none;
-}
-
-.card:hover::before{
-opacity:1;
-}
-
-.card p{
-color:var(--text-secondary);
-line-height:1.7;
-word-break:break-word;
-}
-
-.card:nth-child(2){
-animation-delay:.05s;
-}
-
-.card:nth-child(3){
-animation-delay:.12s;
-}
-
-.perfil-tabs{
-display:flex;
-gap:10px;
-margin-bottom:24px;
-}
-
-.perfil-tabs button{
-padding:10px 22px;
-border-radius:999px;
-border:1px solid var(--border);
-background:transparent;
-color:var(--text-secondary);
-cursor:pointer;
-transition:.25s;
-font-weight:600;
-}
-
-.perfil-tabs button:hover{
-border-color:rgba(123,203,158,.35);
-color:white;
-}
-
-.perfil-tabs button:active{
-transform:scale(.95);
-}
-
-.perfil-tabs .activo{
-background:var(--gradient-main);
-border:none;
-color:white;
-}
-
-.info-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
-}
-
-.info-item{
-padding:20px;
-background:rgba(255,255,255,.04);
-border-radius:16px;
-border:1px solid rgba(255,255,255,.06);
-transition:.25s;
-}
-
-.info-item:hover{
-transform:translateY(-3px);
-border-color:rgba(123,203,158,.2);
-}
-
-.info-item span{
-display:block;
-font-size:.8rem;
-color:#7b8793;
-margin-bottom:8px;
-text-transform:uppercase;
-letter-spacing:.08em;
-}
-
-.info-item strong{
-font-size:1rem;
-color:white;
-word-break:break-word;
-}
-
-/* ================================= */
-/* FORMULARIOS (página editar perfil) */
-/* ================================= */
 
 .perfil-grid{
 display:grid;
@@ -421,7 +111,6 @@ min-height:100px;
 line-height:1.6;
 }
 
-/* Select con look de "pill" */
 .campo-perfil select{
 cursor:pointer;
 appearance:none;
@@ -461,10 +150,7 @@ appearance:textfield;
 margin:0;
 }
 
-/* ================================================= */
-/* MEDIOS DE CONTACTO (Cuenta profesional)            */
-/* Comparten el mismo lenguaje visual que .campo-perfil */
-/* ================================================= */
+/* ===== Medios de contacto (Cuenta profesional) ===== */
 
 .professional-contact-row{
 display:flex;
@@ -542,9 +228,7 @@ background:rgba(232,116,116,.14);
 transform:translateY(-1px);
 }
 
-/* ==================================== */
-/* ACCIÓN DE GUARDADO + ÍCONO DE RESULTADO */
-/* ==================================== */
+/* ===== Ícono animado de check/x junto a los botones de guardar ===== */
 
 .guardar-action{
 display:inline-flex;
@@ -619,10 +303,7 @@ stroke-dashoffset:28;
 transition-delay:0s;
 }
 
-/* ===================== */
-/* MODAL GENÉRICO (av-*) */
-/* ===================== */
-/* Usado por el selector de avatar */
+/* ===== Modal genérico (av-*): selector de avatar y solicitud profesional ===== */
 
 .av-overlay{
 display:none;
@@ -758,71 +439,9 @@ from{opacity:0;transform:scale(.9) translateY(20px);}
 to{opacity:1;transform:scale(1) translateY(0);}
 }
 
-/* ========================= */
-/* EFECTOS Y RESPONSIVE      */
-/* ========================= */
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(28px);
-}
-to{
-opacity:1;
-transform:none;
-}
-}
-
-.pf-header{
-animation:fadeUp .6s cubic-bezier(.22,1,.36,1);
-}
-
-.card,
-.info-item,
-.perfil-tabs button,
-.btn-guardar{
-will-change:transform;
-}
-
-.btn-contratar{
-margin-left:auto;
-text-decoration:none;
-padding:14px 24px;
-border-radius:14px;
-background:var(--gradient-main);
-color:white;
-font-weight:700;
-transition:.25s;
-box-shadow:0 8px 24px rgba(60,184,120,.25);
-}
-
-.btn-contratar:hover{
-transform:translateY(-2px);
-}
+/* ===== Responsive específico de esta página ===== */
 
 @media(max-width:900px){
-
-.pf-header{
-flex-direction:column;
-align-items:center;
-text-align:center;
-gap:18px;
-}
-
-.pf-info{
-display:flex;
-flex-direction:column;
-align-items:center;
-}
-
-.pf-header .btn-guardar{
-margin-left:0;
-margin-top:10px;
-}
-
-.info-grid{
-grid-template-columns:1fr;
-}
 
 .perfil-grid{
 grid-template-columns:1fr;
@@ -836,27 +455,6 @@ grid-template-columns:1fr;
 
 @media(max-width:700px){
 
-.main{
-padding:24px 16px 60px;
-}
-
-.pf-header{
-padding:24px;
-}
-
-.avatar-wrap{
-width:90px;
-height:90px;
-}
-
-.pf-name{
-font-size:1.7rem;
-}
-
-.card{
-padding:22px;
-}
-
 .professional-contact-row{
 flex-wrap:wrap;
 }
@@ -868,35 +466,6 @@ flex:1 1 100%;
 }
 
 @media(max-width:500px){
-
-.perfil-tabs{
-flex-direction:column;
-}
-
-.perfil-tabs button{
-width:100%;
-}
-
-.avatar-wrap{
-width:76px;
-height:76px;
-}
-
-.pf-name{
-font-size:1.45rem;
-}
-
-.pf-sub{
-font-size:.9rem;
-}
-
-.card{
-padding:18px;
-}
-
-.info-item{
-padding:16px;
-}
 
 .av-modal{
 padding:24px;
@@ -920,21 +489,4 @@ width:100%;
 text-align:center;
 }
 
-}
-
-::-webkit-scrollbar{
-width:8px;
-}
-
-::-webkit-scrollbar-track{
-background:#0b0f14;
-}
-
-::-webkit-scrollbar-thumb{
-background:linear-gradient(var(--verde-claro),var(--verde-oscuro));
-border-radius:999px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-background:var(--verde-medio);
 }

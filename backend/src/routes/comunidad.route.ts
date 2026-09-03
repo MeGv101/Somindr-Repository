@@ -8,7 +8,7 @@ export async function communityRoutes(
 
 
 
-  // POSTS
+
 
   fastify.get("/posts", async (request) => {
 
@@ -92,7 +92,6 @@ export async function communityRoutes(
 
 
 
-  // COMENTARIOS
 
   fastify.post(
     "/posts/:id/comments",
@@ -190,7 +189,7 @@ export async function communityRoutes(
 
 
 
-  // REACCIONES
+
 
   fastify.post(
     "/posts/:id/reaction",
@@ -243,7 +242,11 @@ export async function communityRoutes(
 
     }
   );
-  // REPORTES
+
+
+
+
+
   fastify.post(
     "/posts/:id/report",
     async (request, reply) => {
@@ -311,5 +314,53 @@ export async function communityRoutes(
 
     }
   );
-}
 
+
+
+
+
+  fastify.get("/admin/community", async (request, reply) => {
+    try {
+      const payload = await request.jwtVerify<{ id: number }>();
+      return await communityService.getCommunityForAdmin(payload.id);
+    } catch (error) {
+      if (error instanceof Error && error.message === "FORBIDDEN") {
+        return reply.status(403).send({ message: "No tienes permisos de administrador." });
+      }
+      throw error;
+    }
+  });
+
+  fastify.delete("/admin/posts/:id", async (request, reply) => {
+    try {
+      const payload = await request.jwtVerify<{ id: number }>();
+      const params = request.params as { id: string };
+      return await communityService.adminDeletePost(payload.id, Number(params.id));
+    } catch (error) {
+      if (error instanceof Error && error.message === "FORBIDDEN") {
+        return reply.status(403).send({ message: "No tienes permisos de administrador." });
+      }
+      if (error instanceof Error && error.message === "POST_NOT_FOUND") {
+        return reply.status(404).send({ message: "La publicación no existe." });
+      }
+      throw error;
+    }
+  });
+
+  fastify.delete("/admin/comments/:id", async (request, reply) => {
+    try {
+      const payload = await request.jwtVerify<{ id: number }>();
+      const params = request.params as { id: string };
+      return await communityService.adminDeleteComment(payload.id, Number(params.id));
+    } catch (error) {
+      if (error instanceof Error && error.message === "FORBIDDEN") {
+        return reply.status(403).send({ message: "No tienes permisos de administrador." });
+      }
+      if (error instanceof Error && error.message === "COMMENT_NOT_FOUND") {
+        return reply.status(404).send({ message: "El comentario no existe." });
+      }
+      throw error;
+    }
+  });
+
+}

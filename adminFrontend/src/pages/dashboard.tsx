@@ -86,30 +86,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="stat-card accent-rose">
-          <div className="stat-icon"></div>
-          <div className="stat-label">Pendientes</div>
-          <div className="stat-number">0</div>
-          <div className="stat-change negative">
-            <span>↓</span> Sin novedades
-          </div>
-        </div>
 
-        <div className="stat-card">
-          <div className="stat-icon"></div>
-          <div className="stat-label">Aprobados</div>
-          <div className="stat-number">0</div>
-          <div className="stat-change positive">
-            <span>↑</span> Todo en orden
-          </div>
-        </div>
       </div>
 
       {}
       <div className="dashboard-activity">
         <div className="section-header">
           <h2>Actividad Reciente</h2>
-          <span className="see-all">Ver todo →</span>
+
         </div>
         <div className="activity-empty">
           <div className="empty-icon"></div>

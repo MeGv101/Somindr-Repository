@@ -26,8 +26,8 @@
 }
 
 .lang-btn.active {
-  background-color: #6366f1;
-  border-color: #6366f1;
+  background-color: #03680a;
+  border-color: #058c20;
   color: var(--text-primary);
 }
 

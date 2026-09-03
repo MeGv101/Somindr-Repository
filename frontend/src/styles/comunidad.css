@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: etna;
   src: url('../src/assets/fonts/Etna.ttf');
@@ -11,8 +12,12 @@
 
 body {
   background: var(--bg-primary) !important;
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
+
+/* =========================================
+   HERO DE COMUNIDAD
+   ========================================= */
 
 .titulo-hero {
   flex-direction: column;
@@ -25,9 +30,7 @@ body {
   padding: 0 20px;
   position: relative;
   background-image: url('https://images.pexels.com/photos/30311713/pexels-photo-30311713.jpeg');
-  opacity: 80%;
   background-size: cover;
-  background-position-y: 60%;
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
@@ -40,24 +43,26 @@ body {
   background: rgba(0, 0, 0, 0.35);
 }
 
+/* TÍTULO PRINCIPAL */
+
 .titulo-hero h1 {
   position: relative;
   z-index: 2;
-}
-
-.titulo-hero h1 {
   font-size: clamp(5rem, 7.8vw, 6.4rem);
   font-weight: 1200;
-  color: var(--text-primary);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.5);
+  color: #ffffff;
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(0, 0, 0, 0.5);
   letter-spacing: -2px;
   line-height: 1.2;
   word-break: keep-all;
   white-space: nowrap;
-  z-index: 2;
   opacity: 0;
   animation: heroReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* SUBTÍTULO */
 
 .titulo-hero h2 {
   position: relative;
@@ -66,6 +71,8 @@ body {
   animation: heroReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) .18s forwards;
 }
 
+/* TEXTO */
+
 .titulo-hero p {
   position: relative;
   z-index: 2;
@@ -73,17 +80,89 @@ body {
   animation: heroReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) .34s forwards;
 }
 
+/* ANIMACIÓN HERO */
+
 @keyframes heroReveal {
-  0% { opacity: 0; transform: translateY(26px); filter: blur(10px); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
+
+
+/* =========================================
+   MODO CLARO - TÍTULO DEL HERO
+   ========================================= */
+
+/*
+   Si tu proyecto utiliza data-theme="light",
+   esta regla hará que el título sea oscuro.
+*/
+
+[data-theme="light"] .titulo-hero h1 {
+  color: var(--text-primary);
+
+  text-shadow:
+    2px 2px 4px rgba(255, 255, 255, 0.85),
+    0 0 20px rgba(255, 255, 255, 0.55);
+}
+
+
+/*
+   Si tu proyecto utiliza .light-mode
+*/
+
+.light-mode .titulo-hero h1 {
+  color: var(--text-primary);
+
+  text-shadow:
+    2px 2px 4px rgba(255, 255, 255, 0.85),
+    0 0 20px rgba(255, 255, 255, 0.55);
+}
+
+
+/*
+   Si tu proyecto utiliza body.light
+*/
+
+body.light .titulo-hero h1 {
+  color: var(--text-primary);
+
+  text-shadow:
+    2px 2px 4px rgba(255, 255, 255, 0.85),
+    0 0 20px rgba(255, 255, 255, 0.55);
+}
+
+
+/*
+   Si tu proyecto utiliza body.light-mode
+*/
+
+body.light-mode .titulo-hero h1 {
+  color: var(--text-primary);
+
+  text-shadow:
+    2px 2px 4px rgba(255, 255, 255, 0.85),
+    0 0 20px rgba(255, 255, 255, 0.55);
+}
+
+
+/* =========================================
+   FORO
+   ========================================= */
 
 .foro {
   min-height: 100vh;
   background: var(--bg-surface-2);
   color: var(--text-primary);
   font-family: system-ui, sans-serif;
-
 }
 
 .foro .foro-header {
@@ -128,6 +207,11 @@ body {
   transform: scale(0.92);
 }
 
+
+/* =========================================
+   FILTROS
+   ========================================= */
+
 .foro .foro-filtros {
   display: flex;
   gap: 6px;
@@ -149,22 +233,46 @@ body {
   animation: riseIn .55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.foro .foro-filtros button:nth-child(1) { animation-delay: .05s; }
-.foro .foro-filtros button:nth-child(2) { animation-delay: .1s; }
-.foro .foro-filtros button:nth-child(3) { animation-delay: .15s; }
-.foro .foro-filtros button:nth-child(4) { animation-delay: .2s; }
-.foro .foro-filtros button:nth-child(5) { animation-delay: .25s; }
+.foro .foro-filtros button:nth-child(1) {
+  animation-delay: .05s;
+}
+
+.foro .foro-filtros button:nth-child(2) {
+  animation-delay: .1s;
+}
+
+.foro .foro-filtros button:nth-child(3) {
+  animation-delay: .15s;
+}
+
+.foro .foro-filtros button:nth-child(4) {
+  animation-delay: .2s;
+}
+
+.foro .foro-filtros button:nth-child(5) {
+  animation-delay: .25s;
+}
 
 @keyframes riseIn {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .foro .foro-filtros button.foro-on {
   background: var(--text-primary) !important;
   color: var(--bg-primary) !important;
   border-color: transparent !important;
-  transition: background .25s ease, color .25s ease, transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    background .25s ease,
+    color .25s ease,
+    transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .foro .foro-filtros .foro-btn-nuevo {
@@ -180,6 +288,11 @@ body {
   box-shadow: 0 10px 26px rgba(74, 222, 128, .3);
 }
 
+
+/* =========================================
+   FORMULARIO
+   ========================================= */
+
 .foro .foro-form {
   position: relative;
   z-index: 20;
@@ -193,8 +306,17 @@ body {
 }
 
 @keyframes materialize {
-  0% { opacity: 0; transform: scale(.95) translateY(-6px); filter: blur(6px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: scale(.95) translateY(-6px);
+    filter: blur(6px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
 }
 
 .foro .foro-form textarea {
@@ -255,25 +377,21 @@ body {
   cursor: pointer;
 }
 
+
+/* =========================================
+   POSTS
+   ========================================= */
+
 .foro .foro-post {
-  background: var(--bg-secondary);
-  border: 1px solid var(--bg-card);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.158);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
   margin-bottom: 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.158);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
   animation: postReveal .75s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes postReveal {
-  0% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateY(12px); }
-  60% { opacity: 1; }
-  100% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
 }
 
 .foro .foro-post-body {
@@ -307,6 +425,29 @@ body {
   line-height: 1.65;
 }
 
+@keyframes postReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(12px);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   ACCIONES
+   ========================================= */
+
 .foro .foro-acciones {
   display: flex;
   align-items: center;
@@ -324,7 +465,11 @@ body {
   font-size: 13px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .foro .foro-btn-voto.off {
@@ -334,7 +479,7 @@ body {
 }
 
 .foro .foro-btn-voto.on {
-  background: #0d2d1a !important;
+  background: rgba(60, 184, 120, 0.18) !important;
   border: 1px solid var(--verde-medio)55 !important;
   color: var(--verde-medio) !important;
   animation: votoPop .5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -352,15 +497,33 @@ body {
 }
 
 @keyframes votoPop {
-  0% { transform: scale(1); }
-  35% { transform: scale(1.22); }
-  60% { transform: scale(0.95); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.22);
+  }
+
+  60% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes votoRing {
-  0% { opacity: .9; transform: scale(0.7); }
-  100% { opacity: 0; transform: scale(1.5); }
+  0% {
+    opacity: .9;
+    transform: scale(0.7);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
 }
 
 .foro .foro-btn-ghost {
@@ -415,6 +578,11 @@ body {
   width: 100%;
 }
 
+
+/* =========================================
+   RESPUESTAS
+   ========================================= */
+
 .foro .foro-replies {
   border-top: 1px solid var(--bg-card);
   background: var(--bg-primary);
@@ -422,8 +590,13 @@ body {
 }
 
 @keyframes repliesIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .foro .foro-reply {
@@ -433,8 +606,15 @@ body {
 }
 
 @keyframes replyPop {
-  0% { opacity: 0; transform: translateY(10px) scale(.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .foro .foro-reply:last-child {
@@ -465,7 +645,9 @@ body {
   font-size: 12px !important;
   font-weight: 600 !important;
   padding: 0 !important;
-  transition: color .2s ease, transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    color .2s ease,
+    transform .15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .foro .foro-btn-voto-sm.off {
@@ -487,6 +669,11 @@ body {
   pointer-events: none;
   animation: votoRing .55s ease-out;
 }
+
+
+/* =========================================
+   FORMULARIO DE RESPUESTAS
+   ========================================= */
 
 .foro .foro-reply-form {
   padding: 12px 18px 16px;
@@ -564,6 +751,11 @@ body {
   animation: materialize .5s ease both;
 }
 
+
+/* =========================================
+   AURORA
+   ========================================= */
+
 .aurora {
   position: absolute;
   inset: 0;
@@ -577,7 +769,9 @@ body {
   border-radius: 50%;
   filter: blur(90px);
   opacity: .45;
-  animation: float 18s ease-in-out infinite, pulse 8s ease-in-out infinite;
+  animation:
+    float 18s ease-in-out infinite,
+    pulse 8s ease-in-out infinite;
 }
 
 .b1 {
@@ -624,6 +818,11 @@ body {
   animation-delay: 11s;
 }
 
+
+/* =========================================
+   MODAL DE REPORTE
+   ========================================= */
+
 .reporte-overlay {
   position: fixed;
   inset: 0;
@@ -638,15 +837,10 @@ body {
 
 .reporte-modal {
   width: min(420px, 90vw);
-
   padding: 24px;
-
   border-radius: 16px;
-
   background: var(--bg-primary);
-
-  color: white;
-
+  color: var(--text-primary);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.45);
 }
@@ -666,14 +860,13 @@ body {
   border-radius: 8px;
   border: 1px solid var(--border-strong);
   background: var(--bg-surface-2);
-  color: white;
+  color: var(--text-primary);
 }
 
 .reporte-acciones {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-
   margin-top: 20px;
 }
 
@@ -682,19 +875,28 @@ body {
   cursor: not-allowed;
 }
 
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
 @keyframes float {
   0% {
     transform: translate(0px, 0px);
   }
+
   25% {
     transform: translate(80px, -40px);
   }
+
   50% {
     transform: translate(-70px, -120px);
   }
+
   75% {
     transform: translate(100px, 40px);
   }
+
   100% {
     transform: translate(0px, 0px);
   }
@@ -704,14 +906,20 @@ body {
   0% {
     transform: scale(.8);
   }
+
   50% {
     transform: scale(1.35);
   }
+
   100% {
     transform: scale(.8);
   }
 }
 
+
+/* =========================================
+   ANIMACIONES GSAP
+   ========================================= */
 
 .titulo-hero h1 {
   opacity: 0;
@@ -734,7 +942,6 @@ body {
   transition: none;
 }
 
-
 .foro .foro-header {
   opacity: 0;
   transform: translateY(40px);
@@ -755,25 +962,21 @@ body {
   transform: translateX(30px);
 }
 
-
 .foro .foro-filtros button {
   opacity: 0;
   transform: translateY(30px) scale(0.8);
 }
-
 
 .foro .foro-form {
   opacity: 0;
   transform: translateY(50px) scale(0.95);
 }
 
-
 .foro .foro-post {
   opacity: 0;
   transform: translateY(60px) rotateX(5deg);
   transform-origin: top center;
 }
-
 
 .foro .foro-btn-voto {
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -784,17 +987,21 @@ body {
 }
 
 
-
-
+/* =========================================
+   RESPONSIVE
+   ========================================= */
 
 @media (max-width: 768px) {
+
   .titulo-hero h1 {
     white-space: normal;
     word-break: break-word;
   }
 
- }
+}
+
 @media (max-width: 480px) {
+
   .foro .foro-filtros {
     gap: 4px;
   }
@@ -807,8 +1014,13 @@ body {
   .foro .foro-post-body p {
     font-size: 13px;
   }
+
 }
 
+
+/* =========================================
+   GSAP READY
+   ========================================= */
 
 .gsap-ready {
   visibility: visible !important;
@@ -822,10 +1034,16 @@ body {
 }
 
 
+/* =========================================
+   HOVER POSTS
+   ========================================= */
+
 .foro .foro-post:hover {
   border-color: rgba(74, 222, 128, 0.2);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .foro .foro-btn-voto:hover {
@@ -838,24 +1056,40 @@ body {
 }
 
 
+/* =========================================
+   INPUT TIT
+   ========================================= */
+
 .js-loading * {
   animation-play-state: paused !important;
 }
 
-.tit{
+.tit {
   background-color: var(--bg-card);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
+
   width: 28rem;
   color: var(--text-primary);
   height: 3vh;
   text-align: center;
   border-radius: 10px;
-  border-color:  var(--verde-medio) ;
+  border-color: var(--verde-medio);
   margin-bottom: 10px;
   transition: border-color .2s ease;
 }
 
-.tit input:focus ::before{
+.tit input:focus ::before {
   border-color: var(--verde-medio);
 }
 
@@ -864,101 +1098,14 @@ body {
   border-color: var(--verde-medio);
 }
 
-/* ============================= */
-/* DROPDOWN DE CATEGORÍA (custom) */
-/* ============================= */
-/* Reemplaza el <select> nativo del formulario "+ Publicar"
-   para poder colorear el menú de opciones, cosa que un
-   <select>/<option> nativo no permite de forma confiable. */
 
-.custom-select{
-  position: relative;
-  display: inline-block;
-  font-family: inherit;
-}
+/* =========================================
+   VOTO ACTIVO
+   ========================================= */
 
-.custom-select-trigger{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  min-width: 150px;
-  padding: 7px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border-strong);
-  background: var(--bg-card);
-  color: var(--text-tertiary);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: filter .2s ease, border-color .2s ease;
-}
-
-.custom-select-trigger:hover{
-  filter: brightness(1.15);
-  border-color: var(--verde-medio);
-}
-
-.custom-select-arrow{
-  opacity: .7;
-  transition: transform .2s ease;
-  flex-shrink: 0;
-}
-
-.custom-select-arrow.open{
-  transform: rotate(180deg);
-}
-
-.custom-select-menu{
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: var(--bg-secondary);
-  border: 1px solid var(--bg-card);
-  border-radius: 10px;
-  padding: 5px;
-  box-shadow: 0 16px 40px rgba(0,0,0,.5);
-  animation: customSelectOpen .18s cubic-bezier(.22,1,.36,1);
-  max-height: 220px;
-  overflow-y: auto;
-}
-
-@keyframes customSelectOpen{
-  from{ opacity:0; transform:translateY(-6px); }
-  to{ opacity:1; transform:translateY(0); }
-}
-
-.custom-select-option{
-  padding: 8px 12px;
-  margin-bottom: 3px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: filter .15s ease;
-}
-
-.custom-select-option:last-child{
-  margin-bottom: 0;
-}
-
-.custom-select-option:hover{
-  filter: brightness(1.3);
-}
-
-.custom-select-option.selected{
-  box-shadow: inset 0 0 0 1.5px currentColor;
-}
-
-.custom-select-menu::-webkit-scrollbar{
-  width: 6px;
-}
-
-.custom-select-menu::-webkit-scrollbar-thumb{
-  background: var(--verde-medio);
-  border-radius: 999px;
+.foro .foro-btn-voto.on {
+  background: rgba(60, 184, 120, 0.18) !important;
+  border: 1px solid var(--verde-medio)55 !important;
+  color: var(--verde-medio) !important;
+  animation: votoPop .5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

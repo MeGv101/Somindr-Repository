@@ -15,7 +15,8 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useAuth } from "../context/authContext";
 
-import "../styles/perfil.css";
+import "../styles/base-p.css";
+import "../styles/profiles.css";
 
 type ProfessionalInfo = {
   id: number;

@@ -4,6 +4,8 @@ import {
   Route,
 } from "react-router-dom";
 
+import "./App.css";
+
 import { AuthProvider } from "./context/authContext";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
@@ -14,6 +16,8 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Users from "./pages/users";
 import Solicitudes from "./pages/solicitudes";
+import Moderacion from "./pages/moderacion";
+import Reportes from "./pages/reportes";
 
 export default function App() {
 
@@ -52,6 +56,16 @@ export default function App() {
               <Route
                 path="solicitudes"
                 element={<Solicitudes />}
+              />
+
+              <Route
+                path="moderacion"
+                element={<Moderacion />}
+              />
+
+              <Route
+                path="reportes"
+                element={<Reportes />}
               />
 
             </Route>
