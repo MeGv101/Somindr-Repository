@@ -39,16 +39,16 @@ interface Post {
 
 const CAT = {
   Nutrición: {
-    background: "#0d2d1a",
-    color: "#4ade80",
+    background: "#3b3b3b",
+    color: "#a0c90c",
   },
   Físico: {
-    background: "#0d1f3c",
-    color: "#60a5fa",
+    background: "#3b3b3b",
+    color: "#f2322c",
   },
-  Psicoemocional: {
-    background: "#1e0d2d",
-    color: "#c084fc",
+  Emociones: {
+    background: "#3b3b3b",
+    color: "#63e686",
   },
 } as Record<string, React.CSSProperties>;
 
@@ -66,7 +66,7 @@ interface CategorySelectProps {
 function CategorySelect({ value, onChange, getStyle }: CategorySelectProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const categorias = ["Nutrición", "Físico", "Psicoemocional"];
+  const categorias = ["Nutrición", "Físico", "Emociones"];
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -363,7 +363,7 @@ export default function Comunidad() {
 
       <div className="foro-body">
         <div className="foro-filtros">
-          {["Todos", "Nutrición", "Físico", "Apoyo emocional"].map((c) => (
+          {["Todos", "Nutrición", "Físico", "Emociones"].map((c) => (
             <button
               key={c}
               className={filtro === c ? "foro-on" : ""}

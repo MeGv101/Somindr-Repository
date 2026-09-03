@@ -998,7 +998,7 @@ export default function Perfil(){
               <div className="campo-perfil">
 
                 <label>
-                  Precio por hora
+                  Precio por suscripción
                 </label>
 
 
