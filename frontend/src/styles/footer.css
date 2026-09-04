@@ -6,6 +6,7 @@ footer {
   flex: 1;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
   color: var(--text-primary);
   width: 100%;
