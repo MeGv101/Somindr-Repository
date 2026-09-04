@@ -90,7 +90,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
     </header>
       <nav className={`menuppal ${isOpen ? 'active' : ''}`}>
         <div className="sidebar-logo">
-          <img src="../src/assets/logo.svg" className="logo-img" alt="logo" />
+          <img src="../src/assets/logo.png" className="logo-img" alt="logo" />
         </div>
 
         

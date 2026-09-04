@@ -9,7 +9,7 @@ import {
     userRoutines,
 } from "../db/schema.js";
 
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export async function getCategories() {
     return db
@@ -94,6 +94,46 @@ export async function createSession(data: {
             })
             .returning();
     return session;
+}
+
+export async function getUserSessionHistory(
+    userId: number
+) {
+    return db
+        .select({
+            id: userRoutines.id,
+            routineId: userRoutines.routineId,
+            routineName: exerciseRoutines.name,
+            categoryId: exerciseCategories.id,
+            categoryName: exerciseCategories.name,
+            startedAt: userRoutines.startedAt,
+            completedAt: userRoutines.completedAt,
+            completionPercentage: userRoutines.completionPercentage,
+        })
+        .from(userRoutines)
+        .innerJoin(
+            exerciseRoutines,
+            eq(
+                userRoutines.routineId,
+                exerciseRoutines.id
+            )
+        )
+        .innerJoin(
+            exerciseCategories,
+            eq(
+                exerciseRoutines.categoryId,
+                exerciseCategories.id
+            )
+        )
+        .where(
+            eq(
+                userRoutines.userId,
+                userId
+            )
+        )
+        .orderBy(
+            desc(userRoutines.startedAt)
+        );
 }
 
 export async function saveExercises(

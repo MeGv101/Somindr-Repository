@@ -51,6 +51,26 @@ export async function fitnessRoutes(
             }
         }
     );
+    fastify.get(
+        "/fitness/history",
+        async (request) => {
+            const payload =
+                await request.jwtVerify<{
+                    id: number;
+                }>();
+
+            const query =
+                request.query as {
+                    category?: string;
+                };
+
+            return fitnessService
+                .getSessionHistory(
+                    payload.id,
+                    query.category
+                );
+        }
+    );
     fastify.post(
         "/fitness/session",
         async (request, reply) => {
