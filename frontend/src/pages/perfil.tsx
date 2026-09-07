@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
+import "../styles/base-p.css";
 import "../styles/perfil.css";
 
 import Footer from "../components/footer";
@@ -997,7 +998,7 @@ export default function Perfil(){
               <div className="campo-perfil">
 
                 <label>
-                  Precio por hora
+                  Precio por suscripción
                 </label>
 
 

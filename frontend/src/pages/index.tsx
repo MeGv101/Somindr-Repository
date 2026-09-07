@@ -569,14 +569,14 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <img src="/media/SRC/pexels-chente8888-35006998.jpg" alt="slide3" />
           </div>
           <div className="slide-content">
-            <div className="slide-badge">Evolución semanal</div>
+            <div className="slide-badge">Suscripciones</div>
             <h2 className="slide-titulo">
-              Evoluciona
+              Contrata
               <br />
-              Cada Día
+              Especialistas
             </h2>
             <p className="slide-sub">
-              Tu mejor versión empieza hoy. En Somindr integras salud física y mental para mostrarla.
+              En Somindr tu salud está en buenas manos al contratar profesionales verificados.
             </p>
             <button
               type="button"

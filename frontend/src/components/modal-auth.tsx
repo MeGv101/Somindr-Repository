@@ -6,7 +6,6 @@ import {
   useState,
   type MouseEvent,
 } from 'react'
-import { useNavigate } from 'react-router-dom'
 import type { AuthTab } from '../types/auth'
 import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
@@ -40,7 +39,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   setIsAuthenticated,
 } = auth;
 
-  const navigate = useNavigate()
+
   const verificationRef = useRef<ModalVerificationRef>(null)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
@@ -65,7 +64,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
   // Modal de dato inválido (peso, estatura o fecha de nacimiento irreales)
   const [modalDatoInvalidoAbierto, setModalDatoInvalidoAbierto] =
     useState(false)
-  const [mensajeDatoInvalido, setMensajeDatoInvalido] = useState("")
+  const [mensajeDatoInvalido] = useState("")
 
   const limpiarLogin = () => {
     setEmail("");

@@ -11,11 +11,11 @@ import avatar6 from "../assets/avatars/avatar6.jpeg";
 import avatar7 from "../assets/avatars/avatar7.jpeg";
 import avatar8 from "../assets/avatars/avatar8.jpeg";
 
-import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useAuth } from "../context/authContext";
 
-import "../styles/perfil.css";
+import "../styles/base-p.css";
+import "../styles/profiles.css";
 
 type ProfessionalInfo = {
   id: number;

@@ -325,9 +325,7 @@ export async function findPostsWithReportCounts() {
 
 }
 
-export async function deletePostAsAdmin(
-  postId: number
-) {
+export async function deletePostAsAdmin(postId: number) {
 
   await db
     .delete(posts)
@@ -409,8 +407,4 @@ export async function updateReportStatus(
       eq(postReports.id, reportId)
     );
 
-}
-
-export function deletePost(postId: number) {
-  throw new Error("Function not implemented.");
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState, } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { Link, useNavigate } from "react-router-dom";
 import { openChat } from "../services/chat";
 
 import Footer from "../components/footer";
@@ -50,7 +49,6 @@ interface PurchasedProfessional{
 
 }
 export default function Professionals() {
-  const { user } = useAuth();
   const [available, setAvailable] =
     useState<Professional[]>([]);
 
