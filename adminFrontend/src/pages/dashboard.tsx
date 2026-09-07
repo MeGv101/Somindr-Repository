@@ -57,12 +57,6 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="header-actions">
-          <button className="btn btn-sm btn-outline">
-            <span>⟳</span> Actualizar
-          </button>
-          <button className="btn btn-sm btn-primary">
-            <span>+</span> Nuevo
-          </button>
         </div>
       </header>
 

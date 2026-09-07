@@ -130,17 +130,15 @@ export default function Users() {
         </div>
         <div className="header-actions">
           <div className="search-box">
-            <span className="search-icon">🔍</span>
+            <span className="search-icon"></span>
             <input
               type="text"
-              placeholder="Buscar usuarios..."
+              placeholder="Buscar usuarios"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="btn btn-primary btn-sm">
-            <span>+</span> Nuevo usuario
-          </button>
+
         </div>
       </header>
 
@@ -169,7 +167,7 @@ export default function Users() {
       {/* TABLE */}
       {filteredUsers.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">🔍</div>
+          <div className="empty-icon"></div>
           <h3>No se encontraron usuarios</h3>
           <p>Intenta con otro término de búsqueda</p>
         </div>
