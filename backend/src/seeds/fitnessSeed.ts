@@ -1,53 +1,20 @@
 import "dotenv/config";
 import { db } from "../db/index.js";
-import {
-  exerciseCategories,
-} from "../db/schema.js";
+import { exerciseCategories } from "../db/schema.js";
 
 async function seed() {
-  await db.insert(
-    exerciseCategories
-  ).values([
+  await db.insert(exerciseCategories).values([
     {
-      name: "Baja intensidad",
-      description:
-        "Actividad ligera para días de poca energía.",
+      name: "Físico",
+      description: "Entrenamientos para fuerza, resistencia, movilidad y acondicionamiento físico.",
     },
     {
-      name: "Media intensidad",
-      description:
-        "Actividad moderada.",
-    },
-    {
-      name: "Alta intensidad",
-      description:
-        "Entrenamiento exigente.",
-    },
-    {
-      name: "Fuerza",
-      description:
-        "Desarrollo de fuerza muscular.",
-    },
-    {
-      name: "Resistencia",
-      description:
-        "Mejora de resistencia física.",
-    },
-    {
-      name: "Ganancia muscular",
-      description:
-        "Enfocada en hipertrofia.",
-    },
-    {
-      name: "Pérdida de grasa",
-      description:
-        "Mayor gasto energético.",
+      name: "Calistenia",
+      description: "Ejercicios con el peso corporal organizados por progresión y dificultad.",
     },
   ]);
 
-  console.log(
-    "Categorías insertadas"
-  );
+  console.log("Categorías de fitness insertadas");
 }
 
 seed()

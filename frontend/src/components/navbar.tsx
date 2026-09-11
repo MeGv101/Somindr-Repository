@@ -14,6 +14,7 @@ import avatar6 from "../assets/avatars/avatar6.jpeg";
 import avatar7 from "../assets/avatars/avatar7.jpeg";
 import avatar8 from "../assets/avatars/avatar8.jpeg";
 import ThemeToggle from './ThemeToggle'
+import logo from '../assets/logo.png';
 
 import type { AuthTab } from '../types/auth'
 
@@ -72,7 +73,6 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
 
   return (
     <>
-
       <div 
         className={`hamburger ${isOpen ? 'is-active' : ''}`} 
         onClick={toggleMenu}
@@ -90,7 +90,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
     </header>
       <nav className={`menuppal ${isOpen ? 'active' : ''}`}>
         <div className="sidebar-logo">
-          <img src="../src/assets/logo.png" className="logo-img" alt="logo" />
+          <img src={logo} className="logo-img" alt="logo" />
         </div>
 
         
