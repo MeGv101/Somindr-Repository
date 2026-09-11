@@ -222,7 +222,7 @@ export async function deletePostAsAdmin(
   postId: number
 ) {
 
-  await repository.deletePost(
+  await repository.deletePostAsAdmin(
     postId
   );
 

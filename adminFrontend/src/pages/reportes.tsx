@@ -64,32 +64,34 @@ export default function Reportes() {
         return;
       }
 
-      loadReports();
+      setReports((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status } : r))
+      );
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function deletePost(postId: number, reportId: number) {
-    if (!confirm("¿Eliminar la publicación reportada?")) return;
+async function deletePost(postId: number, reportId: number) {
+  if (!confirm("¿Eliminar la publicación reportada?")) return;
 
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`/api/admin/posts/${postId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/admin/posts/${postId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-      if (!response.ok) {
-        alert("No se pudo eliminar la publicación.");
-        return;
-      }
-
-      await resolveReport(reportId, "resolved");
-    } catch (error) {
-      console.error(error);
+    if (!response.ok) {
+      alert("No se pudo eliminar la publicación.");
+      return;
     }
+
+    setReports((prev) => prev.filter((r) => r.id !== reportId));
+  } catch (error) {
+    console.error(error);
   }
+}
 
   const filteredReports =
     filter === "all"
