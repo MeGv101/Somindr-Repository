@@ -81,7 +81,7 @@ ${historyText}
 Mensaje del usuario:
 
 ${message}
-Además, identifica el idioma de el mensaje del usuario (no lo digas bajo ningun concepto, solo procura responder en el mismo idioma.)  
+Además, identifica el idioma de el mensaje del usuario (no lo digas explicitamente bajo ningun concepto, siempre y sin excepción responde en el mismo idioma en que identificaste.)  
 
 Si la información está vacía, indícale que complete primero la sección psicoemocional.
 `;

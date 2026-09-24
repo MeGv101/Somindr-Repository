@@ -1,17 +1,23 @@
-// frontend/src/components/LanguageSwitcher.tsx
 import { useEffect, useState } from "react";
-import { setLanguage, startAutoTranslateObserver } from "../utils/translatePage";
+import {
+  setLanguage,
+  startAutoTranslateObserver
+} from "../utils/translatePage";
 import "../styles/LanguageSwitcher.css";
 
 export default function LanguageSwitcher() {
-  const [lang, setLang] = useState("es");
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("somindr-language") || "es"
+  );
 
   useEffect(() => {
     startAutoTranslateObserver();
+    setLanguage(lang);
   }, []);
 
   const handleClick = (code: string) => {
     setLang(code);
+    localStorage.setItem("somindr-language", code);
     setLanguage(code);
   };
 
