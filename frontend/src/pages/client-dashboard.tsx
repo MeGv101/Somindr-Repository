@@ -1,5 +1,6 @@
   import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
@@ -412,8 +413,9 @@ export default function ClientDashboard() {
                   key={insight.id}
                   className="client-dashboard-card client-dashboard-insight"
                 >
-                  <p>{insight.summary}</p>
-
+                  <ReactMarkdown>
+                    {insight.summary}
+                  </ReactMarkdown>
                   <small>
                     {new Date(
                       insight.createdAt

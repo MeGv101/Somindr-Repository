@@ -68,10 +68,10 @@ Mantén un tono humano y profesional.
 
 Información del usuario:
 
-Mood:
+Mood semanal:
 ${JSON.stringify(moods)}
 
-Fitness y ejercicios psicoemocionales realizados (respiración, meditación, journaling, grounding, etc.):
+Fitness:
 ${JSON.stringify(routines)}
 
 Últimos 20 mensajes:
@@ -81,6 +81,7 @@ ${historyText}
 Mensaje del usuario:
 
 ${message}
+Además, identifica el idioma de el mensaje del usuario (no lo digas bajo ningun concepto, solo procura responder en el mismo idioma.)  
 
 Si la información está vacía, indícale que complete primero la sección psicoemocional.
 `;

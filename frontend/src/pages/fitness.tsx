@@ -188,6 +188,7 @@ export default function Fitness() {
           <p>
             Solo elije una categoría de hoy, elije tu rutina y comienza tus ejercicios!
           </p>
+          <p>No te preocupes si no terminas todos, presiona guardar igual. ¡Lo importante es ver tu evolución!</p>
         </section>
 
         {/* Cards decorativas — solo diseño, sin lógica ni datos dinámicos */}
@@ -247,10 +248,12 @@ export default function Fitness() {
 
         {rutinaDetalle && (
           <section className="fitness-section">
+            
             <div className="routine-header">
               <h2>{rutinaDetalle.name}</h2>
               <p>{rutinaDetalle.description}</p>
               <p>Duración estimada: {rutinaDetalle.estimatedMinutes} minutos</p>
+              Marca las casillas de los ejercicios que completes, cuando termines puedes hacer click en guardar
             </div>
 
             <div className="ejercicios-container">

@@ -22,69 +22,69 @@ type Review = {
 
 const REVIEWS: Review[] = [
   {
-    name: 'Laura Méndez',
-    role: 'Diseñadora UX',
-    date: 'marzo 2025',
+    name: 'Valeria Hernández',
+    role: 'Estudiante de Bachillerato',
+    date: 'septiembre 2026',
     rating: 5,
-    text: 'Increíble experiencia. El equipo estuvo atento en cada paso y el resultado superó todas mis expectativas.',
-    initials: 'LM',
+    text: 'Somindr me ha ayudado a llevar un mejor control de cómo me siento y de mis hábitos. Me gusta que todo esté en un solo lugar.',
+    initials: 'VH',
     hue: '195',
   },
   {
-    name: 'Carlos Ruiz',
-    role: 'Emprendedor',
-    date: 'febrero 2025',
+    name: 'Daniel Martínez',
+    role: 'Estudiante de Educación Media',
+    date: 'agosto 2026',
     rating: 4,
-    text: 'Muy buen servicio. Rápido y confiable. Solo algunos pequeños detalles que mejorar, pero en general quedé muy satisfecho.',
-    initials: 'CR',
+    text: 'Me gusta porque puedo registrar cómo estuvo mi día y ver cómo cambian mis hábitos con el tiempo. Es fácil de usar y bastante completo.',
+    initials: 'DM',
     hue: '32',
   },
   {
-    name: 'Sofía Torres',
-    role: 'Directora de Marketing',
-    date: 'enero 2025',
+    name: 'Sofía Ramírez',
+    role: 'Estudiante de Bachillerato',
+    date: 'agosto 2026',
     rating: 5,
-    text: 'Simplemente perfecto. La calidad del trabajo habla por sí sola. Los recomendaría sin dudarlo a cualquier colega.',
-    initials: 'ST',
+    text: 'La parte de seguimiento emocional me parece muy útil. A veces uno no se da cuenta de cómo se ha estado sintiendo hasta que ve sus registros.',
+    initials: 'SR',
     hue: '285',
   },
   {
-    name: 'Andrés Vega',
-    role: 'Gerente de Proyectos',
-    date: 'diciembre 2024',
+    name: 'Andrés López',
+    role: 'Estudiante de Educación Media',
+    date: 'julio 2026',
     rating: 5,
-    text: 'Cumplieron con todos los plazos y la comunicación fue excelente. Definitivamente volveré a trabajar con ellos.',
-    initials: 'AV',
+    text: 'Me ayudó a organizar mejor mis rutinas y a prestar más atención a mis hábitos. Se siente como una herramienta hecha para estudiantes.',
+    initials: 'AL',
     hue: '152',
   },
   {
-    name: 'María Castillo',
-    role: 'Consultora',
-    date: 'noviembre 2024',
+    name: 'Camila Flores',
+    role: 'Estudiante de Bachillerato',
+    date: 'julio 2026',
     rating: 4,
-    text: 'Profesionales, creativos y muy detallistas. El proceso fue fluido y el entregable final fue de alta calidad.',
-    initials: 'MC',
+    text: 'Me gusta poder llevar un registro de mi estado de ánimo y también revisar mi progreso. La interfaz es sencilla y no se siente complicada.',
+    initials: 'CF',
     hue: '350',
   },
   {
-    name: 'Diego Morales',
-    role: 'CEO, Startup Tech',
-    date: 'octubre 2024',
+    name: 'Mateo Rodríguez',
+    role: 'Estudiante de Educación Media',
+    date: 'junio 2026',
     rating: 5,
-    text: 'El mejor equipo con el que he trabajado. Entienden perfectamente las necesidades del cliente y entregan resultados de primer nivel.',
-    initials: 'DM',
+    text: 'Está bastante completo para ser una plataforma enfocada en estudiantes. Me gusta especialmente poder combinar el seguimiento emocional con mis hábitos.',
+    initials: 'MR',
     hue: '220',
   },
   {
     name: 'Mario Ernesto',
     role: 'Miembro Somindr',
-    date: 'abril 2026',
-    rating: 4,
-    text: 'Me ha ayudado a cumplir todas mis metas y ambiciones. Una plataforma sólida y bien pensada.',
+    date: 'septiembre 2026',
+    rating: 5,
+    text: 'Me ha ayudado a conocer mejor mis hábitos y a mantenerme más pendiente de mis metas. Además, la comunidad hace que no se sienta como otra app aburrida.',
     initials: 'ME',
     hue: '330',
   },
-]
+];
 
 type InfoCard = {
 
@@ -177,8 +177,8 @@ export default function Index({ onOpenAuth }: IndexProps) {
             <div class="avatar" style="background:${bgColor};color:${textColor}">${r.initials}</div>
             <div class="stars">${stars}</div>
           </div>
-          <p class="card-quote">${r.text}</p>
           <p class="card-author">${r.name}</p>
+          <p class="card-quote">${r.text}</p>
           <p class="card-role">${r.role}</p>
           <p class="card-date">${r.date}</p>
         `
@@ -638,7 +638,7 @@ export default function Index({ onOpenAuth }: IndexProps) {
 
       <section className="carousel-wrap">
         <div className="carousel-header">
-          <p>opiniones verificadas</p>
+          <p>opiniones destacadas</p>
           <h2>Lo que dicen nuestros clientes</h2>
         </div>
         <div className="track-outer" id="trackOuter">

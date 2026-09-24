@@ -11,7 +11,7 @@ export default function Footer({ handleLinkClick }: FooterProps) {
     <footer>
       <div>
         <div className="footer-logo">
-          SOMINDR <span></span>
+          somindr <span></span>
         </div>
         <p>© 2026 Somindr.</p>
         <p> Informacion acerca de Somindr en Sobre Nosotros</p>
