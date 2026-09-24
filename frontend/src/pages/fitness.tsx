@@ -23,6 +23,7 @@ interface Ejercicio {
   recommendedReps?: number
   recommendedMinutes?: number
   video?: string
+  image?: string
 }
 
 interface RutinaDetalle {
@@ -31,6 +32,27 @@ interface RutinaDetalle {
   description: string
   estimatedMinutes: number
   exercises: Ejercicio[]
+}
+
+const exerciseImages: Record<string, string> = {
+  "Flexiones": "https://images.pexels.com/photos/4162494/pexels-photo-4162494.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Flexiones Diamante": "https://images.pexels.com/photos/8038637/pexels-photo-8038637.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Flexiones Declinadas": "https://images.pexels.com/photos/8401198/pexels-photo-8401198.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Pike Push-Ups": "https://images.pexels.com/photos/14623628/pexels-photo-14623628.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Sentadillas": "https://images.pexels.com/photos/7900681/pexels-photo-7900681.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Sentadilla Búlgara": "https://images.pexels.com/photos/14085371/pexels-photo-14085371.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Pistol Squat - Progresión": "https://images.pexels.com/photos/14085371/pexels-photo-14085371.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Zancadas": "https://images.pexels.com/photos/4803713/pexels-photo-4803713.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Puente de Glúteos": "https://images.pexels.com/photos/6516221/pexels-photo-6516221.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Plancha": "https://images.pexels.com/photos/13629685/pexels-photo-13629685.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Plancha Lateral": "https://images.pexels.com/photos/6516162/pexels-photo-6516162.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Mountain Climbers": "https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Jumping Jacks": "https://images.pexels.com/photos/7298411/pexels-photo-7298411.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Burpees": "https://images.pexels.com/photos/30246184/pexels-photo-30246184.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Superman": "https://images.pexels.com/photos/4920466/pexels-photo-4920466.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Fondos en Paralelas": "https://images.pexels.com/photos/4803702/pexels-photo-4803702.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "Dominadas": "https://images.pexels.com/photos/4803696/pexels-photo-4803696.jpeg?auto=compress&cs=tinysrgb&w=900",
+  "L-Sit - Progresión": "https://images.pexels.com/photos/4920466/pexels-photo-4920466.jpeg?auto=compress&cs=tinysrgb&w=900",
 }
 
 export default function Fitness() {
@@ -76,6 +98,10 @@ export default function Fitness() {
     try {
       const res = await fetch(`/api/fitness/routine/${routineId}`)
       const data = await res.json()
+      data.exercises = data.exercises.map((exercise: Ejercicio) => ({
+        ...exercise,
+        image: exerciseImages[exercise.exerciseName],
+      }))
       setRutinaDetalle(data)
       setEjerciciosFlipped({})
       setEjerciciosCompletados({})
@@ -155,8 +181,8 @@ export default function Fitness() {
           <h1>Fitness</h1>
           <p>
             Bienvenido al módulo fitness de Somindr! aqui podras revisar nuestras
-            diversas rutinas especialmente diseñadas para los entusiastas que gustan
-            de ejercicios de calistenia.
+            diversas rutinas de entrenamiento físico y calistenia, organizadas por nivel
+            para que puedas progresar paso a paso.
           </p>
           <br />
           <p>
@@ -245,9 +271,19 @@ export default function Fitness() {
                       />
                     </div>
 
-                    <h3>{ejercicio.exerciseName}</h3>
+                    {ejercicio.image && (
+                      <img
+                        src={ejercicio.image}
+                        alt={ejercicio.exerciseName}
+                        className="exercise-image"
+                        loading="lazy"
+                      />
+                    )}
 
-                    {ejercicio.description && <p>{ejercicio.description}</p>}
+                    <div className="exercise-card-info">
+                      <h3>{ejercicio.exerciseName}</h3>
+
+                      {ejercicio.description && <p>{ejercicio.description}</p>}
                     {ejercicio.recommendedReps && (
                       <p>{ejercicio.recommendedReps} repeticiones</p>
                     )}
@@ -255,12 +291,13 @@ export default function Fitness() {
                       <p>{ejercicio.recommendedMinutes} minutos</p>
                     )}
 
-                    <button
-                      className="btn-flip"
-                      onClick={() => toggleFlip(ejercicio.exerciseId)}
-                    >
-                      Ver cómo se hace →
-                    </button>
+                      <button
+                        className="btn-flip"
+                        onClick={() => toggleFlip(ejercicio.exerciseId)}
+                      >
+                        Ver referencia →
+                      </button>
+                    </div>
                   </div>
 
                   <div className="video-content">
@@ -268,8 +305,17 @@ export default function Fitness() {
                       <video controls preload="metadata" className="exercise-video">
                         <source src={ejercicio.video} type="video/mp4" />
                       </video>
+                    ) : ejercicio.image ? (
+                      <>
+                        <img
+                          src={ejercicio.image}
+                          alt={`Referencia de ${ejercicio.exerciseName}`}
+                          className="exercise-image-back"
+                        />
+                        <p className="reference-label">Referencia visual del ejercicio</p>
+                      </>
                     ) : (
-                      <p>Video no disponible</p>
+                      <p>Referencia no disponible</p>
                     )}
 
                     <button

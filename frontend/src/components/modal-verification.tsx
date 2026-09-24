@@ -92,7 +92,7 @@ const ModalVerification = forwardRef<
         <div className="logo">
           <div className="logo-icono">
             <img
-              src="../src/assets/logo.svg"
+              src="../src/assets/logo.png"
               width={70}
               height={70}
               alt="Somindr"

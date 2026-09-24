@@ -27,7 +27,7 @@ await app.register(jwt, {
 });
 
 await app.register(cors, {
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://less-secretariat-lovely-inkjet.trycloudflare.com"]
+  origin: ["http://localhost:5173", "http://localhost:5174", "somindr.localhost"]
 })
 
 await app.register(authRoutes, {

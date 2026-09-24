@@ -37,6 +37,26 @@ export async function getRoutine(
         exercises,
     };
 }
+export async function getSessionHistory(
+    userId: number,
+    category?: string
+) {
+    const history =
+        await fitnessRepository
+            .getUserSessionHistory(
+                userId
+            );
+
+    if (!category) {
+        return history;
+    }
+
+    return history.filter(
+        entry =>
+            entry.categoryName === category
+    );
+}
+
 export async function saveSession(
     userId: number,
     body: {

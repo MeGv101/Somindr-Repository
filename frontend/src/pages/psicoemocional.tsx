@@ -6,6 +6,56 @@ import {
 import "../styles/psicoemocional.css";
 import Footer from "../components/footer";
 
+interface CategoriaBienestar {
+  id: number;
+  name: string;
+  description: string;
+}
+
+interface RutinaBienestar {
+  id: number;
+  name: string;
+  estimatedMinutes: number;
+  difficulty: string;
+}
+
+interface EjercicioBienestar {
+  exerciseId: number;
+  exerciseName: string;
+  description?: string;
+  recommendedReps?: number;
+  recommendedMinutes?: number;
+}
+
+interface RutinaBienestarDetalle {
+  id: number;
+  name: string;
+  description: string;
+  estimatedMinutes: number;
+  exercises: EjercicioBienestar[];
+}
+
+interface SesionBienestar {
+  id: number;
+  routineName: string;
+  categoryName: string;
+  startedAt: string;
+  completedAt: string | null;
+  completionPercentage: number;
+}
+
+const WELLNESS_CATEGORY = "Psico-Emocional";
+
+const wellnessImages: Record<string, string> = {
+  "Respiración": "/media/SRC/pexels-betulbatmaz-18061406.jpg",
+  "Meditación": "/media/SRC/pexels-arthousestudio-7363328.jpg",
+  "Journaling": "/media/SRC/pexels-phamthe-24251921.jpg",
+  "Grounding": "/media/SRC/pexels-timoarrr-4434592.jpg",
+};
+
+const defaultWellnessImage =
+  "/media/SRC/pexels-arthousestudio-7363328.jpg";
+
 export default function PsicoEmocional() {
 
   const [ansiedad, setAnsiedad] = useState(5);
@@ -16,6 +66,14 @@ export default function PsicoEmocional() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [history, setHistory] = useState<any[]>([]);
+
+  const [wellnessRoutines, setWellnessRoutines] = useState<RutinaBienestar[]>([]);
+  const [activeRoutine, setActiveRoutine] = useState<RutinaBienestarDetalle | null>(null);
+  const [wellnessChecks, setWellnessChecks] = useState<Record<number, boolean>>({});
+  const [wellnessSaving, setWellnessSaving] = useState(false);
+  const [wellnessMessage, setWellnessMessage] = useState("");
+  const [wellnessError, setWellnessError] = useState("");
+  const [wellnessHistory, setWellnessHistory] = useState<SesionBienestar[]>([]);
 
   const loadMood = async () => {
     try {
@@ -72,6 +130,124 @@ export default function PsicoEmocional() {
       await response.json();
 
     setHistory(data);
+  }
+
+  useEffect(() => {
+    cargarEjerciciosBienestar();
+    fetchWellnessHistory();
+  }, []);
+
+  async function cargarEjerciciosBienestar() {
+    try {
+      const res = await fetch("/api/fitness/categories");
+      const categorias: CategoriaBienestar[] = await res.json();
+
+      const categoria = categorias.find(
+        (c) => c.name === WELLNESS_CATEGORY
+      );
+
+      if (!categoria) return;
+
+      const resRutinas = await fetch(
+        `/api/fitness/category/${categoria.id}/routines`
+      );
+      const rutinas = await resRutinas.json();
+      setWellnessRoutines(rutinas);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function fetchWellnessHistory() {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `/api/fitness/history?category=${encodeURIComponent(WELLNESS_CATEGORY)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setWellnessHistory(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function abrirRutinaBienestar(routineId: number) {
+    try {
+      setWellnessError("");
+      setWellnessMessage("");
+      const res = await fetch(`/api/fitness/routine/${routineId}`);
+      const data = await res.json();
+      setActiveRoutine(data);
+      setWellnessChecks({});
+    } catch (error) {
+      console.error(error);
+      setWellnessError("No se pudo cargar el ejercicio.");
+    }
+  }
+
+  function cerrarRutinaBienestar() {
+    setActiveRoutine(null);
+    setWellnessChecks({});
+    setWellnessMessage("");
+  }
+
+  function toggleWellnessCheck(exerciseId: number) {
+    setWellnessChecks((prev) => ({
+      ...prev,
+      [exerciseId]: !prev[exerciseId],
+    }));
+  }
+
+  async function guardarRutinaBienestar() {
+    if (!activeRoutine || wellnessSaving) return;
+
+    try {
+      setWellnessSaving(true);
+      setWellnessError("");
+      setWellnessMessage("");
+
+      const token = localStorage.getItem("token");
+
+      const exercisesPayload = activeRoutine.exercises.map((ejercicio) => ({
+        exerciseId: ejercicio.exerciseId,
+        completed: wellnessChecks[ejercicio.exerciseId] || false,
+      }));
+
+      const response = await fetch("/api/fitness/session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          routineId: activeRoutine.id,
+          exercises: exercisesPayload,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Error al guardar.");
+      }
+
+      setWellnessMessage(
+        `Registrado: completaste ${data.completionPercentage}% de "${activeRoutine.name}". La IA ya tiene este dato disponible.`
+      );
+
+      await fetchWellnessHistory();
+    } catch (error) {
+      setWellnessError(
+        error instanceof Error ? error.message : "Error al guardar"
+      );
+    } finally {
+      setWellnessSaving(false);
+    }
   }
 
   const handleSubmit = async () => {

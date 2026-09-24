@@ -9,12 +9,18 @@ import {
     userRoutines,
 } from "../db/schema.js";
 
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 export async function getCategories() {
     return db
         .select()
-        .from(exerciseCategories);
+        .from(exerciseCategories)
+        .where(
+            inArray(exerciseCategories.name, [
+                "Físico",
+                "Calistenia",
+            ])
+        );
 }
 
 export async function getRoutinesByCategory(

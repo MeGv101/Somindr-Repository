@@ -13,6 +13,7 @@ import ModalVerification, {
   type ModalVerificationRef,
 } from './modal-verification'
 import '../styles/modal-auth.css'
+import logo from '../assets/logo.png'
 
 
 export type ModalAuthRef = {
@@ -307,7 +308,7 @@ const ModalAuth = forwardRef<ModalAuthRef>(function ModalAuth(_, ref) {
         <div className="logo">
           <div className="logo-icono">
             <img
-              src="../src/assets/logo.svg"
+              src={logo}
               width={70}
               height={70}
               alt="Somindr"

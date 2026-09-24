@@ -14,7 +14,7 @@ export async function generateResponse(
         const completion =
             await client.chat.completions.create({
                 model:
-                    "groq/compound",
+                    "openai/gpt-oss-120b",
                 messages: [
                     {
                         role: "user",

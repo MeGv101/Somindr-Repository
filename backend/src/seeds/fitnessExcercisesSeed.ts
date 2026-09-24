@@ -1,92 +1,33 @@
 import "dotenv/config";
 import { db } from "../db/index.js";
-import {
-  exercises,
-} from "../db/schema.js";
+import { exercises } from "../db/schema.js";
 
 async function seed() {
   await db.insert(exercises).values([
-  {
-    name: "Flexiones",
-    description: "Ejercicio de empuje para pecho, hombros y tríceps."
-  },
-  {
-    name: "Sentadillas",
-    description: "Fortalece piernas y glúteos."
-  },
-  {
-    name: "Plancha",
-    description: "Ejercicio isométrico para abdomen y core."
-  },
-  {
-    name: "Burpees",
-    description: "Ejercicio cardiovascular de cuerpo completo."
-  },
-  {
-    name: "Jumping Jacks",
-    description: "Cardio ligero para aumentar la frecuencia cardíaca."
-  },
-  {
-    name: "Zancadas",
-    description: "Trabajo unilateral para piernas y equilibrio."
-  },
-  {
-    name: "Mountain Climbers",
-    description: "Cardio y fortalecimiento del core."
-  },
-  {
-    name: "Elevación de Rodillas",
-    description: "Cardio de bajo impacto."
-  },
-  {
-    name: "Plancha Lateral",
-    description: "Fortalece los oblicuos y la estabilidad corporal."
-  },
-  {
-    name: "Puente de Glúteos",
-    description: "Fortalece glúteos y zona lumbar."
-  },
-  {
-    name: "Fondos en Silla",
-    description: "Ejercicio para tríceps usando una silla."
-  },
-  {
-    name: "Abdominales Crunch",
-    description: "Trabajo abdominal básico."
-  },
-  {
-    name: "Superman",
-    description: "Fortalece espalda baja y postura."
-  },
-  {
-    name: "Skipping",
-    description: "Correr en el lugar elevando las rodillas."
-  },
-  {
-    name: "Saltos de Tijera",
-    description: "Cardio dinámico para todo el cuerpo."
-  },
-  {
-    name: "Sentadilla Isométrica",
-    description: "Mantener posición de sentadilla contra una pared."
-  },
-  {
-    name: "Flexiones Diamante",
-    description: "Variación enfocada en tríceps."
-  },
-  {
-    name: "Step Ups",
-    description: "Subir y bajar de un escalón o banco."
-  },
-  {
-    name: "Trote en el Lugar",
-    description: "Actividad cardiovascular moderada."
-  },
-  {
-    name: "Caminata",
-    description: "Actividad aeróbica de baja intensidad."
-  }
-]);
+    // FÍSICO
+    { name: "Sentadillas", description: "Fortalecen piernas y glúteos y mejoran el control del movimiento." },
+    { name: "Zancadas", description: "Ejercicio unilateral para piernas, estabilidad y coordinación." },
+    { name: "Puente de Glúteos", description: "Fortalece glúteos y trabaja la estabilidad de la cadera." },
+    { name: "Plancha", description: "Ejercicio isométrico para fortalecer el core y mejorar la estabilidad." },
+    { name: "Plancha Lateral", description: "Trabaja el core lateral y la estabilidad del tronco." },
+    { name: "Mountain Climbers", description: "Movimiento dinámico que combina acondicionamiento y trabajo de core." },
+    { name: "Jumping Jacks", description: "Ejercicio dinámico para coordinación y acondicionamiento cardiovascular." },
+    { name: "Burpees", description: "Movimiento de cuerpo completo que combina sentadilla, apoyo y salto." },
+    { name: "Superman", description: "Fortalece la espalda y ayuda a desarrollar control del tronco." },
+
+    // CALISTENIA
+    { name: "Flexiones", description: "Ejercicio básico de empuje para pecho, hombros, brazos y core." },
+    { name: "Flexiones Diamante", description: "Variación de flexión con mayor énfasis en tríceps y control corporal." },
+    { name: "Flexiones Declinadas", description: "Progresión de flexiones que aumenta la demanda sobre hombros y pecho." },
+    { name: "Pike Push-Ups", description: "Progresión de empuje vertical para desarrollar fuerza de hombros." },
+    { name: "Fondos en Paralelas", description: "Ejercicio de empuje para pecho y tríceps usando barras paralelas." },
+    { name: "Dominadas", description: "Ejercicio de tracción para espalda y brazos usando una barra." },
+    { name: "Sentadilla Búlgara", description: "Ejercicio unilateral de piernas que exige equilibrio y control." },
+    { name: "Pistol Squat - Progresión", description: "Progresión unilateral de sentadilla para trabajar fuerza, equilibrio y control." },
+    { name: "L-Sit - Progresión", description: "Ejercicio isométrico de core y tren superior mediante progresiones controladas." },
+  ]);
+
+  console.log("Ejercicios de fitness insertados");
 }
 
 seed()

@@ -2,6 +2,8 @@ import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useAuth } from "../context/authContext";
 
+import LanguageSwitcher from "../components/LanguageSwitcher";
+
 import "../styles/layout.css";
 
 export default function AdminLayout() {
@@ -81,6 +83,7 @@ export default function AdminLayout() {
 
         <div className="admin-user">
           <div className="admin-user-name">{user?.nombre}</div>
+          <LanguageSwitcher />
           <button onClick={handleLogout}>
             Cerrar sesión
           </button>
